@@ -1,0 +1,179 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This document can be formatted only with pdflatex.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,twoside,a4paper]{article}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ae}
+\usepackage[pdftex]{graphicx}
+
+
+\usepackage{../mondo/mondo}
+
+\usepackage[english]{babel}
+\usepackage{latexsym,epsf,epsfig}
+\usepackage{rotating,amsmath,amsfonts,amssymb,subfigure}
+
+\usepackage{times}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{datetime}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+
+\newlength{\hsbw}
+\newcommand{\comment}[1]{\mbox{}\par\vspace{0.25in}%
+\setlength{\hsbw}{\linewidth}%
+\addtolength{\hsbw}{-2\fboxsep}%
+\addtolength{\hsbw}{-2\fboxrule}%
+\noindent\fbox{\parbox{\hsbw}{{\bf Comment: }#1}}\vspace{0.25in}}
+% comment-out next line to see Comments
+%\renewcommand{\comment}[1]{}
+
+% Common abbrev. are set as commands to ensure proper spacing after the dot
+\newcommand{\ie}{i.e.\@\xspace}
+\newcommand{\Ie}{I.e.\@\xspace}
+\newcommand{\eg}{e.g.\@\xspace}
+\newcommand{\Eg}{E.g.\@\xspace}
+\newcommand{\etal}{et al.\@\xspace}
+\newcommand{\etc}{etc.\@\xspace}
+
+
+\sloppy
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Change title and other document information here.                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\didentifier}{TR}
+\newcommand{\dtitle}{Train Benchmark}
+\newcommand{\dversion}{0.1}
+\newcommand{\dauthors}{BME}
+
+% \dstatus should be Draft or Final %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\dstatus}{Draft}
+
+% \ddist should be Partners Only, EC or Public %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ddist}{Public}
+
+\newdateformat{eudate}{\THEDAY~\monthname[\THEMONTH]~\THEYEAR}
+\newcommand{\ddate}{\eudate \today}
+%Use a fixed date as below for final version
+%\newcommand{\ddate}{24 February 2014}
+\newcommand{\dyear}{2014\xspace}
+
+%% local changes start %%
+
+\usepackage{booktabs}
+\usepackage{dcolumn}
+
+\usepackage{amsthm}
+
+\newcommand{\cc}[1]{\multicolumn{1}{c}{#1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\codefoot}[1]{{\texttt{#1}}}
+
+\usepackage{listings}
+\lstset{language=Java,basicstyle=\footnotesize,captionpos=b}
+
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+\definecolor{gray20}{gray}{.20}
+
+\lstdefinestyle{shell}{
+  tabsize=2,
+  language=,
+  xleftmargin=.5cm,
+  framexleftmargin=.4cm,
+  keywordstyle=\color{gray20},
+  breaklines=true,
+  captionpos=t,
+  basicstyle=\ttfamily\small,
+  showstringspaces=false,
+  numberstyle=\ttfamily\tiny,
+  numbersep=1.1cm,
+  numbers=left,
+  numbersep=5pt,
+  frameround=ftff,
+  showspaces=false,
+  showtabs=false,
+  frame=single,
+  backgroundcolor=\color{gray97},
+  rulesepcolor=\color{black},
+  commentstyle=\color{gray45}
+}
+
+\lstnewenvironment{Java} {\lstset{
+  basicstyle=\fontsize{8}{10}\ttfamily,xleftmargin=12pt,
+  language=Java,
+  columns=flexible, % add any modifications here
+}}{}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+
+%% local changes end %%
+
+\usepackage{multicol}
+\usepackage{bytefield}
+%\usepackage{colortbl}
+\usepackage{textcomp}
+
+\newcommand{\XOR}{\textasciicircum\xspace}
+\newcommand{\OR}{\textbar\xspace}
+\newcommand{\AND}{\&\xspace}
+\newcommand{\NOT}{\texttildelow}
+\newcommand{\shl}{\textless$\!$\textless\xspace}
+\newcommand{\shr}{\textgreater$\!$\textgreater$\!$\textgreater\xspace}
+\newcommand{\ashr}{\textgreater$\!$\textgreater\xspace}
+
+
+\begin{document}
+
+\firstpage
+
+\partnerpage
+
+
+\newpage
+\tableofcontents
+
+\newpage
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{Document Control}
+
+\begin{tabular}{*{3}{|p{.3\textwidth}}|}\hline
+\centering{\bf Version} &
+\centering{\bf Status} &
+\centering{\bf Date}\tabularnewline\hline
+\centering{0.1} & \centering{Document outline} & \centering{27 January 2014} \tabularnewline\hline
+\end{tabular}
+
+\clearpage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Executive Summary}
+TODO
+
+
+\section{Overview}
+\input{tboverview}
+
+
+
+\clearpage
+
+\bibliographystyle{plain}
+\bibliography{../bib/trainbenchmark}
+
+\end{document}
