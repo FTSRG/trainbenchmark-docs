@@ -51,7 +51,7 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 
 \subsubsection{Description} The \textit{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{poslength-sparql}.
 
-\subsubsection{Goal} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, although a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM}, and it concludes that the string comparison algorithm dominates the query time.
+\subsubsection{Goal} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM}, and it concludes that the string comparison algorithm dominates the query time.
 
 \lstset{language=SQL,morekeywords={PREFIX,FILTER,OPTIONAL,BOUND}}
 
@@ -80,7 +80,55 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{RouteSensor}
 
-The \textit{RouteSensor} query is discussed in~\autoref{routesensor}.
+\subsubsection{Description}
+
+The \textit{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{routesensor-sparql}.
+
+\subsubsection{Goal} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
+
+\subsubsection{Remark} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{routesensor-sparql-nac}.
+
+\begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:routesensor-sparql]
+PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?xSensor
+WHERE
+{
+    ?xRoute rdf:type base:Route .
+    ?xSwitchPosition rdf:type base:SwitchPosition .
+    ?xSwitch rdf:type base:Switch .
+    ?xSensor rdf:type base:Sensor .
+    ?xRoute base:Route_switchPosition ?xSwitchPosition .
+    ?xSwitchPosition base:SwitchPosition_switch ?xSwitch .
+    ?xSwitch base:TrackElement_sensor ?xSensor .
+
+    FILTER NOT EXISTS {
+        ?xRoute ?Route_routeDefinition ?xSensor .
+    } .
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=SPARQL 1.0 formula for the NAC part of the RouteSensor query, label=lst:routesensor-sparql-nac]
+    OPTIONAL {
+        ?xRoute ?Route_routeDefinition ?xSensor .
+        FILTER (sameTerm(base:Route_routeDefinition, ?Route_routeDefinition))
+    } .
+    FILTER (!bound(?Route_routeDefinition))
+\end{lstlisting}
+
+\picScale{trainbenchmark-routesensor}{The RouteSensor query's pattern}{0.4}
+
+\subsubsection{Relational algebraic form}  The \textit{RouteSensor} query can be formalized in relational algebra as:
+
+\begin{align*}
+& \pi_{\mathit{Route}} \big( \\
+& \quad \mathit{Route\_switchPosition} \naturaljoin \mathit{SwitchPosition\_switch} \naturaljoin \\
+& \quad \mathit{TrackElement\_sensor} \antijoin \mathit{Route\_routeDefinition} \\
+& \big)
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{SignalNeighbor}
