@@ -2,7 +2,7 @@
 % This document can be formatted only with pdflatex.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12pt,twoside,a4paper]{article}
+\documentclass[12pt,twoside,a4paper]{report}
 \usepackage[hyphens]{url}
 \usepackage{hyperref}
 
@@ -164,14 +164,17 @@
 \pagenumbering{arabic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Executive Summary}
+\chapter*{Executive Summary}
 TODO
 
 
-\section{Overview}
 \input{tboverview}
-
-\input{queries}
+\input{introduction}
+\input{description}
+\input{specification}
+\input{implementation}
+\input{results}
+\input{summary}
 
 
 \clearpage

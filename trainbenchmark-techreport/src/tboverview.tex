@@ -1,3 +1,5 @@
+\chapter{Overview}
+
 Scalability issues in model-driven engineering arise due to the increasing
 complexity of modeling workloads. This complexity comes from two main factors:
 (i) \emph{instance model sizes} are exhibiting a tremendous growth as the
@@ -15,7 +17,7 @@ response time (i.e. execution time for a specific operation such as validation
 or transformation) than throughput (i.e. the amount of parallel transactions).
 
 
-\paragraph{Overview}
+\section{Overview}
 To address this challenge, the Train Benchmark \cite{TB:SCP2013,TBwebsite} is a macro
 benchmark that aims to measure batch and incremental query evaluation
 performance, in a scenario that is specifically modeled after \emph{model
@@ -50,7 +52,7 @@ represents the time that the user must wait to start to use the tool; (2)
 user spent waiting for the tool validation.
 
 
-\paragraph{Instance models}
+\section{Instance models}
 The Train Benchmark uses a domain-specific model of a railway system that
 originates from the MOGENTES EU FP7 project, where both the metamodel and the
 well-formedness rules were defined by railway domain experts. This domain
@@ -75,7 +77,7 @@ benchmark, which are reported, and can be corrected during the edit phase. The
 initial number of constraint violating elements are low (<1\% of total
 elements).
  
-\paragraph{Queries and transformations}
+\section{Queries and transformations}
 Queries are defined informally in plain text (in a tool independent way) and
 also formalized using the standard OCL language as a reference implementation
 (available on the benchmark website \cite{TBwebsite}). The queries range from
@@ -94,7 +96,7 @@ constant) which increases the number of erroneous elements. An edit operation
 only modify single model elements at once - more complex model manipulation is
 modelled as a series of edits.
 
-\paragraph{Evaluation of measurements}
+\section{Evaluation of measurements}
 The Train Benchmark defines a Java-based framework and application programming
 interface that enables the integration of additional metamodels, instance
 models, query implementations and even new benchmark scenarios (that may be

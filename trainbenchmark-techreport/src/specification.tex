@@ -1,15 +1,10 @@
+\chapter{Train Benchmark Technical Specifications}
 
-% For a basic description of the transformations, see https://trac.inf.mit.bme.hu/Ontology/wiki/TrainBenchmarkTODO#a20120712
-% user
-%   result set size = ~10 (small constant)
-%   #edit = ~10 (small constant)
-% modify:
-%   - introduce errors (SwitchSensor, RouteSensor) or eliminates errors (PosLength, SignalNeighbor) with the modification of random instance elements
-%   - can modify any instance elements, not only elements from the result set
-%   - edit phase: 10*(edit, check)
-%   - timeout: 10 minutes (total time) (user's coffee break)
+\section{Original Version}
 
-\section{\tb{} Queries}
+\subsection{Phases}
+
+\subsection{Queries}
 
 \picSmall{trainbenchmark-metamodel}{The metamodel of the \tb{}}
 
@@ -17,7 +12,7 @@ In the following, we present the queries defined in the \tb{}. %These queries we
 
 We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query. The metamodel of the railroad system is shown in \figref{trainbenchmark-metamodel}.
 
-\subsection{Relational Schemas}
+\subsubsection{Relational Schemas}
 
 For formulating the queries in relational algebra we define the following relational schemas for representing the vertices (objects) in the graph (instance model).
 
@@ -42,16 +37,16 @@ The edges (relationships) are represented with the following relational schemas:
   \item $ \mathit{TrackElement\_connectsTo}\left(\mathit{TrackElement}, \mathit{TrackElement}\right) $
 \end{itemize}
 
-\subsection{Graph Patterns}
+\subsubsection{Graph Patterns}
 
 Blue rectangles and arrows mark simple constraints, while red rectangles and arrows represent negative application conditions. The query return with the nodes in hollow blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{PosLength}
+\subsubsection{PosLength}
 
-\subsubsection{Description.} The \textit{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{poslength-sparql}.
+\paragraph{Description.} The \textit{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{poslength-sparql}.
 
-\subsubsection{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM}, and it concludes that the string comparison algorithm dominates the query time.
+\paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM}, and it concludes that the string comparison algorithm dominates the query time.
 
 \lstset{language=SQL,morekeywords={PREFIX,FILTER,OPTIONAL,BOUND}}
 
@@ -73,18 +68,18 @@ WHERE
 
 \picScale{trainbenchmark-poslength}{The PosLength query's pattern}{0.4}
 
-\subsubsection{Relational algebraic form} The \textit{PosLength} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textit{PosLength} query can be formalized in relational algebra as:
 
 $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \left( \mathit{Sensor} \right) \right) $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{RouteSensor}
+\subsubsection{RouteSensor}
 
-\subsubsection{Description.} The \textit{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{routesensor-sparql}.
+\paragraph{Description.} The \textit{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{routesensor-sparql}.
 
-\subsubsection{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
+\paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
 
-\subsubsection{Remark.} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{routesensor-sparql-nac}.
+\paragraph{Remark.} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{routesensor-sparql-nac}.
 
 \begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:routesensor-sparql]
 PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
@@ -119,7 +114,7 @@ WHERE
 
 \picScale{trainbenchmark-routesensor}{The RouteSensor query's pattern}{0.4}
 
-\subsubsection{Relational algebraic form}  The \textit{RouteSensor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.}  The \textit{RouteSensor} query can be formalized in relational algebra as:
 
 \begin{align*}
 & \pi_{\mathit{Route}} \big( \\
@@ -129,11 +124,11 @@ WHERE
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{SignalNeighbor}
+\subsubsection{SignalNeighbor}
 
-\subsubsection{Description.} The \textit{SignalNeighbor} well-formedness constraint requires that routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{trainbenchmark-signalneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{signalneighbor-sparql}.
+\paragraph{Description.} The \textit{SignalNeighbor} well-formedness constraint requires that routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{trainbenchmark-signalneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{signalneighbor-sparql}.
 
-\subsubsection{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
+\paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
 
 \begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:signalneighbor-sparql]
 PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
@@ -172,7 +167,7 @@ WHERE
 
 \picScale{trainbenchmark-signalneighbor}{The SignalNeighbor query's pattern}{0.4}
 
-\subsubsection{Relational algebraic form} The \textit{SignalNeighbor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textit{SignalNeighbor} query can be formalized in relational algebra as:
 
 \begin{align*}
 & \pi_{\mathit{Route\_entry.Route}} \big( \sigma_{\mathit{Route\_entry.Route} \neq \mathit{Route\_routeDefinition_2.Route}} \big( \\
@@ -183,11 +178,11 @@ WHERE
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{SwitchSensor}
+\subsubsection{SwitchSensor}
 
-\subsubsection{Description.} The \textit{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{switchsensor-sparql}.
+\paragraph{Description.} The \textit{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{switchsensor-sparql}.
 
-\subsubsection{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used the \textit{RouteSensor} and the \textit{SignalNeighbor} queries.
+\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used the \textit{RouteSensor} and the \textit{SignalNeighbor} queries.
 
 \begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:switchsensor-sparql]
 PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
@@ -210,6 +205,32 @@ WHERE
 
 \picScale{trainbenchmark-switchsensor}{The SwitchSensor query's pattern}{0.4}
 
-\subsubsection{Relational algebraic form} The \textit{SwitchSensor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textit{SwitchSensor} query can be formalized in relational algebra as:
 
 $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
+
+
+
+\subsection{Transformations}
+\subsection{Instance Models}
+\subsection{Generation}
+
+\section{Extended version}
+\subsection{Metrics}
+\subsection{Additional Queries, Operations}
+\subsection{Complex Analysis}
+
+
+
+
+
+% For a basic description of the transformations, see https://trac.inf.mit.bme.hu/Ontology/wiki/TrainBenchmarkTODO#a20120712
+% user
+%   result set size = ~10 (small constant)
+%   #edit = ~10 (small constant)
+% modify:
+%   - introduce errors (SwitchSensor, RouteSensor) or eliminates errors (PosLength, SignalNeighbor) with the modification of random instance elements
+%   - can modify any instance elements, not only elements from the result set
+%   - edit phase: 10*(edit, check)
+%   - timeout: 10 minutes (total time) (user's coffee break)
+
