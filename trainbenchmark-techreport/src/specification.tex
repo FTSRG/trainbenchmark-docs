@@ -4,13 +4,28 @@
 
 \subsection{Phases}
 
+
+\subsubsection{Init}
+
+\subsubsection{Load}
+
+\subsubsection{Check}
+
+$\mathit{check}_i$
+
+\subsubsection{Modify}
+
+$\mathit{modify}_i$
+
+\subsection{Metamodel}
+
+The metamodel of the railroad system is shown in \figref{trainbenchmark-metamodel}.
+
 \subsection{Queries}
 
 \picSmall{trainbenchmark-metamodel}{The metamodel of the \tb{}}
 
-In the following, we present the queries defined in the \tb{}. %These queries were widely used during the development of \iqd{}, both for functional tests and performance benchmarks of different query engines, including \iqd{} itself. 
-
-We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query. The metamodel of the railroad system is shown in \figref{trainbenchmark-metamodel}.
+In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
 \subsubsection{Relational Schemas}
 
@@ -210,10 +225,28 @@ WHERE
 $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 
-
 \subsection{Transformations}
+
+
+\subsubsection{PosLength}
+
+
+\subsubsection{RouteSensor}
+
+
+\subsubsection{SignalNeighbor}
+
+
+\subsubsection{SwitchSensor}
+
+
+
+
 \subsection{Instance Models}
-\subsection{Generation}
+
+
+
+\subsection{Generator}
 
 \section{Extended version}
 \subsection{Metrics}

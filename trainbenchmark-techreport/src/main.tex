@@ -18,7 +18,10 @@
 \usepackage{latexsym,epsf,epsfig}
 \usepackage{rotating,amsmath,amsfonts,amssymb,subfigure}
 
-\usepackage{times}
+%\usepackage{times}
+\usepackage{zi4} % typewriter 
+\usepackage{palatino}
+
 \usepackage{listings}
 \usepackage{longtable}
 \usepackage{datetime}
@@ -26,7 +29,6 @@
 \usepackage{tabularx}
 
 \usepackage{adjustbox}
-\include{command-definitions}
 
 \newlength{\hsbw}
 \newcommand{\comment}[1]{\mbox{}\par\vspace{0.25in}%
@@ -111,6 +113,8 @@
   rulesepcolor=\color{black},
   commentstyle=\color{gray45}
 }
+
+\include{command-definitions}
 
 \lstnewenvironment{Java} {\lstset{
   basicstyle=\fontsize{8}{10}\ttfamily,xleftmargin=12pt,
