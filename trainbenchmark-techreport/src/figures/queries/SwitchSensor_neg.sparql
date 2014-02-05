@@ -1,0 +1,10 @@
+SELECT distinct ?xSwitch
+WHERE
+{
+  ?xSwitch rdf:type base:Switch .
+
+  FILTER NOT EXISTS { 
+    ?xSensor rdf:type base:Sensor .
+    ?xSwitch base:sensor ?xSensor .
+  } .
+}

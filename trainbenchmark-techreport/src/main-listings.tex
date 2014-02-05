@@ -1,0 +1,165 @@
+\lstdefinelanguage{iqpl}
+{morekeywords={@Interpretation,@Trigger,count,sum,max,min,avg,shareable,trigger,guard,eval,
+asmfunction,rule,gtrule,if,do,choose,forall,iterate,print,println,log,apply,
+    entity,relation,supertypeOf,subtypeOf,typeOf,instanceOf,try,else,pattern,
+    precondition,postcondition,action,neg,find,import,namespace,in,below,out,
+    inout,let,multiplicity,many_to_one,many_to_many,one_to_many,one_to_one,
+    isAggregation,inverse,seq,update,ref,true,false,call,machine,or,
+    undef,rename,new,del,delete,move,copy,value,setValue,setFrom,setTo,with,when,check,change,appear,disappear,cdrule,transformation,common,from,to,toInteger},
+ sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+ morestring=[b]{"},
+}
+\newcommand{\sourceIQPL}[1]
+{
+\lstset{
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+language=iqpl,
+escapeinside={(*@}{@*)}
+}
+
+\lstinputlisting{#1}
+}
+
+\newcommand{\sourceDRL}[1]
+{
+\lstset{
+morekeywords={query, end, package, not, memberOf, contains},
+sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+morestring=[b]{"},
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+escapeinside={(*@}{@*)}
+}
+
+\lstinputlisting{#1}
+}
+
+\newcommand{\sourceOCL}[1]
+{
+\lstset{
+morekeywords={invariant, and, or, implies, not, oclIsKindOf, self, forAll, exists, oclAsType, includes, allInstances},
+sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+morestring=[b]{"},
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+escapeinside={(*@}{@*)}
+}
+
+\lstinputlisting{#1}
+}
+
+\newcommand{\sourceSPARQL}[1]
+{
+\lstset{
+morekeywords={SELECT, WHERE, OPTIONAL, FILTER, NOT, EXISTS, sameTerm, bound},
+sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+morestring=[b]{"},
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+escapeinside={(*@}{@*)}
+}
+
+\lstinputlisting{#1}
+}
+
+\newcommand{\sourceJava}[1]
+{
+\lstset{
+language=java,
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+escapeinside={(*@}{@*)}
+}
+\lstinputlisting{#1}
+}
+
+\newcommand{\sourceRDF}[1]
+{
+\lstset{
+morekeywords={prefix},
+sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+morestring=[b]{"},
+backgroundcolor=\color{listinggray},
+basicstyle=\scriptsize\ttfamily,
+commentstyle=\itshape\color{commentcolor}\ttfamily,
+stringstyle=\color{stringcolor}\ttfamily,
+frameround=tttt,
+captionpos=b,
+keywordstyle=\color{keywordcolor}\bfseries\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt,
+escapeinside={(*@}{@*)}
+}
+\lstinputlisting{#1}
+}
+
+\newcommand{\alignListing}{\lstset{xleftmargin=5mm, framexleftmargin=5mm, numbers=left}}
+
+%\lstset{keepspaces=true}
+\lstset{basicstyle=\ttfamily\upshape}
+\lstset{flexiblecolumns=true}
+\lstdefinelanguage{viatra} {morekeywords={@Trigger,
+trigger,asmfunction,rule,gtrule,if,do,choose,forall,iterate,print,println,log,apply,
+    entity,relation,supertypeOf,subtypeOf,typeOf,instanceOf,try,else,pattern,
+    precondition,postcondition,action,neg,find,import,namespace,in,below,out,
+    inout,let,multiplicity,many_to_one,many_to_many,one_to_many,one_to_one,
+    isAggregation,inverse,seq,update,ref,true,false,call,machine,or,
+    undef,rename,new,del,delete,move,copy,setValue,setFrom,setTo,with,
+    then},
+ sensitive=true,
+ morecomment=[l]{//},
+ morecomment=[s]{/*}{*/},
+ morestring=[b]{"},
+}
+
+%\lstset{backgroundcolor=\color{listinggray}}
+\lstset{basicstyle=\scriptsize\ttfamily}
+\lstset{commentstyle=\itshape\ttfamily}
+\lstset{stringstyle=\ttfamily}
+\lstset{frameround=tttt} \lstset{captionpos=b}
+\lstset{keywordstyle=\bfseries\ttfamily}
+\lstset{showstringspaces=false}
+\lstset{escapeinside={(*@}{@*)}}
+\lstset{language=viatra}

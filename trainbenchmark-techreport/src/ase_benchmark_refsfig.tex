@@ -1,0 +1,101 @@
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, thick,main
+	  node/.style={circle,fill=black,draw,font=\sffamily\Large\bfseries,inner
+	  sep=0pt, minimum width=4pt}]
+	
+	  \node[regular polygon, regular polygon sides=5, minimum
+	  size=3cm,name=x,fill=white, draw=none] at (0,0) {}; 
+	  \foreach \corner in {1,2,...,5}
+	  	  \ifthenelse{\equal{\corner}{1}}{
+			\node[fill=white,circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	}{
+			\node[circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	};
+	
+	  \path[every node/.style={font=\sffamily\small}]
+	    (1) edge node {} (2)
+	    (2) edge node {} (3)
+	    (3) edge node {} (4)
+	    (4) edge node {} (5)
+	  ;
+	\end{tikzpicture}
+	\hspace{3mm}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,thick,main
+	  node/.style={circle,fill=black,draw,font=\sffamily\Large\bfseries,inner
+	  sep=0pt, minimum width=4pt}]
+	
+	  \node[regular polygon, regular polygon sides=5, minimum
+	  size=3cm,name=x,fill=white, draw=none] at (0,0) {}; 
+	  \foreach \corner in {1,2,...,5}
+	  	  \ifthenelse{\equal{\corner}{1}}{
+			\node[fill=white,circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	}{
+			\node[circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	};
+	
+	  \path[every node/.style={font=\sffamily\small}]
+	    (1) edge node {} (2)
+	    (2) edge node {} (3)
+	    (3) edge node {} (4)
+	    (4) edge node {} (5)
+	
+	    (1) edge node {} (3)
+	  ;
+	\end{tikzpicture}
+	\hspace{3mm}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+	  thick,main
+	  node/.style={circle,fill=white,draw,font=\sffamily\Large\bfseries,inner
+	  sep=0pt, minimum width=4pt}]
+	
+	  \node[regular polygon, regular polygon sides=5, minimum
+	  size=3cm,name=x,fill=white, draw=none] at (0,0) {}; 
+	  \foreach \corner in {1,2,...,5}
+	  	  \ifthenelse{\equal{\corner}{1}}{
+			\node[fill=white,circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	}{
+			\node[circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	};
+	
+	  \path[every node/.style={font=\sffamily\small}]
+	    (1) edge node {} (2)
+	    (2) edge node {} (3)
+	    (3) edge node {} (4)
+	    (4) edge node {} (5)
+	
+	    (1) edge node {} (3)
+	    (2) edge node {} (4)
+	  ;
+	        
+	\end{tikzpicture}
+	\hspace{3mm}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+	  thick,main
+	  node/.style={circle,fill=black,draw,font=\sffamily\Large\bfseries,inner
+	  sep=0pt, minimum width=4pt}]
+	
+	  \node[regular polygon, regular polygon sides=5, minimum
+	  size=3cm,name=x,fill=white, draw=none] at (0,0) {}; 
+	  \foreach \corner in {1,2,...,5}
+	  	  \ifthenelse{\equal{\corner}{1}}{
+			\node[fill=white,circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	}{
+			\node[circle,minimum width=12pt] (\corner) at (x.corner \corner){}
+	  	  	};
+	
+	  \path[every node/.style={font=\sffamily\small}]
+	    (1) edge node {} (2)
+	    (2) edge node {} (3)
+	    (3) edge node {} (4)
+	    (4) edge node {} (5)
+	    (1) edge node {} (3)
+	    (2) edge node {} (4)
+	    (3) edge node {} (5)
+	  ;
+	  
+	  
+	\end{tikzpicture}
+	\caption{\codeCap{Refs} patterns}
+	\label{fig:aserefs}
+\end{figure}

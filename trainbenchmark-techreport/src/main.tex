@@ -2,6 +2,7 @@
 % This document can be formatted only with pdflatex.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\pdfminorversion=7
 \documentclass[12pt,twoside,a4paper]{report}
 \usepackage[hyphens]{url}
 \usepackage{hyperref}
@@ -16,7 +17,7 @@
 
 \usepackage[english]{babel}
 \usepackage{latexsym,epsf,epsfig}
-\usepackage{rotating,amsmath,amsfonts,amssymb,subfigure}
+\usepackage{rotating,amsmath,amsfonts,amssymb}
 
 \usepackage{times}
 
@@ -25,6 +26,18 @@
 \usepackage{datetime}
 \usepackage{xcolor}
 \usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric}
+\usepackage{amsfonts}
+\usepackage{xcolor,colortbl}
+% \usepackage[labelformat=simple]{subfig}
+% \usepackage{subcaption}
+% \usepackage{subfloat}
+\usepackage{caption}
+\usepackage{subcaption}
+% \usepackage{subfloat} % obsolete package
 
 \usepackage{adjustbox}
 
@@ -80,6 +93,7 @@
 \newcolumntype{d}[1]{D{.}{.}{#1}}
 \newcommand{\code}[1]{{\texttt{#1}}}
 \newcommand{\codefoot}[1]{{\texttt{#1}}}
+\newcommand{\abs}[1]{|{#1}|}
 
 \usepackage{listings}
 \lstset{language=Java,basicstyle=\footnotesize,captionpos=b}
@@ -113,6 +127,7 @@
 }
 
 \include{command-definitions}
+\include{main-listings}
 
 \lstnewenvironment{Java} {\lstset{
   basicstyle=\fontsize{8}{10}\ttfamily,xleftmargin=12pt,
@@ -139,6 +154,23 @@
 \newcommand{\shl}{\textless$\!$\textless\xspace}
 \newcommand{\shr}{\textgreater$\!$\textgreater$\!$\textgreater\xspace}
 \newcommand{\ashr}{\textgreater$\!$\textgreater\xspace}
+
+
+\newcommand{\todo}[1]{\textbf{TODO:  }{#1}}
+% \newcommand{\defref}[1]{#1~(see~\ref{def:#1}, page~\pageref{def:#1})}
+% \newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tblref}[1]{Table~\ref{#1}}
+%\newcommand{\charef}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+% \newcommand{\subsecref}[1]{Section~\ref{#1}}
+%\newcommand{\appref}[1]{Appendix~\ref{#1}}
+% \newcommand{\appref}[1]{appendix$^{\ref{#1}}$}
+\newcommand{\concept}[1]{\emph{#1}\index{#1}\label{def:#1}}
+%\newcommand{\viatraemf}{\textsc{EMF-IncQuery}}
+% \newcommand{\viatraemf}{EMF-IncQuery}
+% \newcommand{\Viatra}{\textsc{Viatra2}}
+\newcommand{\incquery}{\textsc{EMF-IncQuery}}
+\let\codeCap\texttt
 
 
 \begin{document}
@@ -174,14 +206,17 @@ TODO
 \input{introduction}
 \input{description}
 \input{specification}
+\input{specification-met}
 \input{implementation}
+\input{implementation-met}
 \input{results}
+\input{results-met}
 \input{summary}
 
 
 \clearpage
 
 \bibliographystyle{plain}
-\bibliography{../bib/trainbenchmark}
+\bibliography{../bib/trainbenchmark,../bib/ase13}
 
 \end{document}

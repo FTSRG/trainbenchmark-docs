@@ -1,0 +1,25 @@
+SELECT distinct ?xRoute1
+WHERE {
+  ?xRoute1 rdf:type base:Route .
+  ?xSen1 rdf:type base:Sensor .
+  ?xRoute1 base:routeDefinition ?xSen1 .
+  ?xTE1 rdf:type base:TrackElement .
+  ?xTE1 base:sensor ?xSen1 .
+  ?xTE2 rdf:type base:TrackElement .
+  ?xTE1 base:connectsTo ?xTE2 .
+  ?xSen2 rdf:type base:Sensor .
+  ?xTE2 base:sensor ?xSen2 .
+  ?xSig rdf:type base:Signal .
+  ?xRoute1 base:exit ?xSig .
+  
+  ?xRouteX rdf:type base:Route .
+  ?xRouteX base:routeDefinition ?xSen2 .
+  FILTER ( ?xRouteX != ?xRoute1 )
+  
+  OPTIONAL { 
+           ?xRoute2 rdf:type base:Route .
+           ?xRoute2 base:routeDefinition ?xSen2 .
+           ?xRoute2 base:entry ?xSig .
+           } .
+  FILTER (!bound(?xRoute2))
+}

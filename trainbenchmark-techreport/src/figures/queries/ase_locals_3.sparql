@@ -1,0 +1,13 @@
+SELECT distinct ?xSeg1
+WHERE
+{
+  ?xSeg1 rdf:type base:Segment .
+  ?xSeg2 rdf:type base:Segment .
+  ?xSeg3 rdf:type base:Segment .
+  ?xSeg1 base:connectsTo ?xSeg2 .
+  ?xSeg2 base:connectsTo ?xSeg3 .
+  ?xSeg3 base:connectsTo ?xSeg1 .
+  ?xSeg2 base:connectsTo ?xSeg1 .
+  ?xSeg3 base:connectsTo ?xSeg2 .
+  ?xSeg1 base:connectsTo ?xSeg3 .
+}

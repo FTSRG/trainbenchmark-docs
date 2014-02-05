@@ -1,0 +1,12 @@
+pattern locals_3(Seg1) =
+{
+	Segment(Seg1);
+	Segment(Seg2);
+	Segment(Seg3);
+	Segment.connectsTo(Seg1,Seg2);
+	Segment.connectsTo(Seg2,Seg3);
+	Segment.connectsTo(Seg3,Seg1);
+	Segment.connectsTo(Seg2,Seg1);
+	Segment.connectsTo(Seg3,Seg2);
+	Segment.connectsTo(Seg1,Seg3);
+}

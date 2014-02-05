@@ -1,0 +1,109 @@
+
+\section{Extended Version}
+\subsection{Framework}
+\subsection{Architecture}
+\subsection{Services}
+\subsection{API}
+
+
+\subsection{Implementation Details}
+
+These query series are first defined in graph patterns and then formalized using
+a query language suited for the given tool. The presented query series
+were implemented using each model query technology mentioned in Sec
+\ref{sec:benchmark_overview}. In Fig.~\ref{fig:patterns} the sample
+implementation of the \code{locals\_3} query is depicted.
+
+\begin{figure*}[tp]
+\begin{center}
+	\centering
+    \begin{tabular}{c}
+	    \begin{subfigure}[t]{0.38 
+	    \textwidth}
+	        \centering
+	        {\alignListing
+	                  \sourceIQPL{figures/queries/ase_locals_3.eiq}
+	        }
+	        \caption{\incquery{} graph pattern}
+	        \label{fig:iqlocals3}
+		\end{subfigure}
+		
+		\\
+		
+		%~ %add desired spacing between images, e. g. ~, \quad, \qquad etc. 
+	    \begin{subfigure}[t]{0.38\textwidth}
+	        \centering
+	        {\alignListing
+	                  \sourceSPARQL{figures/queries/ase_locals_3.sparql}
+	        }
+	        \caption{SPARQL graph pattern}
+	        \label{fig:sparqllocals3}
+		\end{subfigure}
+	\end{tabular}
+	~ %add desired spacing between images, e. g. ~, \quad, \qquad etc. 
+    \begin{subfigure}[p]{0.56\textwidth}
+        \centering
+        {\alignListing
+                  \sourceJava{figures/queries/ase_locals_3.java}
+        }
+        \caption{Java code}
+        \label{fig:javalocals3}
+	\end{subfigure}
+
+  \caption{Pattern schemas for \codeCap{Locals\_3} query}
+  \label{fig:patterns}
+\end{center} 
+\end{figure*}
+	
+% \begin{figure*}[tp]
+% \begin{center}
+% 	\centering
+%     \begin{tabular}{c}
+% 	     \subfloat[\incquery{} pattern]
+% 	     {\alignListing
+% 		                  \sourceIQPL{../figures/queries/ase_locals_3.eiq}}
+% 
+% 			\\
+% 
+% 	     \subfloat[SPARQL pattern]
+% 	     {\alignListing
+% 	                   \sourceSPARQL{../figures/queries/ase_locals_3.sparql}}
+% 	\end{tabular}
+% 	~~~ %add desired spacing between images, e. g. ~, \quad, \qquad etc. 
+%     \subfloat[Java code]
+%     {\alignListing
+%                   \sourceJava{../figures/queries/ase_locals_3.java}}\quad
+%   \caption{Pattern schemas for \code{Locals_3} query}
+%   \label{fig:patterns2}
+% \end{center} 
+% \end{figure*}
+% 
+
+In the IncQuery Pattern Language \cite{IQlanguage} (\figref{fig:iqlocals3}), object constraints and reference constraints are used to describe the structure, and individuals matching the \code{Seg1} variable are returned.
+
+Using the SPARQL \cite{Sparql} notation (\figref{fig:sparqllocals3}), triples describe the same structural constraint, and the semantically equivalent query returns distinct matches of the \code{xSeg1} variable.
+
+The query function was also coded in Java (illustrated in \figref{fig:javalocals3}). The model is traversed by embedded iterations and for every \code{Segment} the connections are checked. The implementation does not contain any search plan specific optimization (i.e. the embedding order of \code{for} cycles is ad-hoc), but it cuts unnecessary search branches at the earliest possibility.  This coding style represents an experienced programmer, who writes good quality source code. This way, such Java implementation could be used as a baseline in the future, to compare multiple tools qualitatively.
+
+
+% [5/18/13 8:06:01 AM] Gábor Bergmann: On 5/18/13, at 7:27 AM, Ráth István wrote:
+% > de nincs mögöttük ennél egy fokkal okosabb implementáció?
+% a modell tulajdonságai (fokszámok, milyen élből mennyi van, stb.) alapján nem optimalizáltam, csak józan ésszel egymásba ágyazott ciklusokkal járom be
+% [5/18/13 8:06:33 AM] Gábor Bergmann: persze ha le lehet vágni egy ágat (pl. mert adott paraméterekre már megvan egy illeszkedés), akkor igyekszem azonnal levágni
+
+\section{tools}
+
+This benchmark was evaluated on three characteristically different query
+technologies:
+\begin{enumerate}
+  \item An imperative \emph{local search-based} approach implemented completely in Java, operating on EMF models
+  \item A declarative, \emph{incremental} approach based on the concepts of Rete nets as provided by the \incquery{} framework, operating on EMF models.
+  \item A declarative, \emph{black-box} execution engine as implemented in the
+  Sesame framework based on the SPARQL query specification language, operating on RDF models.
+\end{enumerate}
+
+Finally, we perform statistical correlation analysis against the
+data set generated from the execution of our benchmarks and the evaluation of our
+metrics.  
+
+

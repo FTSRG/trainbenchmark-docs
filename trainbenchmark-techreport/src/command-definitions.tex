@@ -1,7 +1,7 @@
 \newcommand{\tuple}[1]{\langle #1 \rangle}
 
 \newcommand{\picScale}[3]{
-	\begin{figure}[!htb]
+	\begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=#3]{figures/#1}
 		\caption{#2}
@@ -9,7 +9,7 @@
 	\end{figure}}
 
 \newcommand{\picCustom}[3]{
-	\begin{figure}[!htb]
+	\begin{figure}[Htb]
 		\centering
 		\begin{adjustbox}{max size={#3\textwidth}{\textheight}}
 			\includegraphics[scale=1.0]{figures/#1}
@@ -32,8 +32,8 @@
 \newcommand{\deltadifference}[1]{\parentheses{#1 \setminus \Delta #1}}
 \newcommand{\deltaunion}[1]{\parentheses{#1 \union \Delta #1}}
 \newcommand{\consequence}{\quad \Rightarrow \quad}
-\newcommand{\figref}[1]{\autoref{fig:#1}}
-\newcommand{\lstref}[1]{\autoref{lst:#1}}
+\newcommand{\figref}[1]{\autoref{#1}}
+\newcommand{\lstref}[1]{\autoref{#1}}
 \newcommand{\naturaljoin}{\bowtie}
 \newcommand{\antijoin}{\, \triangleright \,}
 
