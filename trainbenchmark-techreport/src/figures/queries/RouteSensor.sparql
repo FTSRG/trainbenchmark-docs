@@ -1,0 +1,6 @@
+OPTIONAL {
+  ?xRoute ?routeDefinition ?xSensor .
+  FILTER (sameTerm(base:routeDefinition, 
+                   ?routeDefinition))
+} .
+FILTER (!bound(?routeDefinition))
