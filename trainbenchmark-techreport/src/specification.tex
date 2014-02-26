@@ -167,15 +167,25 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
 
-% \paragraph{Remark.} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{lst:routesensor-sparql-nac}.
-
 \begin{figure}[Htb]
 \centering
 \begin{minipage}{0.5\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/RouteSensor_neg.sparql}}
   \caption{RouteSensor query in SPARQL}
-  \label{lst:routesensor-sparql}
+  \label{lst:routesensor-sparql-nac}
+\end{minipage}
+\end{figure}
+
+\paragraph{Remark.} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{lst:routesensor-sparql-nac10}.
+
+\begin{figure}[Htb]
+\centering
+\begin{minipage}{0.5\textwidth}
+  { \alignListing
+    \sourceSPARQL{figures/queries/RouteSensor.sparql}}
+  \caption{RouteSensor query in SPARQL 1.0}
+  \label{lst:routesensor-sparql-nac10}
 \end{minipage}
 \end{figure}
 

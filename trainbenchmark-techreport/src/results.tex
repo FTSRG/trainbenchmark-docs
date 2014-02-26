@@ -1,62 +1,18 @@
 \chapter{Benchmark Results}
-\section{Original Version}
-\subsection{Java}
-\subsection{OCL}
-\subsection{EMF-IncQuery}
-\subsection{Analysis}
 
+\section{Benchmarking Environment}
+\label{sec:environment}
 
-\section{Extended Version}
-\subsection{ASE Analysis}
-\subsection{Spider Chart}
+The benchmarking machine contains two quad core Intel Xeon L5420 (2.50GHz) CPU, 32 GBs of RAM and a SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64 bit Ubuntu 12.04 OS was installed with unnecessary services (like cron) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64 bit for Linux to satisfy specific tool dependencies.
 
+The performance measurements were independent from the others, i.e. for every tool only its codebase was loaded, and every measurement was run in a different JVM. Before the execution, OS file cache was cleared, and swap was disabled to avoid this kind of thrashing. Each testcase must be run within a specified time limit (15 minutes), otherwise it was killed.
 
+For a JVM, 25 GB heap limit was specified, but to compensate 64 bit pointers, OOPS (ordinary object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m -XX:+UseCompressedOops -Xmx25g}).
 
-\concept{Tools} of different technologies were selected to carry out the train
-benchmark and compare their efficiency on this model validation task.
-All tools are used in a single workstation configuration and accessed in single
-user mode. Most tools keep the database in memory (see \figref{table:tools}),
-for others RAM disk is created to alleviate the increased time because of disk
-access. Common in all tools that they preserve strong consistency. The list of
-tools with their version, data description language, query language,
-implementation language and incrementality can be found in \figref{table:tools}.
+In the benchmark all cases were run ten times, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
 
-\subsection{EMF tools}
-Plain \concept{Java} was choosen as the reference imlementation, although it
-does not provide declarative query definition. The benchmark highlights how it
-performs compared to the tested tools.
-
-OCL \cite{omg-ocl} is a widely used constraint language, which can be used also
-as a query language. \concept{Eclipse OCL} \cite{EclipseOCL} is used to evaluate
-these constraints over an EMF metamodel. In the benchmark, the latest code
-generation (CG) based approach \cite{ocl-cg} was measured besides the original
-implementation.
-
-Incremental OCL query evaluation can be achieved using the \concept{OCL Impact
-Analyzer} \cite{ocl-ia} from the Eclipse OCL project. During EMF modifications
-it looks for possible context objects that could change the match set, and OCL
-re-evaluation can be executed only for those objects. As it is intended only for
-incremental use, Eclipse-OCL is used for batch mode. (Batch mode is required for
-the benchmark because modifications are based on batch results.)
-
-\todo{UML Analyzer}
-
-\concept{EMF-IncQuery} \cite{models10} is an Eclipse Modeling project that
-provides incremental query evaluation using RETE \cite{rete} nets. Queries can
-be written in its graph pattern based query language (IncQuery Pattern Language,
-IQPL \cite{iqpl}), which is evaluated over EMF models.
-
-Incremental query evaluation is also supported by the \concept{Drools}
-\cite{Drools} rule engine developed by Red Hat. It is based on a variant of RETE \cite{rete}
-(object-oriented RETE). Queries can be formalized using its own rule description
-language. Queries can be constructed by naming the ''when'' part of rules and
-acquiring their matches.
-
-%  \concept{Praxis} \cite{praxis} implements an operation-based model checker.
-% It translates the instance model and modifications into prolog axioms as a
-% series of edit operations. Queries are formalized in SWI-Prolog using the
-% provided library.
-
+\section{Tools}
+The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph-pattern like query language, or some custom solution.
 
 \begin{table}[Hh]
 \includegraphics[width=\columnwidth]{figures/tools.pdf}
@@ -64,126 +20,39 @@ acquiring their matches.
 \label{table:tools}
 \end{table}
 
-\subsection{SPARQL engines}
-SPARQL engines are query engines, used to answer graph pattern queries over
-ontologies. Basically they perform queries over the raw dataset, but when
-(RDF/RDFS or OWL) inferencing is switched on, they can work on the inferred
-graph too.
+\subsection{Java}
+An imperative \emph{local search-based} approach was implemented in Java, operating on \emph{Eclipse Modeling Framework (EMF)}~\cite{EMF} models. Queries are implemented as Java functions, traversing a model without any search plan optimization, but they cut unnecessary search branches at the earliest possibility.
 
-\concept{Pellet} \cite{Pellet} is one of the state of the art reasoners
-supporting OWL2 (with direct semantics) and SWRL language reasoning. SPARQL
-queries can be executed using the Jena interface. Incremental reasoner is
-available, however incremental query engine is not, so it can not be utilized
-during the second check.
+\subsection{Eclipse OCL}
 
-\concept{Jena} \cite{Jena} defines a standard API for managing RDF or OWL
-ontologies, manipulating and querying them. It has a custom in-memory RDF
-inferencing engine which is tested.
+The OCL~\cite{OCL} language is commonly used for querying EMF model instances in validation frameworks. It is a standardized navigation-based query language, applicable over a range of modeling formalisms. Taking advantage of the expressive features and wide-spread adoption of this query language, the project Eclipse OCL~\cite{EclipseOCL} provides a powerful query interface that evaluates such expressions over EMF models.
 
-\concept{Sesame} \cite{sesame} is another widely used API created primarily for
-RDF model editing, querying and storing. It has its own RDFS inferencer based on
-forward chaining, and part of the inferred model can be retrieved using the
-SPARQL language. Note that Open Virtuoso, Stardog and Allegro Graph use this API
-with their own storage and query engine implementation.
+\subsection{OCL Impact Analyser}
+The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\concept{Open Virtuoso} \cite{openvirtuoso} is the open source version of the
-Virtuoso database engine. It supports unified RDF and RDB storage and SPARQL/SQL
-query answering. This engine is widely used as an RDF engine, for example it
-backs DBpedia (the RDF version of Wikipedia) and provides public SPARQL access
-point to it.
+\subsection{EMF-IncQuery}
 
-\concept{Stardog} \cite{stardog} is a fast, lightweight, commercial RDF database
-for mission-critical apps (as its website describes). It uses SPARQL as query
-language, RDF or OWL as model store and Pellet for inferencing.
+EMF-IncQuery~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using RETE~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL \cite{iqpl}), which is evaluated over EMF models.
 
-\concept{Allegro Graph} \cite{allegrograph} is a high performance persistent
-graph database. It supports RDFS++ reasoning and SPARQL query answering. It uses
-efficient memory utilization in combination with disk-based storage, enabling it
-to scale to billions of quads while maintaining superior performance. As other
-tools use in-memory backends, the data directory is put into an in-memory
-filesystem during the benchmark.
+\subsection{Sesame}
 
-\concept{4store} \cite{harris20094store} is a distributed RDF database, which
-can evaluate SPARQL queries. The tool is evaluated in a single machine
-environment using the Sesame API. This way, the measuring application is
-communicated using the SPARQL protocol with the 4s-httpd, which is connected to
-the local 4s-backend. Although distributed query answering is supported, 4store
-doesn't offer inferencing because of performance reasons.
+Sesame gives an API specification for many tools, and also provides its own implementation. The tool evaluates queries over RDF that are formulated as SPARQL \cite{Sparql} graph patterns.
 
-\subsection{Relational Databases}
-Relational databases are the most widely used technologies for storing and
-querying data, even for graph based applications (like OO software). MemSQL is
-an in-memory implementation, but it is a rather new technology and for now
-doesn't support the necessary subset of SQL to formulate the constraints.
-Instead \concept{MySQL} \cite{mysql} was used configured to work as an in-memory
-engine. The whole benchmark was adapted to relational databases, without
-starting from EMF or using any object-relational mapping technique.
+% \subsection{Drools}
+% Incremental query evaluation is also supported by the \concept{Drools}
+% \cite{Drools} rule engine developed by Red Hat. It is based on a variant of RETE \cite{rete}
+% (object-oriented RETE). Queries can be formalized using its own rule description
+% language. Queries can be constructed by naming the ''when'' part of rules and
+% acquiring their matches.
 
 \subsection{Graph Database}
-RDF is a graph based structure in itself, but more general graph databases exist
-like Neo4j \cite{neo4j}. The data model is based on graphs, where any node or
-arc can be labeled. Cypher can be used to query such labeled graphs using its
-own graph pattern notation. This engine also uses disk for data storing, so
-memdisk is created during the benchmark.
-
-\subsection{Benchmark environment and measurement framework}
-
-In order to measure tool efficiency instead of some bottlenecks (e.g. the lack
-of memory) or transient effects (like random CPU hogs), we payed attention to
-the hardware-software environment.
-The benchmark was executed on a physical machine that contains two quad core
-Intel Xeon L5420 CPU ($2.50$~GHz), $32$~GBs of RAM. $64$ bit Ubuntu 12.04 OS
-with OpenJDK JVM version 1.6.0\_24 was used. To avoid external influences, such
-as swapping, trashing or parallel software execution, swap support, and
-unnecessary operating system services (like cron) were turned off, and disk
-caches were cleared between executions.
-Similarly, to avoid Java \emph{garbage collection}, an extra large heap limit
-($15$~GB) was set.
-
-Before acquiring memory usage (free heap space) from the JVM, GC calls were
-triggered five times to sweep unfreed objects from the RAM.
-The time of each phase was recorded with millisec precision and recorded to CSV
-format for later offline evaluation.
-
-To measure the scalability of the tools the implemented queries were executed on
-a set of generated models between sizes $30$k and $14$M model elements. Each
-total time was limited to $12$ minutes.
-
-To make the performance measurements of a tool for a given query-model pair was
-independent from the others, every measurement was run in a different JVM. This
-large degree of isolation was required to reduce the effects of complex interference
-between queries and instance models.
-
-
-\subsection{Measurement methodology}
-Execution times were recorded using the \emph{java.lang.System.nanoTime()}
-function, while memory usage data has been recorded in separate runs using the
-\emph{java.lang.Runtime} class. At the tools, where external server is needed
-(e.g Open Virtuoso and MySQL) a memory usage of the external process was also
-measured using a system call to the OS, that returns the resident set size (RSS)
-of the process memory.
-
-To minimize the transient effects of the JVM and OS, that influence the
-execution time, all benchmark series was executed ten times and afterwards the
-results were noise filtered. We estimated an error model of the measured values:
-due to transient effects the measured value everytime increases and never
-decreases. We consider the three smallest value of the ten measured values to be
-valid measurement results and calculated the average of them. To minimize the
-transient effects of Java memory management we execute several garbage collector
-invocations before the measurement is done.
-
-TODO: timeout 10 min.
-
-% összes tool
-
-We present the benchmark results in the following two subsections. First, the
-global outcome will be shown, where all the tools will take into account.
-Afterwards, based on this results the most relevant tools and cases will be
-selected and a detailed presentation of our results will be shown.
-
+RDF is a graph based structure in itself, but more general graph databases exist like Neo4j \cite{neo4j}. The data model is based on graphs, where any node or arc can be labeled. Cypher can be used to query such labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so memdisk is created during the benchmark.
 
 \section{Original version}
-\subsection{Measurement Results}\label{sec:results}
+
+
+\subsection{Measurement Results}
+\label{sec:results}
 
 The measurement results of the benchmark is displayed on
 \autoref{fig:trainbenchmark-diagrams}. These diagrams show the batch query

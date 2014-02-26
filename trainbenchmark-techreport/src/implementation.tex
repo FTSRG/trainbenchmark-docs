@@ -6,6 +6,19 @@
 \subsection{Services}
 \subsection{API}
 
+\subsection{time meas}
+
+To obtain faithful execution times, we implemented a benchmarking framework,
+which accounted for the time measurements with nanosec precision (that can have
+less accuracy!), and the clear separation of phases enforced by the defined
+interfaces. These model loading and querying functions were implemented using
+functionally equivalent calls of a given tool. See Table~\ref{table:tools} for
+the model management format and query language of the benchmarked tools. The
+benchmarks were realized as Java applications.
+
+\subsection{memory meas}
+Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM.
+
 \todo{+init +destroy, getmemusage, getbmr, \ldots}
 Before every test
 there is an unmeasured initialization phase. Environment initialization
