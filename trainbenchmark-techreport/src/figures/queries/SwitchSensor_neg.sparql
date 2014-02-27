@@ -1,6 +1,4 @@
-SELECT distinct ?xSwitch
-WHERE
-{
+SELECT DISTINCT ?xSwitch WHERE {
   ?xSwitch rdf:type base:Switch .
 
   FILTER NOT EXISTS { 

@@ -1,6 +1,4 @@
-SELECT distinct ?xSeg1
-WHERE
-{
+SELECT DISTINCT ?xSeg1 WHERE {
   ?xSeg1 rdf:type base:Segment .
   ?xSeg2 rdf:type base:Segment .
   ?xSeg3 rdf:type base:Segment .

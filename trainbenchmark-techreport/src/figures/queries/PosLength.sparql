@@ -1,5 +1,4 @@
-SELECT distinct ?xSegment
-WHERE {
+SELECT DISTINCT ?xSegment WHERE {
   ?xSegment rdf:type base:Segment .
   ?xSegment base:length ?xLength .
 

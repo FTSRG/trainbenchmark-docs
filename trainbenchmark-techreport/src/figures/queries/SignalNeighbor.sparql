@@ -1,5 +1,4 @@
-SELECT distinct ?xRoute1
-WHERE {
+SELECT DISTINCT ?xRoute1 WHERE {
   ?xRoute1 rdf:type base:Route .
   ?xSen1 rdf:type base:Sensor .
   ?xRoute1 base:routeDefinition ?xSen1 .
