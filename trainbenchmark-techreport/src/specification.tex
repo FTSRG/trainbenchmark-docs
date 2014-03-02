@@ -387,40 +387,98 @@ In the edit phase the program modifies ten percent of the elements of the result
 \tblref{table:modify_type}. displays the effect of model changes to the result set size, and the type of edit operations (add, update, delete).
 
 \todo{táblázat design}
-\begin{table}[Htb]
+\begin{table}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{figures/instance/modify_type-crop.pdf}
 \caption{Modification type for the queries}
 \label{table:modify_type}
 \end{table}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-poslength}
+	\caption{The PosLength query's transformation in the User scenario}
+	\label{fig:trainbenchmark-transformation-user-poslength}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-routesensor}
+	\caption{The RouteSensor query's transformation in the User scenario}
+	\label{fig:trainbenchmark-transformation-user-routesensor}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-signalneighbor}
+	\caption{The SignalNeighbor query's transformation in the User scenario}
+	\label{fig:trainbenchmark-transformation-user-signalneighbor}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-switchsensor}
+	\caption{The SwitchSensor query's transformation in the User scenario}
+	\label{fig:trainbenchmark-transformation-user-switchsensor}
+\end{figure}
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-poslength}
+	\caption{The PosLength query's transformation in the Model transformation scenario}
+	\label{fig:trainbenchmark-transformation-xform-poslength}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-routesensor}
+	\caption{The RouteSensor query's transformation in the Model transformation scenario}
+	\label{fig:trainbenchmark-transformation-xform-routesensor}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-signalneighbor}
+	\caption{The SignalNeighbor query's transformation in the Model transformation scenario}
+	\label{fig:trainbenchmark-transformation-xform-signalneighbor}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-switchsensor}
+	\caption{The SwitchSensor query's transformation in the Model transformation scenario}
+	\label{fig:trainbenchmark-transformation-xform-switchsensor}
+\end{figure}
+
 The modifications in more detail:
 \begin{itemize}
-  \item User Scenario: in this case elements to be edited are selected from the whole instance model.
+  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e. they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} In this query's modify phase a randomly selected segment's length is updated to 0, which means that an error is injected.
+    \item \emph{PosLength:} In this query's modify phase a randomly selected segment's length is updated to 0, which means that an error is injected \figref{fig:trainbenchmark-transformation-user-poslength}.
     
     In EMF this means that an int attribute is set (updated), while in other graph databases (e.g. RDF databases) first the assertions about the old value is removed, and the assertion stating the new value of the length is inserted.
     
-    \item \emph{SwitchSensor:} Errors are injected by deleting sensor relations of randomly selected switches which became invalid.
+    \item \emph{RouteSensor:} The route definition connection between the randomly selected routes' and their first connected sensor are removed \figref{fig:trainbenchmark-transformation-user-routesensor}.
     
-    \item \emph{RouteSensor:} The route definition connection between the randomly selected routes' and their first connected sensor are removed.
-    
-    \item \emph{SignalNeighbor:} Errors are introduced by unconnecting the entry edge of the selected routes.
+    \item \emph{SignalNeighbor:} Errors are introduced by unconnecting the entry edge of the selected routes \figref{fig:trainbenchmark-transformation-user-signalneighbor}.
+
+    \item \emph{SwitchSensor:} Errors are injected by randomly selecting switches and deleting their relationship to sensors. If the chosen switch was invalid, it stays invalid (as no relationships are deleted); if the chosen switch was valid, it will become invalid \figref{fig:trainbenchmark-transformation-user-switchsensor}.
         
   \end{itemize}
-  \item Model transformation scenario: in this case elements to be edited are selected from the result of the previous query.
+  \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1*(\mathit{oldValue}-1)$.
+    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1*(\mathit{oldValue}-1)$ \figref{fig:trainbenchmark-transformation-xform-poslength}.
+    
+    \item \emph{RouteSensor:} The erroneous sensors are removed from the switch, which means that the constaint must no longer apply \figref{fig:trainbenchmark-transformation-xform-routesensor}.
+    
+    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of erroneous routes, resulting in a structure where the constraint must not be hold for the actual route \figref{fig:trainbenchmark-transformation-xform-signalneighbor}.
     
     \item \emph{SwitchSensor:} For selected invalid switches sensors are created, and connected to them.
-    In EMF this means the creation of a new Sensor, and it is added to the switch, and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the switch, as well as its type are inserted into the knowledge base.
-    
-    \item \emph{RouteSensor:} The erroneous sensors are removed from the switch, which means that the constaint must no longer apply.
-    
-    \item  \emph{SignalNeighbor:} Disconnect entry references of erroneous routes, resulting in a structure where the constraint must not be hold for the actual route.
+    In EMF this means the creation of a new Sensor, and it is added to the switch, and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the switch, as well as its type are inserted into the knowledge base \figref{fig:trainbenchmark-transformation-xform-switchsensor}.  
     
   \end{itemize}
 \end{itemize}
