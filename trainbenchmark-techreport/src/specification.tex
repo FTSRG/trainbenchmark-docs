@@ -413,10 +413,9 @@ The modifications in more detail:
   \item Model transformation scenario: in this case elements to be edited are selected from the result of the previous query.
   \begin{itemize}
     
-    \item Random elements selected from the set of invalid elements, and their values are negated: updated to $-1*(\mathit{oldValue}-1)$.
+    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1*(\mathit{oldValue}-1)$.
     
     \item \emph{SwitchSensor:} For selected invalid switches sensors are created, and connected to them.
-    
     In EMF this means the creation of a new Sensor, and it is added to the switch, and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the switch, as well as its type are inserted into the knowledge base.
     
     \item \emph{RouteSensor:} The erroneous sensors are removed from the switch, which means that the constaint must no longer apply.
