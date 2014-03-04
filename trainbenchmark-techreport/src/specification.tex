@@ -4,9 +4,9 @@
 
 \section{Original Version}
 
-A \concept{test case} configuration for every tool consists of an \emph{instance model} (\secref{sec:instanceGeneration}) with a \emph{given size} to be checked, a \emph{predefined query} (\secref{sec:queries}) describing constraint voilating elements, and the name of the \emph{scenario} (\secref{sec:scenarios}) to be run.
+A \concept{test case} configuration for every tool consists of an \emph{instance model} (\autoref{sec:instanceGeneration}) with an \emph{instance model size}, a \emph{predefined query} (\autoref{sec:queries}) describing constraint violating elements and the name of the \emph{scenario} (\autoref{sec:scenarios}) to run.
 
-As a result of a run testcase, the \emph{execution times} of the phases, \emph{memory usage}, and the \emph{number of erroneous elements} are measured. The number of invalid elements are used to check the correctness of the validation, however elements must be available for later processing. 
+As a result of a testcase run, the \emph{execution times} of each phase, the \emph{memory usage} and the \emph{number of erroneous elements} are measured and recorded. The number of invalid elements are used to check the correctness of the validation, however the set of element identifiers must also be available for later processing. 
 
 
 \subsection{Phases}
@@ -19,42 +19,42 @@ As a result of a run testcase, the \emph{execution times} of the phases, \emph{m
 	\label{fig:phases}
 \end{figure}
 
-To measure performance also when the underlying model is changing, four benchmark \concept{phases} were defined, as illustrated in \figref{fig:phases}.
+To measure performance for re-validating a model after modifications, four benchmark \concept{phases} were defined, as illustrated in \figref{fig:phases}.
 \begin{enumerate}
  
  \item During the \concept{read} phase, the previously generated instance model and validation query are loaded from hard drive to memory. This includes the parsing of the input as well as initializing data structures of the tool.
  
- \item In the \concept{check} phase, the instance model is queried to identify invalid elements. This can be as simple as reading the results from cache, or the model can be traversed based on some index. By the end of this phase, erroneous objects need to made available in a list for further processing.
+ \item In the \concept{check} phase, the instance model is queried to identify invalid elements. This can be as simple as reading the results from cache, or the model can be traversed based on some index. By the end of this phase, erroneous objects need to made available in a collection for further processing.
  
  \item In the \concept{edit} phase, the model is changed to simulate effects (and measure performance) of model modifying operations. At the beginning of this phase ``query like'' functions are used to gather elements to be modified, however this time is excluded, and only the required time of model editing operations are recorded in this phase. (As query performance is measured in the check phases.)
  
  \item The re-validation of the model is carried out in the \concept{re-check} phase similarly to the \emph{check} phase.
 \end{enumerate}
 
-\subsection{Use-case scenarios of the benchmark}
+\subsection{Use case scenarios of the benchmark}
 \label{sec:scenarios}
 
 \todo{lehet a köv. bekezdést át kellene fogalmazni.}
 Paper \cite{icgt08-bhrv} analyzes performance of algorithms used for graph
-pattern query answering, and identifies two use-cases where efficient
+pattern query answering and identifies two use cases where efficient
 \emph{incremental model validation} is required. The batch part of our benchmark
 consists of the execution of the read and first check phases. Inspired by paper
 \cite{icgt08-bhrv}, three \concept{scenarios} were defined to measure different
-use-cases:
+use cases:
 \begin{itemize}
   
-  \item \concept{Batch validation scenario:}
-  In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use-case is performed when a model editor is opened, and initial validations are issued by the designer. 
+  \item \concept{Batch validation scenario} (\texttt{Batch}):
+  In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use case is performed when a model editor is opened and initial validations are issued by the designer. 
   
-  \item \concept{Model transformation scenario:}
+  \item \concept{Model transformation scenario} (\texttt{XForm}):
   The automated model transformation scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is corrected, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
   
-  Efficient execution of such a use-case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
+  Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
   
-  \item \concept{User model editing scenario:}
-  The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (e.g. a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
+  \item \concept{User model editing scenario} (\texttt{User}):
+  The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (e.g.\ a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
   
-  Such scenario occurs when someone uses a common UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect quickly design errors early in the development process to let engineers refine models and cut down debugging and error correction costs.
+  Such scenario occurs when someone uses a common UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect design errors quickly and early in the development process to let engineers refine models and cut down debugging and error correction costs.
   
 \end{itemize}
 
@@ -71,14 +71,14 @@ use-cases:
 \end{figure}
 
 
-Throughout the paper, an example from the railway domain is used which is depicted on \figref{fig:metamodel}. A train \emph{route} can be defined by a set of \emph{sensors}. Sensors are associated with \emph{track elements}, which can be a track \emph{segment} (with length) or a \emph{switch}. A route can have associated \emph{switch positions}, which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
+The metamodel of the Train Benchmark's railway domain is depicted in \figref{fig:metamodel}. A train \emph{route} can be defined by a set of \emph{sensors}. Sensors are associated with \emph{track elements}: track \emph{segment}s (with a specific length) or a \emph{switch}es. A route may have associated \emph{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
  
 \subsection{Queries}
 \label{sec:queries}
 
-In the validation and re-validation phase of the benchmark, constraint violating elements are returned by queries. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return invalid instance model elements.
+In the validation and re-validation phases of the benchmark, the queries return the elements violating the well-formedness constraint defined by the test case. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return a set of the invalid instance model elements' identifiers.
  
-Two simple queries involving maximum two objects (named PosLength and SwitchSensor) and two complex queries involving 4-7 variables and joins (called RouteSensor and SignalNeighbor) were defined. Simple queries can filter less efficient tools, and complex queries can be used to differentiate faster model query technologies.
+Two simple queries involving maximum two objects (named \emph{PosLength} and \emph{SwitchSensor}) and two complex queries involving 4-7 objects and multiple join operations (\emph{RouteSensor} and \emph{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
  
 In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
@@ -111,14 +111,15 @@ The edges (relationships) are represented with the following relational schemas:
 
 \subsubsection{Graph Patterns}
 
-Blue rectangles and arrows mark simple constraints, while red rectangles and arrows represent negative application conditions. The query return with the nodes in hollow blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
+Blue rectangles and arrows mark simple constraints, while red rectangles and arrows represent negative application conditions. The query returns with the nodes in hollow blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Query: PosLength}
+
+\subsubsection{PosLength}
 
 \paragraph{Description.} The \textit{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
 
-\paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM}, and it concludes that the string comparison algorithm dominates the query time.
+\paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
 
 \begin{figure}[Htb]
 \centering
@@ -310,7 +311,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 
 \paragraph{Description.} The \textit{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
 
-\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used the \textit{RouteSensor} and the \textit{SignalNeighbor} queries.
+\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textit{RouteSensor} and the \textit{SignalNeighbor} queries.
 
 \begin{figure}[Htb]
 \centering
@@ -359,8 +360,6 @@ $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 In the \emph{edit} phase the model is modified to change the result set returned in the succeeding re-check phase.
 
-\todo{táblázat grafikai megjelenésén javítani}
-
 \begin{table}[Htb]
 	\centering
 	\scriptsize
@@ -383,23 +382,21 @@ In the \emph{edit} phase the model is modified to change the result set returned
 \label{tbl:modify_RouteSensor}
 \end{table}
 
-\autoref{tbl:modify_RouteSensor}. shows instance model characteristics and the effect of the modify phase in the \emph{RouteSensor} case. The first column counts the number of instance model elements, and the second shows the number of Sensors, which can be erroneous. The two scenarios process different instance models, and modifies them differently:
+\autoref{tbl:modify_RouteSensor}. shows the instance model characteristics and the effect of the modify phase in the \emph{RouteSensor} case. The first column counts the number of instance model elements. The second and the fifth column show the number of Sensors in the model. The two scenarios process different instance models and modify them differently:
 
 \begin{itemize}
-\item 
-In the \emph{User scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the RouteSensor case), so it can be understood and resolved by a human using the editor.
+	\item In the \emph{User scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the RouteSensor case), so it can be understood and resolved by a user using the editor.
+	
+	During the modification the user always performs 10 random edits (fixed low constant) which \emph{increase} the number of erroneous elements. These edit operations modify only some elements of the model and do not add or remove modules containing multiple instance model elements.
 
-During the modification the user always performs ten random edits (fixed low constant) which increase the number of erroneous elements. These edit operations modify only some elements of the model, and does not add or remove modules containing multiple instance model elements.
+	\item In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the RouteSensor case). This scenario models the case when these errors are processed by a model transformation program automatically.
 
-\item 
-In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the RouteSensor case). This scenario models the case when these errors are processed by a model transformation program automatically.
-
-In the edit phase the program modifies ten percent of the elements of the result set originating from the batch query. These modifications always correct the model, thus the number of invalid elements decreases (see \autoref{tbl:modify_type}).
+	In the edit phase the program modifies 10\% of the elements of the result set retrieved from the batch query. These modifications always correct an invalid element in the model, so the number of invalid elements \emph{decreases} (see \autoref{tbl:modify_type}).
 
 \end{itemize}
 
 
-\autoref{tbl:modify_type}. displays the effect of model changes to the result set size, and the type of edit operations (add, update, delete).
+\autoref{tbl:modify_type}. displays the effect of model changes to the result set size and the type of edit operations (add, update, delete).
 
 \begin{table}[h]
 	\centering
@@ -477,31 +474,32 @@ In the edit phase the program modifies ten percent of the elements of the result
 
 The modifications in more detail:
 \begin{itemize}
-  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e. they may be valid or invalid. 
+  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e.\ they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} In this query's modify phase a randomly selected segment's length is updated to 0, which means that an error is injected \figref{fig:trainbenchmark-transformation-user-poslength}.
+    \item \emph{PosLength:} In this query's modify phase a randomly selected segment's \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:trainbenchmark-transformation-user-poslength}).
     
-    In EMF this means that an int attribute is set (updated), while in other graph databases (e.g. RDF databases) first the assertions about the old value is removed, and the assertion stating the new value of the length is inserted.
+    In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.
     
-    \item \emph{RouteSensor:} The route definition connection between the randomly selected routes' and their first connected sensor are removed \figref{fig:trainbenchmark-transformation-user-routesensor}.
+    \item \emph{RouteSensor:} The \emph{route definition} edge between the randomly selected routes' and their first connected sensor are removed (\figref{fig:trainbenchmark-transformation-user-routesensor}).
     
-    \item \emph{SignalNeighbor:} Errors are introduced by unconnecting the entry edge of the selected routes \figref{fig:trainbenchmark-transformation-user-signalneighbor}.
+    \item \emph{SignalNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected routes (\figref{fig:trainbenchmark-transformation-user-signalneighbor}).
 
-    \item \emph{SwitchSensor:} Errors are injected by randomly selecting switches and deleting their relationship to sensors. If the chosen switch was invalid, it stays invalid (as no relationships are deleted); if the chosen switch was valid, it will become invalid \figref{fig:trainbenchmark-transformation-user-switchsensor}.
+    \item \emph{SwitchSensor:} Errors are injected by randomly selecting switches and deleting their relationship to sensors. If the chosen switch was invalid, it stays invalid (as no relationships are deleted); if the chosen switch was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
         
   \end{itemize}
   \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1 \times (\mathit{oldValue}-1)$ \figref{fig:trainbenchmark-transformation-xform-poslength}.
+    \item \emph{PosLength:} Random elements selected from the set of invalid elements and their values are updated to $-1 \times (\mathit{oldValue}-1)$ (\figref{fig:trainbenchmark-transformation-xform-poslength}).
     
-    \item \emph{RouteSensor:} The erroneous sensors are removed from the switch, which means that the constaint must no longer apply \figref{fig:trainbenchmark-transformation-xform-routesensor}.
+    \item \emph{RouteSensor:} The invalid sensors are disconnected from the switch, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-xform-routesensor}).
     
-    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of erroneous routes, resulting in a structure where the constraint must not be hold for the actual route \figref{fig:trainbenchmark-transformation-xform-signalneighbor}.
+    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of invalid routes, resulting in a structure where the constraint must not be hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
+        
+    \item \emph{SwitchSensor:} For selected invalid switches sensors are created and connected to them.
     
-    \item \emph{SwitchSensor:} For selected invalid switches sensors are created, and connected to them.
-    In EMF this means the creation of a new Sensor, and it is added to the switch, and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the switch, as well as its type are inserted into the knowledge base \figref{fig:trainbenchmark-transformation-xform-switchsensor}.  
+    In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:trainbenchmark-transformation-xform-switchsensor}).
     
   \end{itemize}
 \end{itemize}
@@ -513,14 +511,14 @@ The modifications in more detail:
 
 In the first phase of the benchmark, a previously generated \concept{instance model} is loaded from the file system. These models are systematically generated based on the metamodel and on the model queries. Randomized instance model fragments are generated and connected to each other. The generation process takes care of controlling the number of matches for all model queries.
 
-To break symmetry, the exact number of elements and cardinalities are randomized. This brings artificially generated models \emph{closer to real world instances}, and \emph{prevents query tools from this kind of efficient storing} of instance models. During the generation of the railway system model, errors are injected at random positions. The initial number of constraint violating elements that are low (below one percent of the total number of elements), and are deterministically placed, thanks to \emph{pseudo} random generation. These errors have to be found in the check phase of the benchmark, and can be corrected during the edit phase.
+To break symmetry, the exact number of elements and cardinalities are randomized. This brings artificially generated models \emph{closer to real world instances}, and \emph{prevents query tools from this kind of efficient storing} of instance models. During the generation of the railway system model, errors are injected at random positions. The initial number of constraint violating elements that are low (below one percent of the total number of elements), and are deterministically placed, thanks to \emph{pseudorandom} generation. These errors have to be found in the check phase of the benchmark, and can be corrected during the edit phase.
 
 \begin{figure}[Htb]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/instance/TrainMMb.pdf}
-\caption{Train Metamodel and Instance Model Characteristics}
+\includegraphics[width=\textwidth]{figures/instance/TrainMMb.pdf}
+\caption{Train metamodel and instance model characteristics}
 \label{fig:metamodel-instance-characteristics}
 \end{center}
 \end{figure}
 
-To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g., 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% is \emph{Segment}, thus 80.4\% of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g., there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
+To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g.\ 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% is \emph{Segment}, thus 80.4\% of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g.\ there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.

@@ -40,6 +40,8 @@
 \usepackage{adjustbox}
 \usepackage{tabu}
 \usepackage{multirow}
+\usepackage{mathastext}
+\usepackage{zi4}
 
 \newlength{\hsbw}
 \newcommand{\comment}[1]{\mbox{}\par\vspace{0.25in}%
@@ -51,8 +53,8 @@
 %\renewcommand{\comment}[1]{}
 
 % Common abbrev. are set as commands to ensure proper spacing after the dot
-\newcommand{\ie}{i.e.\@\xspace}
-\newcommand{\Ie}{I.e.\@\xspace}
+\newcommand{\ie}{i.e.\ \@\xspace}
+\newcommand{\Ie}{i.e.\ \@\xspace}
 \newcommand{\eg}{e.g.\@\xspace}
 \newcommand{\Eg}{E.g.\@\xspace}
 \newcommand{\etal}{et al.\@\xspace}
@@ -155,22 +157,18 @@
 \newcommand{\shr}{\textgreater$\!$\textgreater$\!$\textgreater\xspace}
 \newcommand{\ashr}{\textgreater$\!$\textgreater\xspace}
 
+\renewcommand{\figureautorefname}{Figure}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand{\partautorefname}{Part}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
 
 \newcommand{\todo}[1]{\textbf{TODO:  }{#1}}
-% \newcommand{\defref}[1]{#1~(see~\ref{def:#1}, page~\pageref{def:#1})}
-% \newcommand{\figref}[1]{Fig.~\ref{#1}}
-%\newcommand{\charef}[1]{Chapter~\ref{#1}}
-\newcommand{\secref}[1]{Section~\ref{#1}}
-% \newcommand{\subsecref}[1]{Section~\ref{#1}}
-%\newcommand{\appref}[1]{Appendix~\ref{#1}}
-% \newcommand{\appref}[1]{appendix$^{\ref{#1}}$}
 \newcommand{\concept}[1]{\emph{#1}\index{#1}\label{def:#1}}
-%\newcommand{\viatraemf}{\textsc{EMF-IncQuery}}
-% \newcommand{\viatraemf}{EMF-IncQuery}
-% \newcommand{\Viatra}{\textsc{Viatra2}}
 \newcommand{\incquery}{\textsc{EMF-IncQuery}}
 \let\codeCap\texttt
-
 
 \begin{document}
 

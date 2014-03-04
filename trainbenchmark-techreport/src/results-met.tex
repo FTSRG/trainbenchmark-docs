@@ -15,16 +15,14 @@ benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetric
 section we describe the runtime environment, and highlight some design
 decisions.
 
-The benchmark machine contains two quad core Intel Xeon L5420 (2.50GHz) CPU, 32
-GBs of RAM and a SAS disk formatted to ext4 for storing the models. In order to
-alleviate disturbance of a running measurement and minimize noise in the results,
+The benchmark machine contains two quad core Intel Xeon L5420 (2.50 GHz) CPU, 32 GBs of RAM and a SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results,
 a bare metal 64 bit Ubuntu 12.04 OS was installed with unnecessary services
 (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java
 environment and Eclipse Juno Modeling 64 bit for Linux for development, and for
 the \incquery{} and Java dependencies.
 
 The performance measurements of a tool for a given query-model pair
-was independent from the others, i.e. for every tool only its codebase was
+was independent from the others, i.e.\ for every tool only its codebase was
 loaded, and every scenario measurement (see \figref{fig:asebenchmark}) was run
 in a different JVM. Before the execution, OS file cache was cleared, and swap
 was disabled to avoid this kind of thrashing. Each test (including all phases)
@@ -45,7 +43,7 @@ benchmarks were realized as Java applications.
 	\hline 
 	\textbf{Tool} & \textbf{Model} & \textbf{Query Language} & \textbf{Version} \\ \hline
 	Java & EMF & Java & 6.0 \\ \hline
-	EMF-IncQuery & EMF & IQPL & 0.7.0 \\ \hline
+	\incquery{} & EMF & IQPL & 0.7.0 \\ \hline
 	Sesame & RDF & SPARQL & 2.5.0 \\ \hline
 	\end{tabular}
 	\caption{Measured tools}
@@ -93,7 +91,7 @@ is statistically significant ($p < 0.001$). Note that any such statistical resul
 is conditional to the uniform sampling of the selected queries and models.
 
 
-A limitation of the approach is that two strongly correlated variables (e.g.
+A limitation of the approach is that two strongly correlated variables (e.g.\ 
 \code{countEdges} and \code{countTriples}) may show up as equally good
 predictors, but in reality they can not be used as two independent signals for
 predicting performance (as most triples in our models are edges). The simple
@@ -103,7 +101,7 @@ techniques such as mRMR~\cite{mRMR-1453511} that can take into account which
 metrics convey independent information. Afterwards, predicting the best choice
 of technology based on the metric values is a problem of multivariate regression
 / classification, for which we plan to employ advanced machine learning
-techniques (e.g. ID3~\cite{ID3-quinlan-1986} decision trees or
+techniques (e.g.\ ID3~\cite{ID3-quinlan-1986} decision trees or
 MARS~\cite{MARS-MR1091842} regression model) in future work.
 
 \begin{figure*}[tp]
@@ -159,7 +157,7 @@ Check times in \incquery{} are very strongly correlated to the number of matches
 Overall, it can be said that model-only metrics are useful in predicting the performance of model persistence operations. However, query-based and combined metrics (such as our proposed \emph{abs-} and \emph{relDifficulty}) are necessary to provide a more thorough picture.
 Note that since only statistically significant correlations are included, a low magnitude correlation does not necessarily mean a measurement error. It is possible that there is a true link between the two variables, but the $\tau$ value is lowered by other metrics that strongly influence the performance indicator. 
 % \paragraph{Decision making}
-% The Goal Question Metric (GQM) approach~\cite{gqm} can be used to make informed decisions about tool or language selection. A \emph{goal} can be that the processing of models must be efficient. \emph{Questions} would be: batch or incremental scenario is performed by the tools? How large is the model? What is the complexity of the queries? These can be answered using the relevant metrics of Fig. \ref{fig:correlation-spider}. Metrics with high correlation will have the most impact on runtime. In the future we plan to extend this benchmark, and build decision trees or more complex decision support systems that can aid domain engineers to choose the right tool and languages for their task.
+% The Goal Question Metric (GQM) approach~\cite{gqm} can be used to make informed decisions about tool or language selection. A \emph{goal} can be that the processing of models must be efficient. \emph{Questions} would be: batch or incremental scenario is performed by the tools? How large is the model? What is the complexity of the queries? These can be answered using the relevant metrics of \figref{fig:correlation-spider}. Metrics with high correlation will have the most impact on runtime. In the future we plan to extend this benchmark, and build decision trees or more complex decision support systems that can aid domain engineers to choose the right tool and languages for their task.
 
 % [5/18/13 8:29:53 AM] Varró, Daniel: Toolokról külön-külön kellene írni valamit
 % [5/18/13 8:30:26 AM] Varró, Daniel: továbbá a végén arról, hogy a szakirodalomból ismert metrikák mennyire bizonyultak használhatónak vagy használhatatlannak

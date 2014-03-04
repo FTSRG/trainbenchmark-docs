@@ -11,7 +11,7 @@
 These query series are first defined in graph patterns and then formalized using
 a query language suited for the given tool. The presented query series
 were implemented using each model query technology mentioned in Sec
-\ref{sec:benchmark_overview}. In Fig.~\ref{fig:patterns} the sample
+\ref{sec:benchmark_overview}. In \figref{fig:patterns} the sample
 implementation of the \code{locals\_3} query is depicted.
 
 \begin{figure*}[tp]
@@ -83,7 +83,7 @@ In the IncQuery Pattern Language \cite{IQlanguage} (\figref{fig:iqlocals3}), obj
 
 Using the SPARQL \cite{Sparql} notation (\figref{fig:sparqllocals3}), triples describe the same structural constraint, and the semantically equivalent query returns distinct matches of the \code{xSeg1} variable.
 
-The query function was also coded in Java (illustrated in \figref{fig:javalocals3}). The model is traversed by embedded iterations and for every \code{Segment} the connections are checked. The implementation does not contain any search plan specific optimization (i.e. the embedding order of \code{for} cycles is ad-hoc), but it cuts unnecessary search branches at the earliest possibility.  This coding style represents an experienced programmer, who writes good quality source code. This way, such Java implementation could be used as a baseline in the future, to compare multiple tools qualitatively.
+The query function was also coded in Java (illustrated in \figref{fig:javalocals3}). The model is traversed by embedded iterations and for every \code{Segment} the connections are checked. The implementation does not contain any search plan specific optimization (i.e.\ the embedding order of \code{for} cycles is ad-hoc), but it cuts unnecessary search branches at the earliest possibility.  This coding style represents an experienced programmer, who writes good quality source code. This way, such Java implementation could be used as a baseline in the future, to compare multiple tools qualitatively.
 
 
 % [5/18/13 8:06:01 AM] Gábor Bergmann: On 5/18/13, at 7:27 AM, Ráth István wrote:
@@ -91,7 +91,7 @@ The query function was also coded in Java (illustrated in \figref{fig:javalocals
 % a modell tulajdonságai (fokszámok, milyen élből mennyi van, stb.) alapján nem optimalizáltam, csak józan ésszel egymásba ágyazott ciklusokkal járom be
 % [5/18/13 8:06:33 AM] Gábor Bergmann: persze ha le lehet vágni egy ágat (pl. mert adott paraméterekre már megvan egy illeszkedés), akkor igyekszem azonnal levágni
 
-\section{tools}
+\section{Tools}
 
 This benchmark was evaluated on three characteristically different query
 technologies:

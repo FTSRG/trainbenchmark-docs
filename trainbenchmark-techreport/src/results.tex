@@ -5,7 +5,7 @@
 
 The benchmarking machine contains two quad core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
-The performance measurements were independent from the others, i.e. for every tool only its codebase was loaded, and every measurement was run in a different JVM. Before the execution, OS file cache was cleared, and swap was disabled to avoid this kind of thrashing. Each testcase must be run within a specified time limit (15 minutes), otherwise it was killed.
+The performance measurements were independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement was run in a different JVM. Before the execution, OS file cache was cleared, and swap was disabled to avoid this kind of thrashing. Each testcase must be run within a specified time limit (15 minutes), otherwise it was killed.
 
 For a JVM, 25~GB heap limit was specified, but to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m -XX:+UseCompressedOops -Xmx25g}).
 
@@ -24,7 +24,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
 	Eclipse OCL & 3.1.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
 	OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
-	EMF-IncQuery & 0.7.0 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	\incquery{} & 0.7.0 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
 	Sesame & 2.5.0 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
 	4store & 1.1.4 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
 	Neo4j & 1.8 & Graph & Cypher & \ding{109} & \ding{109} & Java \\ \hline
@@ -47,9 +47,9 @@ The OCL~\cite{OCL} language is commonly used for querying EMF model instances in
 \subsection{OCL Impact Analyser}
 The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\subsection{EMF-IncQuery}
+\subsection{\incquery{}}
 
-EMF-IncQuery~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using RETE~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL \cite{iqpl}), which is evaluated over EMF models.
+\incquery{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using RETE~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL \cite{iqpl}), which is evaluated over EMF models.
 
 \subsection{Sesame}
 
@@ -151,7 +151,7 @@ references used by this query.
 
 \subsubsection{Incremental Query Evaluation}
 In the \emph{incremental case}, Eclipse OCL evaluates the query on each issue
-(i.e.: hundred times) from scratch, its execution time increases linearly with
+(i.e.\ : hundred times) from scratch, its execution time increases linearly with
 model size, resulting slow overall evaluation.
 
 For the \emph{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact

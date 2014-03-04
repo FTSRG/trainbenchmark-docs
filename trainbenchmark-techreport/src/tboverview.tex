@@ -12,9 +12,9 @@ One of the the most computationally expensive tasks in modeling applications are
 queries over relational databases \cite{tpc-c} or graph stores
 \cite{BerlinBenchmark, SP2Bench}, modeling tool workloads are significantly
 different. Specifically, modeling tools use much more complex queries than
-typical transactional systems, and the real world performance is affected by
-response time (i.e. execution time for a specific operation such as validation
-or transformation) than throughput (i.e. the amount of parallel transactions).
+typical transactional systems, and the real world performance is more affected by
+response time (i.e.\ execution time for a specific operation such as validation
+or transformation) than throughput (i.e.\ the amount of parallel transactions).
 
 
 \section{Overview}
@@ -22,8 +22,8 @@ To address this challenge, the Train Benchmark \cite{TB:SCP2013,TBwebsite} is a 
 benchmark that aims to measure batch and incremental query evaluation
 performance, in a scenario that is specifically modeled after \emph{model
 validation} in (domain-specific) modeling tools: at first, the entire model is
-validated, then after each model manipulation (e.g., the deletion of a
-reference) is followed by an immediate re-validation. The benchmark records
+validated, then after each model manipulation (e.g.\ the deletion of a
+reference) is followed by an immediate re-validation. The benchmark measures
 execution times for four phases:
 
 \begin{enumerate}
@@ -33,8 +33,8 @@ execution times for four phases:
  
  \item In the \emph{check} phase, the instance model is queried to identify
  invalid elements. This can be as simple as reading the results from cache, or
- the model can be traversed based on some index. By the end of this phase,
- erroneous objects need to made available in a list.
+ the model can be traversed based on some index. The result of this phase  
+ is the set of the erroneous objects.
  
  \item In the \emph{edit} phase, the model is modified to simulate effects of
  manual user edits. Here the size of the change set can be adjusted to
@@ -45,35 +45,35 @@ execution times for four phases:
 \end{enumerate}
 
 The Train Benchmark computes two derived results based on the recorded data:
-(1) \emph{batch validation time} (the sum of the \emph{read} and {check} phases)
+(1) \emph{batch validation time} (the sum of the \emph{read} and \emph{check} phases)
 represents the time that the user must wait to start to use the tool; (2)
 \emph{incremental validation time} consists of the \emph{edit} and
-\emph{re-check} phases performed $100$ times, representing the time that the
+\emph{re-check} phases performed 100 times, representing the time that the
 user spent waiting for the tool validation.
 
 
 \section{Instance models}
 The Train Benchmark uses a domain-specific model of a railway system that
-originates from the MOGENTES EU FP7 project, where both the metamodel and the
+originates from the \mbox{MOGENTES} EU FP7 project, where both the metamodel and the
 well-formedness rules were defined by railway domain experts. This domain
 enables the definition of both simple and more complex model queries while it is
-uncomplicated enough to incorporate solutions from other technological spaces
-(e.g. ontologies, relational databases and RDF). This allows the comparison of
+simple enough to incorporate solutions from other technological spaces
+(e.g.\ ontologies, relational databases and RDF). This allows the comparison of
 the performance aspects of wider range of query tools from a constraint
 validation viewpoint.
 
 The instance models are systematically generated based on the metamodel and the
 defined complex model queries: small instance model fragments are generated
-based on the queries, and then they are placed, randomized and connected to each
+based on the queries, then they are placed, randomized and connected to each
 other. The methodology takes care of controlling the number of matches of all
 defined model queries. To break symmetry, the exact number of elements and
 cardinalities are randomized.
  
-This brings artificially generated models \emph{closer to real world instances},
+This brings artificially generated models \emph{closer to real world instances}
 and \emph{prevents query tools from efficiently storing} or caching of instance
 models. During the generation of the railway system model, errors are injected
 at random positions. These errors can be found in the check phase of the
-benchmark, which are reported, and can be corrected during the edit phase. The
+benchmark, which are reported and can be corrected during the edit phase. The
 initial number of constraint violating elements are low (<1\% of total
 elements).
  
@@ -90,19 +90,19 @@ result, all query implementations must return (the same set of) invalid instance
 model elements.
  
 In the \emph{edit} phase, the model is modified to change the result set to be
-returned by the query in the re-check phase. For simulating manual
-modifications, the benchmark always performs hundred random edits (fixed low
+returned by the query in the \emph{re-check} phase. For simulating manual
+modifications, the benchmark always performs 100 random edits (fixed low
 constant) which increases the number of erroneous elements. An edit operation
-only modify single model elements at once -- more complex model manipulation is
+only modifies a single model elements at once -- more complex model manipulation is
 modelled as a series of edits.
 
 \section{Evaluation of measurements}
 The Train Benchmark defines a Java-based framework and application programming
 interface that enables the integration of additional metamodels, instance
-models, query implementations and even new benchmark scenarios (that may be
+models, query implementations and even new benchmark scenarios (which may be
 different from the original 4-phase concept). The default implementation
 contains a benchmark suite for queries implemented in Java, Eclipse OCL and
-EMF-IncQuery.
+\incquery{}.
 
 Measurements are recorded automatically in a machine-processable format (CSV)
 that is automatically processed by R \cite{TB:R} scripts. An extended version of the Train
