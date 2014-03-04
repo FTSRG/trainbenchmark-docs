@@ -1,16 +1,67 @@
 \chapter{Train Benchmark Implementation}
 
 \section{Original Version}
+
 \subsection{Framework}
+
+\begin{figure}[!Htb]
+	\centering
+	\includegraphics[width=\textwidth]{figures/trainbenchmark-modules}
+	\caption{The Maven modules defined in the Train Benchmark. Note that artifact ids of the modules are abbreviated and their full id starts with \texttt{hu.bme.mit.trainbenchmark}.}
+	\label{fig:trainbenchmark-modules}
+\end{figure}
+
 \subsection{Architecture}
+
+For the integration of the Train Benchmark projects and their third party dependencies, we use Apache Maven~\cite{Maven}. The dependencies are shown in \figref{fig:trainbenchmark-modules}.
+
+In this section, we briefly describe each module's tasks and responsibilities.
+
+\subsubsection{Parent module}
+
+The \texttt{hu.bme.mit.trainbenchmark} module is the parent module which contains the modules used in the Train Benchmark. Building this Maven module builds all child modules as well.
+
+\subsubsection{Central modules}
+
+The \texttt{hu.bme.mit.trainbenchmark.model} module contains the reference metamodel represented in EMF.
+
+The \texttt{hu.bme.mit.trainbenchmark.config} module contains classes and constants used by the \emph{generator} and the \emph{benchmark} projects.
+
+
+
+\subsubsection{Representation-specific modules}
+
+The \texttt{hu.bme.mit.trainbenchmark.emf} and \texttt{hu.bme.mit.trainbenchmark.rdf} modules contain classes and constants used by the particular representations.
+
+
+
+\subsubsection{Generator modules}
+
+The \texttt{hu.bme.mit.trainbenchmark.generator.*} modules are responsible for generating the instance models for the benchmarks.
+
+\begin{itemize}
+  \item \texttt{emf}: generates an EMF instance model.
+  \item \texttt{graph}: generates a property graph model in the specified format: GraphML (default), Blueprints GraphSON, Faunus GraphSON.
+  \item \texttt{rdf}: generates an RDF instance model.
+  \item \texttt{sql}: generates an SQL script which creates and loads the appropriate database tables.
+\end{itemize}
+
+
+
+\subsubsection{Benchmark modules}
+
+The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for benchmarking. For the list of current implementations, see \ref{tools}.
+
+
 \subsection{Services}
+
 \subsection{API}
 
 \subsection{time meas}
 
 To obtain faithful execution times, we implemented a benchmarking framework,
-which accounted for the time measurements with nanosec precision (that can have
-less accuracy!), and the clear separation of phases enforced by the defined
+which accounted for the time measurements with nanosecond precision (however, the accuracy may be lower than that),
+ and the clear separation of phases enforced by the defined
 interfaces. These model loading and querying functions were implemented using
 functionally equivalent calls of a given tool. See Table~\ref{table:tools} for
 the model management format and query language of the benchmarked tools. The
@@ -253,11 +304,9 @@ limiting heap space by the maximum usage results in excessive garbage collection
 and thus an increased runtime. However, in our experience setting the limit to
 two times the measured values, such issues do not occur.
 
-In case of the benchmark queries, we measured a $1.5$GB heap size in case of a
+In case of the benchmark queries, we measured a $1.5$ GB heap size in case of a
 model with $3.5$M model elements that we believe is manageable in a developer
-machine with $4$--$8$GB of RAM. On the other hand, when handling such large
+machine with 4--8 GB of RAM. On the other hand, when handling such large
 models the existing user interface itself could become a bottleneck. Thus we
 believe, our measurement results hold also in the integrated development
 environments.
-
-\pic{trainbenchmark-modules}{The Maven modules defined in the Train Benchmark}.

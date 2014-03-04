@@ -13,10 +13,10 @@ As a result of a run testcase, the \emph{execution times} of the phases, \emph{m
 \label{sec:phases}
 
 \begin{figure}[Htb]
-		\centering
-		\includegraphics[scale=0.5]{figures/phases}
-		\caption{Four phases of the benchmark}
-		\label{fig:phases}
+	\centering
+	\includegraphics[scale=0.5]{figures/phases}
+	\caption{Four phases of the benchmark}
+	\label{fig:phases}
 \end{figure}
 
 To measure performance also when the underlying model is changing, four benchmark \concept{phases} were defined, as illustrated in \figref{fig:phases}.
@@ -395,34 +395,6 @@ In the edit phase the program modifies ten percent of the elements of the result
 \end{table}
 
 
-\begin{figure}[!Htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-poslength}
-	\caption{The PosLength query's transformation in the User scenario}
-	\label{fig:trainbenchmark-transformation-user-poslength}
-\end{figure}
-
-\begin{figure}[!Htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-routesensor}
-	\caption{The RouteSensor query's transformation in the User scenario}
-	\label{fig:trainbenchmark-transformation-user-routesensor}
-\end{figure}
-
-\begin{figure}[!Htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-signalneighbor}
-	\caption{The SignalNeighbor query's transformation in the User scenario}
-	\label{fig:trainbenchmark-transformation-user-signalneighbor}
-\end{figure}
-
-\begin{figure}[!Htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-switchsensor}
-	\caption{The SwitchSensor query's transformation in the User scenario}
-	\label{fig:trainbenchmark-transformation-user-switchsensor}
-\end{figure}
-
 
 
 \begin{figure}[!Htb]
@@ -453,6 +425,37 @@ In the edit phase the program modifies ten percent of the elements of the result
 	\label{fig:trainbenchmark-transformation-xform-switchsensor}
 \end{figure}
 
+
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.25\textwidth}
+                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-poslength}
+                \caption{PosLength}
+                \label{fig:trainbenchmark-transformation-user-poslength}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-routesensor}
+                \caption{RouteSensor}
+                \label{fig:trainbenchmark-transformation-user-routesensor}
+        \end{subfigure}%
+        ~
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-signalneighbor}
+                \caption{SignalNeighbor}
+                \label{fig:trainbenchmark-transformation-user-signalneighbor}
+        \end{subfigure}%
+        ~
+        \begin{subfigure}[b]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-switchsensor}
+                \caption{SwitchSensor}
+                \label{fig:trainbenchmark-transformation-user-switchsensor}
+        \end{subfigure}
+        \caption{Transformations in the User scenario}\label{fig:animals}
+\end{figure}
+
+
 The modifications in more detail:
 \begin{itemize}
   \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e. they may be valid or invalid. 
@@ -472,7 +475,7 @@ The modifications in more detail:
   \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1*(\mathit{oldValue}-1)$ \figref{fig:trainbenchmark-transformation-xform-poslength}.
+    \item \emph{PosLength:} Random elements selected from the set of invalid elements, and their values are negated: updated to $-1 \times (\mathit{oldValue}-1)$ \figref{fig:trainbenchmark-transformation-xform-poslength}.
     
     \item \emph{RouteSensor:} The erroneous sensors are removed from the switch, which means that the constaint must no longer apply \figref{fig:trainbenchmark-transformation-xform-routesensor}.
     
