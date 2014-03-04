@@ -3,11 +3,11 @@
 \section{Benchmarking Environment}
 \label{sec:environment}
 
-The benchmarking machine contains two quad core Intel Xeon L5420 (2.50GHz) CPU, 32 GBs of RAM and a SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64 bit Ubuntu 12.04 OS was installed with unnecessary services (like cron) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64 bit for Linux to satisfy specific tool dependencies.
+The benchmarking machine contains two quad core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
 The performance measurements were independent from the others, i.e. for every tool only its codebase was loaded, and every measurement was run in a different JVM. Before the execution, OS file cache was cleared, and swap was disabled to avoid this kind of thrashing. Each testcase must be run within a specified time limit (15 minutes), otherwise it was killed.
 
-For a JVM, 25 GB heap limit was specified, but to compensate 64 bit pointers, OOPS (ordinary object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m -XX:+UseCompressedOops -Xmx25g}).
+For a JVM, 25~GB heap limit was specified, but to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m -XX:+UseCompressedOops -Xmx25g}).
 
 In the benchmark all cases were run ten times, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
 
@@ -15,11 +15,27 @@ In the benchmark all cases were run ten times, which were aggregated using the R
 \label{tools}
 The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph-pattern like query language, or some custom solution.
 
-\begin{table}[Hh]
-\includegraphics[width=\columnwidth]{figures/tools.pdf}
-\caption{Tools used in the benchmark}
-\label{table:tools}
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\begin{tabular}{  | l | l | l | m{1.3cm} | l | m{1.9cm} | m{2.2cm} | }
+	\hline
+	Tool & Version & Model DL & Query language & Incremental & In-memory only & Implementation language \\ \hline 
+	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
+	Eclipse OCL & 3.1.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
+	OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
+	EMF-IncQuery & 0.7.0 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	Sesame & 2.5.0 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
+	4store & 1.1.4 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
+	Neo4j & 1.8 & Graph & Cypher & \ding{109} & \ding{109} & Java \\ \hline
+	\end{tabular}
+	\caption{Tools used in the benchmark}
+	\label{tools}
 \end{table}
+
+
+
+
 
 \subsection{Java}
 An imperative \emph{local search-based} approach was implemented in Java, operating on \emph{Eclipse Modeling Framework (EMF)}~\cite{EMF} models. Queries are implemented as Java functions, traversing a model without any search plan optimization, but they cut unnecessary search branches at the earliest possibility.
@@ -89,34 +105,34 @@ initial (Rete) cache build.
 \begin{center}
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-	    \caption{Batch Query Evaluation Time - RouteSensor}
+	    \caption{Batch Query Evaluation Time -- RouteSensor}
 	    \label{fig:BatchValid_RouteSensor}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-	    \caption{Batch Query Evaluation Time - SignalNeighbor}
+	    \caption{Batch Query Evaluation Time -- SignalNeighbor}
 	    \label{fig:BatchValid_SignalNeighbor}
 	\end{subfigure} \\
 
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_RouteSensor}
-	    \caption{Incremental Query Evaluation Time - RouteSensor}
+	    \caption{Incremental Query Evaluation Time -- RouteSensor}
 	    \label{fig:SumInc_RouteSensor}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_SignalNeighbor}
-	    \caption{Incremental Query Evaluation Time - SignalNeighbor}
+	    \caption{Incremental Query Evaluation Time -- SignalNeighbor}
 	    \label{fig:SumInc_SignalNeighbor}
 	\end{subfigure} \\
 
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_RouteSensor}
-	    \caption{Memory Usage - RouteSensor}
+	    \caption{Memory Usage -- RouteSensor}
 	    \label{fig:Memory_RouteSensor}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.48\textwidth}\centering
 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_SignalNeighbor}
-	    \caption{Memory Usage - SignalNeighbor}
+	    \caption{Memory Usage -- SignalNeighbor}
 	    \label{fig:Memory_SignalNeighbor}
 	\end{subfigure}
   \caption{Benchmark Results}

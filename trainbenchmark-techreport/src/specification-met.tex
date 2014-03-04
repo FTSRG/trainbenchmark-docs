@@ -106,7 +106,7 @@ the absolute difficulty metric. To compensate for this, the relative difficulty
 metric (\code{relDifficulty}) is defined as
 $ln\frac{\prod_{c}{(1+\abs{c})}}{1+countMatches} = \sum_{c}{ln(1+\abs{c})} -
 ln(1+countMatches)$, expressing the logarithm of the ``challenge'' the query
-poses - this is how much worse a query engine can do than the lower bound. 
+poses -- this is how much worse a query engine can do than the lower bound. 
 If the relative metric is a low figure, than the cost of query evaluation will not
 be much worse than the optimum, regardless of the query evaluation strategy. It
 can be easily shown that if a part of a graph pattern is extracted as a helper
@@ -120,7 +120,7 @@ common parts of multiple patterns into reusable helper patterns.
 
 \begin{figure}[Hhtb]
 \begin{center}
-\includegraphics[width=12cm]{figures/TrainMMMet.png}
+\includegraphics[width=12cm]{figures/TrainMMMet.pdf}
 \caption{Train metamodel (metrics version)}
 \label{fig:metamodel-met}
 \end{center}
@@ -299,7 +299,7 @@ schema in Fig. \ref{fig:asenegs}.
 \input{query_metrics}
 
 After the construction of the query series, we evaluated the query only metrics
-on them. Table~\ref{tab:queryonlymetrics} shows the results of the evaluation:
+on them. \autoref{tab:queryonlymetrics} shows the results of the evaluation:
 each cell contains the value or range of values that we got on each query
 series. This table confirms that there are query series for every metric (shown
 in blue), and each query series differ in one or more metrics.

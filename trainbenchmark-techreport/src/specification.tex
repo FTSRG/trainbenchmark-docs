@@ -362,13 +362,28 @@ In the \emph{edit} phase the model is modified to change the result set returned
 \todo{táblázat grafikai megjelenésén javítani}
 
 \begin{table}[Htb]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/instance/instance_characteristics_fig-crop.pdf}
+	\centering
+	\scriptsize
+	\begin{tabular}{r|r|r|r|r|r|r|r|r|r|}
+	\cline{2-9}
+	& \multicolumn{4}{ c| }{\bf User (modify = 10)} & \multicolumn{4}{ c| }{\bf Model transformation (modify = Res1 × 10\%)} \\ \hline
+	\multicolumn{1}{ |r| }{\bf\#Objects} & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 \\ \hline
+	\multicolumn{1}{ |r| }{6032}         & 928 & 19 & 10 & 29 & 967 & 94 & 9 & 85 \\ \hline
+	\multicolumn{1}{ |r| }{11710}        & 1804 & 41 & 10 & 51 & 1936 & 193 & 19 & 174 \\ \hline
+	\multicolumn{1}{ |r| }{23180}        & 3575 & 68 & 10 & 76 & 3545 & 348 & 34 & 314 \\ \hline
+	\multicolumn{1}{ |r| }{46728}        & 7210 & 140 & 10 & 150 & 6691 & 642 & 64 & 578 \\ \hline
+	\multicolumn{1}{ |r| }{87396}        & 13465 & 264 & 10 & 274 & 13650 & 1301 & 130 & 1171 \\ \hline
+	\multicolumn{1}{ |r| }{175754}       & 27074 & 510 & 10 & 520 & 27190 & 2606 & 260 & 2346 \\ \hline
+	\multicolumn{1}{ |r| }{354762}       & 54653 & 1048 & 10 & 1058 & 55708 & 5324 & 532 & 4792 \\ \hline
+	\multicolumn{1}{ |r| }{708770}       & 109185 & 2071 & 10 & 2081 & 110291 & 10623 & 1062 & 9561 \\ \hline
+	\multicolumn{1}{ |r| }{1415954}      & 218140 & 4215 & 10 & 4224 & 219305 & 21097 & 2109 & 18988 \\ \hline
+	\multicolumn{1}{ |r| }{2837336}      & 437089 & 8501 & 10 & 8510 & 437025 & 41762 & 4176 & 37586 \\ \hline
+	\end{tabular}
 \caption{Modification in the RouteSensor test case}
-\label{table:modify_RouteSensor}
+\label{tbl:modify_RouteSensor}
 \end{table}
 
-\tblref{table:modify_RouteSensor}. shows instance model characteristics and the effect of the modify phase in the \emph{RouteSensor} case. The first column counts the number of instance model elements, and the second shows the number of Sensors, which can be erroneous. The two scenarios process different instance models, and modifies them differently:
+\autoref{tbl:modify_RouteSensor}. shows instance model characteristics and the effect of the modify phase in the \emph{RouteSensor} case. The first column counts the number of instance model elements, and the second shows the number of Sensors, which can be erroneous. The two scenarios process different instance models, and modifies them differently:
 
 \begin{itemize}
 \item 
@@ -379,23 +394,27 @@ During the modification the user always performs ten random edits (fixed low con
 \item 
 In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the RouteSensor case). This scenario models the case when these errors are processed by a model transformation program automatically.
 
-In the edit phase the program modifies ten percent of the elements of the result set originating from the batch query. These modifications always correct the model, thus the number of invalid elements decreases (see \tblref{table:modify_type}).
+In the edit phase the program modifies ten percent of the elements of the result set originating from the batch query. These modifications always correct the model, thus the number of invalid elements decreases (see \autoref{tbl:modify_type}).
 
 \end{itemize}
 
 
-\tblref{table:modify_type}. displays the effect of model changes to the result set size, and the type of edit operations (add, update, delete).
+\autoref{tbl:modify_type}. displays the effect of model changes to the result set size, and the type of edit operations (add, update, delete).
 
-\todo{táblázat design}
 \begin{table}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/instance/modify_type-crop.pdf}
-\caption{Modification type for the queries}
-\label{table:modify_type}
+	\centering
+	\begin{tabular}{l|l|l|l|l|l|}
+	\cline{2-5}
+	& \multicolumn{2}{ c| }{\bf User} & \multicolumn{2}{ c| }{\bf Model transformation} \\ \cline{2-5}
+	& \bf Modification type & \bf RSS change & \bf Modification type & \bf RSS change \\ \hline
+	\multicolumn{1}{ |l| }{\bf PosLength}      & Update & Increase & Update & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SwitchSensor}   & Delete & Increase & Add    & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf RouteSensor}    & Delete & Increase & Delete & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SignalNeighbor} & Update & Increase & Update & Decrease \\ \hline
+	\end{tabular}
+	\caption{Modification type for the queries}
+	\label{tbl:modify_type}
 \end{table}
-
-
-
 
 \begin{figure}[!Htb]
 	\centering
@@ -504,4 +523,4 @@ To break symmetry, the exact number of elements and cardinalities are randomized
 \end{center}
 \end{figure}
 
-To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g., $3.4\%$ of the model elements are instance of the class \emph{Switch}, $77.0\%$ is \emph{Segment}, thus $80.4\%$ of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g., there are $9.5$ \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
+To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g., 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% is \emph{Segment}, thus 80.4\% of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g., there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.

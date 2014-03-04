@@ -34,21 +34,22 @@ To obtain faithful execution times, we implemented a benchmarking framework,
 which accounted for the time measurements with nanosec precision (that can have
 less accuracy!), and the clear separation of phases enforced by the defined
 interfaces. These model loading and querying functions were implemented using
-functionally equivalent calls of a given tool. See Table~\ref{table:tools} for
+functionally equivalent calls of a given tool. See \autoref{tbl:tools-met} for
 the model management format and query language of the benchmarked tools. The
 benchmarks were realized as Java applications.
 
-\begin{table}
-	\caption{Measured tools}
+\begin{table}[h]
 	\centering
-		\begin{tabular}{|l|c|l|r|}
-		\hline 
-		\textbf{Tool} & \textbf{Model} & \textbf{Query Language} & \textbf{Version}\\ \hline
-		Java & EMF & Java & 6.0\\ \hline
-		EMF-IncQuery & EMF & IQPL & 0.7.0\\ \hline
-		Sesame & RDF & SPARQL & 2.5.0\\ \hline
-		 \end{tabular}
-	\label{table:tools-met}
+	\footnotesize
+	\begin{tabular}{ | l | c | l | r | }
+	\hline 
+	\textbf{Tool} & \textbf{Model} & \textbf{Query Language} & \textbf{Version} \\ \hline
+	Java & EMF & Java & 6.0 \\ \hline
+	EMF-IncQuery & EMF & IQPL & 0.7.0 \\ \hline
+	Sesame & RDF & SPARQL & 2.5.0 \\ \hline
+	\end{tabular}
+	\caption{Measured tools}
+	\label{tbl:tools-met}
 \end{table}
 
 Before acquiring memory usage (free heap space) from the JVM, GC calls were
@@ -88,7 +89,7 @@ Correlation coefficients may lead to incorrect conclusions if the sample of
 models and queries is too small. Therefore, whenever measuring an absolute value
 of $\tau$, we additionally conducted the associated statistical test
 ($\tau$-test) to decide whether the detected correlation between the variables
-is statistically significant ($p<0.001$). Note that any such statistical result
+is statistically significant ($p < 0.001$). Note that any such statistical result
 is conditional to the uniform sampling of the selected queries and models.
 
 
@@ -137,6 +138,7 @@ MARS~\cite{MARS-MR1091842} regression model) in future work.
 	    \includegraphics[width=0.95\textwidth]{figures/spider-sesame-check.pdf}
 	    \caption{Sesame Check time}\end{subfigure} 
     \end{tabular}
+
   \caption{$\abs{\tau}$ of correlating ($p<0.001$) metrics for each performance indicator}
   \label{fig:correlation-spider}
 \end{center}
@@ -152,7 +154,7 @@ However, check times show a more diverse picture. The check times for the Java i
 
 Interestingly, the best Sesame check time predictor turned out to be the number of pattern variables, and there is no significant correlation with any direct model metrics. 
 
-Check times in \incquery{} are very strongly correlated to the number of matches - which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \incquery{} read time. It can also be highlighted that \incquery{} seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
+Check times in \incquery{} are very strongly correlated to the number of matches -- which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \incquery{} read time. It can also be highlighted that \incquery{} seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
 \paragraph{Metrics}
 Overall, it can be said that model-only metrics are useful in predicting the performance of model persistence operations. However, query-based and combined metrics (such as our proposed \emph{abs-} and \emph{relDifficulty}) are necessary to provide a more thorough picture.
 Note that since only statistically significant correlations are included, a low magnitude correlation does not necessarily mean a measurement error. It is possible that there is a true link between the two variables, but the $\tau$ value is lowered by other metrics that strongly influence the performance indicator. 

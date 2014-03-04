@@ -63,7 +63,7 @@ To obtain faithful execution times, we implemented a benchmarking framework,
 which accounted for the time measurements with nanosecond precision (however, the accuracy may be lower than that),
  and the clear separation of phases enforced by the defined
 interfaces. These model loading and querying functions were implemented using
-functionally equivalent calls of a given tool. See Table~\ref{table:tools} for
+functionally equivalent calls of a given tool. See \autoref{tbl:tools} for
 the model management format and query language of the benchmarked tools. The
 benchmarks were realized as Java applications.
 
@@ -149,14 +149,14 @@ modes of Neo4j.
 
 
 \begin{figure*}[Hht]
-\includegraphics[width=2\columnwidth]{figures/incNonInc.pdf}
+\includegraphics[width=\textwidth]{figures/incNonInc.pdf}
 \caption{Incremental and non-incremental approaches}
-\label{table:incNonInc}
+\label{tbl:incNonInc}
 \end{figure*}
 
 Incremental and non-incremental engines use different computational approach,
 which results in different characteristics as described by
-\figref{table:incNonInc}. A clearly non-incremental tool does no extra work
+\figref{tbl:incNonInc}. A clearly non-incremental tool does no extra work
 during the load or modification of the model, but parses it into its memory, and
 modifies the structure. In contrast an incremental tool usually builds some
 auxiliary data structure (e.g. caches or indexes) on load, and maintains this
@@ -304,9 +304,9 @@ limiting heap space by the maximum usage results in excessive garbage collection
 and thus an increased runtime. However, in our experience setting the limit to
 two times the measured values, such issues do not occur.
 
-In case of the benchmark queries, we measured a $1.5$ GB heap size in case of a
-model with $3.5$M model elements that we believe is manageable in a developer
-machine with 4--8 GB of RAM. On the other hand, when handling such large
+In case of the benchmark queries, we measured a 1.5~GB heap size in case of a
+model with 3.5 million model elements that we believe is manageable in a developer
+machine with 4--8~GB of RAM. On the other hand, when handling such large
 models the existing user interface itself could become a bottleneck. Thus we
 believe, our measurement results hold also in the integrated development
 environments.
