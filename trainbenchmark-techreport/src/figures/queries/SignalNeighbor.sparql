@@ -11,9 +11,9 @@ SELECT DISTINCT ?xRoute1 WHERE {
   ?xSig rdf:type base:Signal .
   ?xRoute1 base:exit ?xSig .
   
-  ?xRouteX rdf:type base:Route .
-  ?xRouteX base:routeDefinition ?xSen2 .
-  FILTER ( ?xRouteX != ?xRoute1 )
+  ?xRoute3 rdf:type base:Route .
+  ?xRoute3 base:routeDefinition ?xSen2 .
+  FILTER ( ?xRoute3 != ?xRoute1 )
   
   OPTIONAL { 
            ?xRoute2 rdf:type base:Route .
