@@ -477,27 +477,27 @@ The modifications in more detail:
   \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e.\ they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} In this query's modify phase a randomly selected segment's \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:trainbenchmark-transformation-user-poslength}).
+    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:trainbenchmark-transformation-user-poslength}).
     
     In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.
     
-    \item \emph{RouteSensor:} The \emph{route definition} edge between the randomly selected routes' and their first connected sensor are removed (\figref{fig:trainbenchmark-transformation-user-routesensor}).
+    \item \emph{RouteSensor:} The \emph{route definition} edge between the randomly selected \emph{routes'} and their first connected \emph{sensor} are removed (\figref{fig:trainbenchmark-transformation-user-routesensor}).
     
-    \item \emph{SignalNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected routes (\figref{fig:trainbenchmark-transformation-user-signalneighbor}).
+    \item \emph{SignalNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:trainbenchmark-transformation-user-signalneighbor}).
 
-    \item \emph{SwitchSensor:} Errors are injected by randomly selecting switches and deleting their relationship to sensors. If the chosen switch was invalid, it stays invalid (as no relationships are deleted); if the chosen switch was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
+    \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting their relationship to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such a relationship, so no relationships are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
         
   \end{itemize}
   \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements selected from the set of invalid elements and their values are updated to $-1 \times (\mathit{oldValue}-1)$ (\figref{fig:trainbenchmark-transformation-xform-poslength}).
+    \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:trainbenchmark-transformation-xform-poslength}).
     
-    \item \emph{RouteSensor:} The invalid sensors are disconnected from the switch, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-xform-routesensor}).
+    \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-xform-routesensor}).
     
-    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of invalid routes, resulting in a structure where the constraint must not be hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
+    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not be hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
         
-    \item \emph{SwitchSensor:} For selected invalid switches sensors are created and connected to them.
+    \item \emph{SwitchSensor:} Random elements are selected from the set of invalid \emph{switches} and are connected to newly created \emph{sensors}.
     
     In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:trainbenchmark-transformation-xform-switchsensor}).
     
