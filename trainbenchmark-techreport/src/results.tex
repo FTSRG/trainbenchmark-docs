@@ -84,18 +84,18 @@ different model sizes. Additionally, the initial and the updated result set size
 is displayed under the model sizes in the batch and incremental queries,
 respectively.
 
-The left column shows charts of the \emph{RouteSensor} query,
-while the more complex \emph{SignalNeighbor} is presented in the right column.
-The remaining \emph{PosLength} and \emph{SwitchSensor} queries are only presented
+The left column shows charts of the \textsf{RouteSensor} query,
+while the more complex \textsf{SignalNeighbor} is presented in the right column.
+The remaining \textsf{PosLength} and \textsf{SwitchSensor} queries are only presented
 at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
-\emph{RouteSensor} case.
+\textsf{RouteSensor} case.
 
 \subsubsection{Batch Query Evaluation}
 In case of batch query evaluation, both OCL implementations use the same
 algorithm, thus their execution time is roughly the same. The roughly negligible
 differences are due to the initialization of the OCL Impact Analyzer.
 
-For the \emph{batch query} evaluation of the \emph{RouteSensor} query
+For the \emph{batch query} evaluation of the \textsf{RouteSensor} query
 \autoref{fig:BatchValid_RouteSensor} shows that \incquery{} performs similarly
 to Eclipse OCL. It is slightly faster for small models ($2$s and $3$s
 respectively), but is slower for large models (up to $125$s and $78$s), where
@@ -146,7 +146,7 @@ initial (Rete) cache build.
 \end{center}
 \end{figure}
 
-For the more complex \emph{SignalNeighbor} query
+For the more complex \textsf{SignalNeighbor} query
 \autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat
 surprisingly) outperforms OCL solutions: it is noticeably faster for small
 modells ($2$s and $4$s), and over $435$k model elements OCL did not finish with
@@ -160,11 +160,11 @@ In the \emph{incremental case}, Eclipse OCL evaluates the query on each issue
 (i.e.\ : hundred times) from scratch, its execution time increases linearly with
 model size, resulting slow overall evaluation.
 
-For the \emph{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact
+For the \textsf{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact
 Analyzer performs the $100$ modifications in $350$ms regardless of the model
 size. On the same query, \incquery{} starts much faster, but its speed reduces
 on the larger models (from $9$ to $220$ms). On the other hand, the Impact
-Analyzer is an order of magnitude slower on the \emph{SignalNeighbor} query
+Analyzer is an order of magnitude slower on the \textsf{SignalNeighbor} query
 (\autoref{fig:SumInc_SignalNeighbor}) query: it does not finish in $12$ minutes
 for models over $61$k model elements, while \incquery{} handles every model
 regardless of size under $40$ms.

@@ -43,15 +43,15 @@ consists of the execution of the read and first check phases. Inspired by paper
 use cases:
 \begin{itemize}
   
-  \item \concept{Batch validation scenario} (\texttt{Batch}):
+  \item \concept{Batch validation scenario} (\textsf{Batch}):
   In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use case is performed when a model editor is opened and initial validations are issued by the designer. 
   
-  \item \concept{Model transformation scenario} (\texttt{XForm}):
+  \item \concept{Model transformation scenario} (\textsf{XForm}):
   The automated model transformation scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is corrected, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
   
   Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
   
-  \item \concept{User model editing scenario} (\texttt{User}):
+  \item \concept{User model editing scenario} (\textsf{User}):
   The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (e.g.\ a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
   
   Such scenario occurs when someone uses a common UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect design errors quickly and early in the development process to let engineers refine models and cut down debugging and error correction costs.
@@ -71,14 +71,14 @@ use cases:
 \end{figure}
 
 
-The metamodel of the Train Benchmark's railway domain is depicted in \figref{fig:metamodel}. A train \emph{route} can be defined by a set of \emph{sensors}. Sensors are associated with \emph{track elements}: track \emph{segment}s (with a specific length) or a \emph{switch}es. A route may have associated \emph{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
+The metamodel of the Train Benchmark's railway domain is depicted in \figref{fig:metamodel}. A train \textsf{route} can be defined by a set of \textsf{sensors}. Sensors are associated with \textsf{track elements}: track \textsf{segment}s (with a specific length) or a \textsf{switch}es. A route may have associated \textsf{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
  
 \subsection{Queries}
 \label{sec:queries}
 
 In the validation and re-validation phases of the benchmark, the queries return the elements violating the well-formedness constraint defined by the test case. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return a set of the invalid instance model elements' identifiers.
  
-Two simple queries involving maximum two objects (named \emph{PosLength} and \emph{SwitchSensor}) and two complex queries involving 4-7 objects and multiple join operations (\emph{RouteSensor} and \emph{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
+Two simple queries involving maximum two objects (named \textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4-7 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
  
 In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
@@ -117,7 +117,7 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 
 \subsubsection{PosLength}
 
-\paragraph{Description.} The \textit{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
+\paragraph{Description.} The \textsf{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
 
 \paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
 
@@ -126,7 +126,7 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 \begin{minipage}{0.5\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/PosLength.sparql}}
-  \caption{PosLength query in SPARQL}
+  \caption{\textsf{PosLength} query in SPARQL}
   \label{lst:poslength-sparql}
 \end{minipage}
 \end{figure}
@@ -134,7 +134,7 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 % 
 % \lstset{language=SQL,morekeywords={PREFIX,FILTER,OPTIONAL,BOUND}}
 % 
-% \begin{lstlisting}[caption=The PosLength query in SPARQL, label=lst:poslength-sparql]
+% \begin{lstlisting}[caption=The \textsf{PosLength} query in SPARQL, label=lst:poslength-sparql]
 % PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
 % PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 % PREFIX owl:  <http://www.w3.org/2002/07/owl#>
@@ -153,18 +153,18 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-poslength}
-		\caption{The PosLength query's pattern}
+		\caption{The \textsf{PosLength} query's pattern}
 		\label{fig:trainbenchmark-poslength}
 \end{figure}
 
-\paragraph{Relational algebraic form.} The \textit{PosLength} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textsf{PosLength} query can be formalized in relational algebra as:
 
 $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \left( \mathit{Sensor} \right) \right) $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{RouteSensor}
 
-\paragraph{Description.} The \textit{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{fig:trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{lst:routesensor-sparql-nac}.
+\paragraph{Description.} The \textsf{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{fig:trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{lst:routesensor-sparql-nac}.
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
 
@@ -173,7 +173,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{minipage}{0.6\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/RouteSensor_neg.sparql}}
-  \caption{RouteSensor query in SPARQL}
+  \caption{The \textsf{RouteSensor} query in SPARQL}
   \label{lst:routesensor-sparql-nac}
 \end{minipage}
 \end{figure}
@@ -185,12 +185,12 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{minipage}{0.6\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/RouteSensor.sparql}}
-  \caption{RouteSensor query in SPARQL 1.0}
+  \caption{The \textsf{RouteSensor} query in SPARQL 1.0}
   \label{lst:routesensor-sparql-nac10}
 \end{minipage}
 \end{figure}
 
-% \begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:routesensor-sparql]
+% \begin{lstlisting}[caption=The \textsf{RouteSensor} query in SPARQL, label=lst:routesensor-sparql]
 % PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
 % PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 % PREFIX owl:  <http://www.w3.org/2002/07/owl#>
@@ -213,7 +213,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 % }
 % \end{lstlisting}
 % 
-% \begin{lstlisting}[caption=SPARQL 1.0 formula for the NAC part of the RouteSensor query, label=lst:routesensor-sparql-nac]
+% \begin{lstlisting}[caption=SPARQL 1.0 formula for the NAC part of the \textsf{RouteSensor} query, label=lst:routesensor-sparql-nac]
 %     OPTIONAL {
 %         ?xRoute ?Route_routeDefinition ?xSensor .
 %         FILTER (sameTerm(base:Route_routeDefinition, ?Route_routeDefinition))
@@ -224,11 +224,11 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-routesensor}
-		\caption{The RouteSensor query's pattern}
+		\caption{The \textsf{RouteSensor} query's pattern}
 		\label{fig:trainbenchmark-routesensor}
 \end{figure}
 
-\paragraph{Relational algebraic form.}  The \textit{RouteSensor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.}  The \textsf{RouteSensor} query can be formalized in relational algebra as:
 
 \begin{align*}
 & \pi_{\mathit{Route}} \big( \\
@@ -240,7 +240,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{SignalNeighbor}
 
-\paragraph{Description.} The \textit{SignalNeighbor} well-formedness constraint requires that routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{fig:trainbenchmark-signalneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:signalneighbor-sparql}.
+\paragraph{Description.} The \textsf{SignalNeighbor} well-formedness constraint requires that the routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{fig:trainbenchmark-signalneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:signalneighbor-sparql}.
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
 
@@ -249,12 +249,12 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{minipage}{0.6\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/SignalNeighbor.sparql}}
-  \caption{SignalNeighbor query in SPARQL}
+  \caption{The \textsf{SignalNeighbor} query in SPARQL}
   \label{lst:signalneighbor-sparql}
 \end{minipage}
 \end{figure}
 
-% \begin{lstlisting}[caption=The SignalNeighbor query in SPARQL, label=lst:signalneighbor-sparql]
+% \begin{lstlisting}[caption=The \textsf{SignalNeighbor} query in SPARQL, label=lst:signalneighbor-sparql]
 % PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
 % PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 % PREFIX owl:  <http://www.w3.org/2002/07/owl#>
@@ -292,11 +292,11 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-signalneighbor}
-		\caption{The SignalNeighbor query's pattern}
+		\caption{The \textsf{SignalNeighbor} query's pattern}
 		\label{fig:trainbenchmark-signalneighbor}
 \end{figure}
 
-\paragraph{Relational algebraic form.} The \textit{SignalNeighbor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textsf{SignalNeighbor} query can be formalized in relational algebra as:
 
 \begin{align*}
 & \pi_{\mathit{Route\_entry.Route}} \big( \sigma_{\mathit{Route\_entry.Route} \neq \mathit{Route\_routeDefinition_2.Route}} \big( \\
@@ -309,21 +309,21 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{SwitchSensor}
 
-\paragraph{Description.} The \textit{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
+\paragraph{Description.} The \textsf{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
 
-\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textit{RouteSensor} and the \textit{SignalNeighbor} queries.
+\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textsf{RouteSensor} and the \textsf{SignalNeighbor} queries.
 
 \begin{figure}[Htb]
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/SwitchSensor_neg.sparql}}
-  \caption{SwitchSensor query in SPARQL}
+  \caption{The \textsf{SwitchSensor} query in SPARQL}
   \label{lst:switchsensor-sparql}
 \end{minipage}
 \end{figure}
 
-% \begin{lstlisting}[caption=The RouteSensor query in SPARQL, label=lst:switchsensor-sparql]
+% \begin{lstlisting}[caption=The \textsf{RouteSensor} query in SPARQL, label=lst:switchsensor-sparql]
 % PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
 % PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 % PREFIX owl:  <http://www.w3.org/2002/07/owl#>
@@ -346,11 +346,11 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-switchsensor}
-		\caption{The SwitchSensor query's pattern}
+		\caption{The \textsf{SwitchSensor} query's pattern}
 		\label{fig:trainbenchmark-switchsensor}
 \end{figure}
 
-\paragraph{Relational algebraic form.} The \textit{SwitchSensor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textsf{SwitchSensor} query can be formalized in relational algebra as:
 
 $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
@@ -378,18 +378,18 @@ In the \emph{edit} phase the model is modified to change the result set returned
 	\multicolumn{1}{ |r| }{1415954}      & 218140 & 4215 & 10 & 4224 & 219305 & 21097 & 2109 & 18988 \\ \hline
 	\multicolumn{1}{ |r| }{2837336}      & 437089 & 8501 & 10 & 8510 & 437025 & 41762 & 4176 & 37586 \\ \hline
 	\end{tabular}
-\caption{Modification in the RouteSensor test case}
+\caption{Modification in the \textsf{RouteSensor} test case}
 \label{tbl:modify_RouteSensor}
 \end{table}
 
-\autoref{tbl:modify_RouteSensor}. shows the instance model characteristics and the effect of the modify phase in the \emph{RouteSensor} case. The first column counts the number of instance model elements. The second and the fifth column show the number of Sensors in the model. The two scenarios process different instance models and modify them differently:
+\autoref{tbl:modify_RouteSensor}. shows the instance model characteristics and the effect of the modify phase in the \textsf{RouteSensor} case. The first column counts the number of instance model elements. The second and the fifth column show the number of Sensors in the model. The two scenarios process different instance models and modify them differently:
 
 \begin{itemize}
-	\item In the \emph{User scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the RouteSensor case), so it can be understood and resolved by a user using the editor.
+	\item In the \emph{User scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the \textsf{RouteSensor} case), so it can be understood and resolved by a user using the editor.
 	
 	During the modification the user always performs 10 random edits (fixed low constant) which \emph{increase} the number of erroneous elements. These edit operations modify only some elements of the model and do not add or remove modules containing multiple instance model elements.
 
-	\item In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the RouteSensor case). This scenario models the case when these errors are processed by a model transformation program automatically.
+	\item In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the \textsf{RouteSensor} case). This scenario models the case when these errors are processed by a model transformation program automatically.
 
 	In the edit phase the program modifies 10\% of the elements of the result set retrieved from the batch query. These modifications always correct an invalid element in the model, so the number of invalid elements \emph{decreases} (see \autoref{tbl:modify_type}).
 
@@ -416,59 +416,58 @@ In the \emph{edit} phase the model is modified to change the result set returned
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-poslength}
-	\caption{The PosLength query's transformation in the Model transformation scenario}
+	\caption{The \textsf{PosLength} query's transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-poslength}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-routesensor}
-	\caption{The RouteSensor query's transformation in the Model transformation scenario}
+	\caption{The \textsf{RouteSensor} query's transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-routesensor}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-signalneighbor}
-	\caption{The SignalNeighbor query's transformation in the Model transformation scenario}
+	\caption{The \textsf{SignalNeighbor} query's transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-signalneighbor}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-switchsensor}
-	\caption{The SwitchSensor query's transformation in the Model transformation scenario}
+	\caption{The \textsf{SwitchSensor} query's transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-switchsensor}
 \end{figure}
-
 
 
 \begin{figure}
         \centering
         \begin{subfigure}[b]{0.25\textwidth}
                 \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-poslength}
-                \caption{PosLength}
+                \caption{\textsf{PosLength}}
                 \label{fig:trainbenchmark-transformation-user-poslength}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-routesensor}
-                \caption{RouteSensor}
+                \caption{\textsf{RouteSensor}}
                 \label{fig:trainbenchmark-transformation-user-routesensor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-signalneighbor}
-                \caption{SignalNeighbor}
+                \caption{\textsf{SignalNeighbor}}
                 \label{fig:trainbenchmark-transformation-user-signalneighbor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-switchsensor}
-                \caption{SwitchSensor}
+                \caption{\textsf{SwitchSensor}}
                 \label{fig:trainbenchmark-transformation-user-switchsensor}
         \end{subfigure}
-        \caption{Transformations in the User scenario}\label{fig:animals}
+        \caption{Transformations in the User scenario}\label{fig:trainbenchmark-transformations-xform}
 \end{figure}
 
 
@@ -526,7 +525,7 @@ To show some characteristics of the generated instance models, the distribution 
 \begin{figure}[Htb]
 \begin{center}
 \includegraphics[scale=0.5]{figures/rete-routesensor-layout.pdf}
-\caption{The Rete network for the RouteSensor query} 
+\caption{The Rete network for the \textsf{RouteSensor} query} 
 \label{fig:rete-routesensor-layout}
 \end{center}
 \end{figure}
@@ -534,7 +533,7 @@ To show some characteristics of the generated instance models, the distribution 
 \begin{figure}[Htb]
 \begin{center}
 \includegraphics[scale=0.5]{figures/rete-poslength-layout.pdf}
-\caption{The Rete network for the PosLength query} 
+\caption{The Rete network for the \textsf{PosLength} query} 
 \label{fig:rete-poslength-layout}
 \end{center}
 \end{figure}
@@ -542,7 +541,7 @@ To show some characteristics of the generated instance models, the distribution 
 \begin{figure}[Htb]
 \begin{center}
 \includegraphics[scale=0.5]{figures/rete-signalneighbor-layout.pdf}
-\caption{The Rete network for the SignalNeighbor query} 
+\caption{The Rete network for the \textsf{SignalNeighbor} query} 
 \label{fig:rete-signalneighbor-layout}
 \end{center}
 \end{figure}
@@ -550,7 +549,7 @@ To show some characteristics of the generated instance models, the distribution 
 \begin{figure}[Htb]
 \begin{center}
 \includegraphics[scale=0.5]{figures/rete-switchsensor-layout.pdf}
-\caption{The Rete network for the SwitchSensor query} 
+\caption{The Rete network for the \textsf{SwitchSensor} query} 
 \label{fig:rete-switchsensor-layout}
 \end{center}
 \end{figure}
