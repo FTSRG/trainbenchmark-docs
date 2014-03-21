@@ -132,7 +132,7 @@ The metamodel used for merics evaluation is depicted in \figref{fig:metamodel-me
 
 Models are characterized by their size and structure. Here size refers to the cardinalities of node and edge types. The fact that increasing model size tends to increase the cost of queries is intuitively self evident (and also empirically confirmed e.g.\ by our previous experiments~\cite{icgt08-bhrv,models10}). Handling large models in real life is a great chellenge, but model structure (that determines which nodes are connected to each other by which edges) must also be taken into account, which here means edge distribution of nodes. Different edge distributions also present in real-world networks: the internet or protein-protein interaction networks show \emph{scale-free} characteristics~\cite{barabasi_network_2004}, while in other areas self-healing algorithms for \emph{binomial computer networks} are studied~\cite{binomial-self-healing}. Average degree can impact performance greatly, which is a typical property of different model kinds. For example, software models have usually nodes with \emph{low degree}, while social models are usually \emph{dense graphs}. 
 
-We have conducted the experiments on synthetic models, generted automatically
+We have conducted the experiments on synthetic models, generated automatically
 with our model builder, belonging to three \concept{model families}  (without
 comparing them directly to real world ones, leaving it as a future work). All
 generated models within a family have the same approximate size; though there is
@@ -214,7 +214,7 @@ Five queries were defined, where each one includes the same number of edge
 constraints, but the number of local variables increases. 
 
 It can be realized using the \code{Segment} type and \code{connectsTo}
-reference, so it means, that only one node type and reference type is used in
+reference, so it means that only one node type and reference type is used in
 these patterns and the focus is on the structure of the patterns. The simple
 graph based visualisation of these pattern structures is shown in \figref{fig:aselocals},
 where the node drawn with empty circle represents the

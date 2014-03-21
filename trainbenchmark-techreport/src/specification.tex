@@ -36,7 +36,7 @@ To measure performance for re-validating a model after modifications, four bench
 
 \todo{lehet a köv. bekezdést át kellene fogalmazni.}
 Paper \cite{icgt08-bhrv} analyzes performance of algorithms used for graph
-pattern query answering and identifies two use cases where efficient
+pattern query evaluation and identifies two use cases where efficient
 \emph{incremental model validation} is required. The batch part of our benchmark
 consists of the execution of the read and first check phases. Inspired by paper
 \cite{icgt08-bhrv}, three \concept{scenarios} were defined to measure different
@@ -494,7 +494,7 @@ The modifications in more detail:
     
     \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-xform-routesensor}).
     
-    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not be hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
+    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
         
     \item \emph{SwitchSensor:} Random elements are selected from the set of invalid \emph{switches} and are connected to newly created \emph{sensors}.
     

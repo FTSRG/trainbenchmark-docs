@@ -126,9 +126,9 @@ negation in all languages.
 
 \todo{Az alábbi bekezdésből jön implementációs feladat, vagy a threats to validity-ben kell róla valamit írni?}
 
-Of course the unique features of tools or the lack of language expressiveness is not
+Of course the unique featuress of tools or the lack of language expressiveness is not
 highlighted in the benchmark, in order to be able to compare them. For example,
-object type constraints are prescribed in the query, where the language allowed.
+object type constraints are prescribed in the query, where the language allowed it.
 However in Java and OCL they are omitted, since it would be strange to read
 unnecessary \texttt{instanceof} and \texttt{oclIsKindOf} expressions. On the other
 hand, Drools requires these constraints, as variables are bound based on the
@@ -180,9 +180,9 @@ values are used to compare all kind of tools.
 
 Another differentiating factor can be query optimizaton. Formulating the same
 constraint using different query primitives or different query ordering can
-effect query performance highly. In the field of relational databases it has a
+affect query performance highly. In the field of relational databases it has a
 great literature used in tools (like MySQL or the RDBMS-backed Virtuoso), while
-for graph query languages research has been undertaken this field. 
+for graph query languages less research has been undertaken this field. 
 \todo{cite needed} In the benchmark\ldots \todo{mit is kezdtünk vele\ldots}
 
 \section{Questions to answer / Related work\ldots / Motivation (todo disassemble)}
@@ -207,7 +207,7 @@ which is a future work in SP$^2$Bench and also not addressed in \cite{SIB} and
 Other ontology benchmarks are the Lehigh University Benchmark (LUBM)
 \cite{LUBMBenchmark} and its improved version, the UOBM Ontology Benchmark
 \cite{UOBM}. These are tailored for measuring reasoning capabilities of ontology
-reasoners, while our goal is to compare query answering performaces.
+reasoners, while our goal is to compare query evaluation performaces.
 
 Model transformation tools are compared annually in the Transformation Tool
 Contest \cite{TTC} by solving model synchronisation, model execution and
@@ -225,7 +225,7 @@ default EMF implementation.
 We have not used relational database benchmarks, because the main scope of this
 article are graph-based databases and MySQL was included only for a rough
 comparison. RDBMS benchmarks usually use relational schemas (and not graph-based
-metamodels), and measure throughput with concurrent modifications in a similar manner 
+metamodels) and measure throughput with concurrent modifications in a similar manner 
 to the TPC-C \cite{tpc-c} benchmark.
 
 Egyed published papers about verifying and fixing inconsistencies in UML models
@@ -235,17 +235,17 @@ UMLAnalyzer tool. They measured 19 rules and 30 independent UML models, scaling
 up to 100\ 000 elements. The tool evaluates OCL expressions in sub-millisecond
 time using an impact analyzer approach.
 
-Praxis \cite{falleri-praxis} use rule-reduction technique to provide incremental
+Praxis \cite{falleri-praxis} uses rule-reduction technique to provide incremental
 instance model validation. It represents the model and edits using an operation
 based approach. Technically Java, UML or Movida metamodels can be used and
 conforming instances as well as edit operations are translated to Prolog facts.
 Constraints are represented as Prolog rules, which are evaluated when they are
-triggered based on the user written impact list. The paper reports evaluation
+triggered based on the user-defined impact list. The paper reports evaluation
 performance in the 0.1 second range (without measuring the conversion time) and
 very low (below megabyte during evaluation and tens of megabytes during
 modification at maximum) memory usage.
 
-To summarize, our benchmark concentrates to the model validation use-case, where
+To summarize, our benchmark concentrates on the model validation use-case, where
 constraints (formulated as queries) are fixed and instance models are evolving.
 The benchmark measures the batch phase and incremental phases separately and
 evaluates them for multiple modeling domains (EMF, RDF, OWL, GDB, RDBMS).
@@ -323,7 +323,7 @@ Steps to generate diagrams automatically:
 \begin{enumerate}
   \item Switch to the \textsf{src/hu.bme.mit.trainbenchmark.analyze} in the mondo-trainbenchmark repository
   \item Merge measured data into results.txt. The file contains one header line and multiple data record belonging to (optionally) multiple series.
-  \item Modify \textsf{configs.R} to introduce new tool (specify tool name in the results.txt and on the diagrams), specify line color and type of the tool, and in the \textsf{drawtools} variable enumerate tools to be plotted.
+  \item Modify \textsf{configs.R} to introduce a new tool (specify the name of the tool in the \texttt{results.txt} file and on the diagrams), specify the line color and the type of the tool and in the \textsf{drawtools} variable enumerate tools to be plotted.
   \item Execute \textsf{knitIt.sh}
   \item Inspect the generated \textsf{plotLines.html} and \textsf{plotLines-user.html} reports.
   \item If the report should be zipped, execute \textsf{packHTML.sh} that generates \textsf{tbReport.zip}.
