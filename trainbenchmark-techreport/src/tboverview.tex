@@ -52,9 +52,9 @@ represents the time that the user must wait to start to use the tool; (2)
 user spent waiting for the tool validation.
 
 
-\section{Instance models}
+\section{Instance Models}
 The Train Benchmark uses a domain-specific model of a railway system that
-originates from the \mbox{MOGENTES} EU FP7 project, where both the metamodel and the
+originates from the \mbox{MOGENTES} EU FP7~\cite{Mogentes} project, where both the metamodel and the
 well-formedness rules were defined by railway domain experts. This domain
 enables the definition of both simple and more complex model queries while it is
 simple enough to incorporate solutions from other technological spaces
@@ -77,7 +77,7 @@ benchmark, which are reported and can be corrected during the edit phase. The
 initial number of constraint violating elements are low (<1\% of total
 elements).
  
-\section{Queries and transformations}
+\section{Queries and Transformations}
 Queries are defined informally in plain text (in a tool independent way) and
 also formalized using the standard OCL language as a reference implementation
 (available on the benchmark website \cite{TBwebsite}). The queries range from
@@ -90,17 +90,17 @@ result, all query implementations must return (the same set of) invalid instance
 model elements.
  
 In the \emph{edit} phase, the model is modified to change the result set to be
-returned by the query in the \emph{re-check} phase. For simulating manual
+returned by the query in the \emph{recheck} phase. For simulating manual
 modifications, the benchmark always performs 100 random edits (fixed low
 constant) which increases the number of erroneous elements. An edit operation
 only modifies a single model elements at once \todo{rewrite this} -- more complex model manipulation is
 modelled as series of edits.
 
-\section{Evaluation of measurements}
+\section{Evaluation of Measurements}
 The Train Benchmark defines a Java-based framework and application programming
 interface that enables the integration of additional metamodels, instance
 models, query implementations and even new benchmark scenarios (which may be
-different from the original 4-phase concept). The default implementation
+different from the original four-phase concept). The default implementation
 contains a benchmark suite for queries implemented in Java, Eclipse OCL and
 \incquery{}.
 

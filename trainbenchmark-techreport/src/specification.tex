@@ -1,8 +1,11 @@
-\chapter{Train Benchmark Technical Specifications}
+\chapter{Train Benchmark Technical Specification}
 
-\todo{write about original, extended overview}
+This chapter discusses the technical specification of the Train Benchmark. In order to ensure fair comparison of different tools, the specification describes the queries, transformations and the instance model generator in detail. The phases in the benchmark are also strictly defined.
 
+Currently, the Train Benchmark comes in two versions: the original version (\autoref{specification-original}) and an extended version (\autoref{specification-extended}), first discussed in paper~\cite{TB:ASE2013}.
+ 
 \section{Original Version}
+\label{specification-original}
 
 A \concept{test case} configuration for every tool consists of an \emph{instance model} (\autoref{sec:instanceGeneration}) with an \emph{instance model size}, a \emph{predefined query} (\autoref{sec:queries}) describing constraint violating elements and the name of the \emph{scenario} (\autoref{sec:scenarios}) to run.
 
@@ -14,8 +17,9 @@ As a result of a testcase run, the \emph{execution times} of each phase, the \em
 
 \begin{figure}[Htb]
 	\centering
-	\includegraphics[scale=0.5]{figures/phases}
-	\caption{Four phases of the benchmark}
+	%\includegraphics[scale=0.5]{figures/phases}
+	\includegraphics[width=\textwidth]{figures/trainbenchmark-sequence}
+	\caption{The phases of the benchmark.}
 	\label{fig:phases}
 \end{figure}
 
@@ -26,12 +30,12 @@ To measure performance for re-validating a model after modifications, four bench
  
  \item In the \concept{check} phase, the instance model is queried to identify invalid elements. This can be as simple as reading the results from cache, or the model can be traversed based on some index. By the end of this phase, erroneous objects need to made available in a collection for further processing.
  
- \item In the \concept{edit} phase, the model is changed to simulate effects (and measure performance) of model modifying operations. At the beginning of this phase ``query like'' functions are used to gather elements to be modified, however this time is excluded, and only the required time of model editing operations are recorded in this phase. (As query performance is measured in the check phases.)
+ \item In the \concept{edit} phase, the model is changed to simulate effects (and measure performance) of model modifying operations. At the beginning of this phase ``query-like'' functions are used to gather elements to be modified, however this time is excluded, and only the required time of model editing operations are recorded in this phase. (As query performance is measured in the check phases.)
  
  \item The re-validation of the model is carried out in the \concept{re-check} phase similarly to the \emph{check} phase.
 \end{enumerate}
 
-\subsection{Use case scenarios of the benchmark}
+\subsection{Use Case Scenarios of the Benchmark}
 \label{sec:scenarios}
 
 \todo{lehet a köv. bekezdést át kellene fogalmazni.}
@@ -65,20 +69,20 @@ use cases:
 \begin{figure}[htb!]
 \begin{center}
 \includegraphics[width=1\columnwidth]{figures/TrainMM.pdf}
-\caption{Train Metamodel}
+\caption{The railway metamodel used in the Train Benchmark.}
 \label{fig:metamodel}
 \end{center}
 \end{figure}
 
 
-The metamodel of the Train Benchmark's railway domain is depicted in \figref{fig:metamodel}. A train \textsf{route} can be defined by a set of \textsf{sensors}. Sensors are associated with \textsf{track elements}: track \textsf{segment}s (with a specific length) or a \textsf{switch}es. A route may have associated \textsf{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
+The metamodel of the railway domain used in the Train Benchmark is depicted in \figref{fig:metamodel}. A train \textsf{route} can be defined by a set of \textsf{sensors}. Sensors are associated with \textsf{track elements}: track \textsf{segment}s (with a specific length) or a \textsf{switch}es. A route may have associated \textsf{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
  
 \subsection{Queries}
 \label{sec:queries}
 
 In the validation and re-validation phases of the benchmark, the queries return the elements violating the well-formedness constraint defined by the test case. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return a set of the invalid instance model elements' identifiers.
  
-Two simple queries involving maximum two objects (named \textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4-7 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
+Two simple queries involving maximum 2 objects (\textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4--8 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
  
 In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
@@ -100,13 +104,13 @@ For formulating the queries in relational algebra we define the following relati
 The edges (relationships) are represented with the following relational schemas:
 
 \begin{itemize}
-  \item $ \mathit{Route\_entry}\left(\mathit{Route}, \mathit{Signal}\right) $
-  \item $ \mathit{Route\_exit}\left(\mathit{Route}, \mathit{Signal}\right) $
-  \item $ \mathit{Route\_switchPosition}\left(\mathit{Route}, \mathit{SwitchPosition}\right) $
-  \item $ \mathit{Route\_routeDefinition}\left(\mathit{Route}, \mathit{Sensor}\right) $
-  \item $ \mathit{SwitchPosition\_switch}\left(\mathit{SwitchPosition}, \mathit{Switch}\right) $
-  \item $ \mathit{TrackElement\_sensor}\left(\mathit{Switch}, \mathit{Sensor}\right) $
-  \item $ \mathit{TrackElement\_connectsTo}\left(\mathit{TrackElement}, \mathit{TrackElement}\right) $
+  \item $ \mathit{entry}\left(\mathit{Route}, \mathit{Signal}\right) $
+  \item $ \mathit{exit}\left(\mathit{Route}, \mathit{Signal}\right) $
+  \item $ \mathit{switchPosition}\left(\mathit{Route}, \mathit{SwitchPosition}\right) $
+  \item $ \mathit{routeDefinition}\left(\mathit{Route}, \mathit{Sensor}\right) $
+  \item $ \mathit{switch}\left(\mathit{SwitchPosition}, \mathit{Switch}\right) $
+  \item $ \mathit{sensor}\left(\mathit{Switch}, \mathit{Sensor}\right) $
+  \item $ \mathit{connectsTo}\left(\mathit{TrackElement}, \mathit{TrackElement}\right) $
 \end{itemize}
 
 \subsubsection{Graph Patterns}
@@ -144,22 +148,22 @@ Blue rectangles and arrows mark simple constraints, while red rectangles and arr
 % WHERE
 % {
 %     ?xSegment rdf:type base:Segment .
-%     ?xSegment base:Segment_length ?xSegment_length .
+%     ?xSegment base:length ?length .
 % 
-%     FILTER (?xSegment_length <= 0)
+%     FILTER (?length <= 0)
 % }
 % \end{lstlisting}
 
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-poslength}
-		\caption{The \textsf{PosLength} query's pattern}
+		\caption{The \textsf{PosLength} pattern}
 		\label{fig:trainbenchmark-poslength}
 \end{figure}
 
 \paragraph{Relational algebraic form.} The \textsf{PosLength} query can be formalized in relational algebra as:
 
-$$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \left( \mathit{Sensor} \right) \right) $$
+$$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Sensor} \right) \right) $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{RouteSensor}
@@ -203,39 +207,43 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 %     ?xSwitchPosition rdf:type base:SwitchPosition .
 %     ?xSwitch rdf:type base:Switch .
 %     ?xSensor rdf:type base:Sensor .
-%     ?xRoute base:Route_switchPosition ?xSwitchPosition .
-%     ?xSwitchPosition base:SwitchPosition_switch ?xSwitch .
-%     ?xSwitch base:TrackElement_sensor ?xSensor .
+%     ?xRoute base:switchPosition ?xSwitchPosition .
+%     ?xSwitchPosition base:switch ?xSwitch .
+%     ?xSwitch base:sensor ?xSensor .
 % 
 %     FILTER NOT EXISTS {
-%         ?xRoute ?Route_routeDefinition ?xSensor .
+%         ?xRoute ?routeDefinition ?xSensor .
 %     } .
 % }
 % \end{lstlisting}
 % 
 % \begin{lstlisting}[caption=SPARQL 1.0 formula for the NAC part of the \textsf{RouteSensor} query, label=lst:routesensor-sparql-nac]
 %     OPTIONAL {
-%         ?xRoute ?Route_routeDefinition ?xSensor .
-%         FILTER (sameTerm(base:Route_routeDefinition, ?Route_routeDefinition))
+%         ?xRoute ?routeDefinition ?xSensor .
+%         FILTER (sameTerm(base:routeDefinition, ?routeDefinition))
 %     } .
-%     FILTER (!bound(?Route_routeDefinition))
+%     FILTER (!bound(?routeDefinition))
 % \end{lstlisting}
 
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-routesensor}
-		\caption{The \textsf{RouteSensor} query's pattern}
+		\caption{The NAC of the \textsf{RouteSensor} pattern in SPARQL 1.0}
 		\label{fig:trainbenchmark-routesensor}
 \end{figure}
 
 \paragraph{Relational algebraic form.}  The \textsf{RouteSensor} query can be formalized in relational algebra as:
 
-\begin{align*}
-& \pi_{\mathit{Route}} \big( \\
-& \quad \mathit{Route\_switchPosition} \naturaljoin \mathit{SwitchPosition\_switch} \naturaljoin \\
-& \quad \mathit{TrackElement\_sensor} \antijoin \mathit{Route\_routeDefinition} \\
-& \big)
-\end{align*}
+%\begin{align*}
+%& \pi_{\mathit{Route}} \big( \\
+%& \quad \mathit{switchPosition} \naturaljoin \mathit{switch} \naturaljoin \\
+%& \quad \mathit{sensor} \antijoin \mathit{routeDefinition} \\
+%& \big)
+%\end{align*}
+
+\[
+\pi_{\mathit{Route}} \big( \mathit{switchPosition} \naturaljoin \mathit{switch} \naturaljoin \mathit{sensor} \antijoin \mathit{routeDefinition} \big)
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{SignalNeighbor}
@@ -270,20 +278,20 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 %   ?xTrackElement1 rdf:type base:Trackelement .
 %   ?xTrackElement2 rdf:type base:Trackelement .
 %   
-%   ?xRoute1 base:Route_exit ?xSignal .
-%   ?xRoute1 base:Route_routeDefinition ?xSensor1 .
-%   ?xTrackElement1 base:TrackElement_sensor ?xSensor1 .
-%   ?xTrackElement1 base:TrackElement_connectsTo ?xTrackElement2 .
-%   ?xTrackElement2 base:TrackElement_sensor ?xSensor2 .
+%   ?xRoute1 base:exit ?xSignal .
+%   ?xRoute1 base:routeDefinition ?xSensor1 .
+%   ?xTrackElement1 base:sensor ?xSensor1 .
+%   ?xTrackElement1 base:connectsTo ?xTrackElement2 .
+%   ?xTrackElement2 base:sensor ?xSensor2 .
 %   
 %   ?xRoute3 rdf:type base:Route .
-%   ?xRoute3 base:Route_routeDefinition ?xSensor2 .
+%   ?xRoute3 base:routeDefinition ?xSensor2 .
 %   FILTER ( ?xRoute3 != ?xRoute1 )
 %   
 %   OPTIONAL { 
 %            ?xRoute2 rdf:type base:Route .
-%            ?xRoute2 base:Route_entry ?xSignal .
-%            ?xRoute2 base:Route_routeDefinition ?xSensor2 .
+%            ?xRoute2 base:entry ?xSignal .
+%            ?xRoute2 base:routeDefinition ?xSensor2 .
 %            } .
 %   FILTER (!BOUND(?xRoute2))
 % }
@@ -292,17 +300,17 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-signalneighbor}
-		\caption{The \textsf{SignalNeighbor} query's pattern}
+		\caption{The \textsf{SignalNeighbor} pattern}
 		\label{fig:trainbenchmark-signalneighbor}
 \end{figure}
 
 \paragraph{Relational algebraic form.} The \textsf{SignalNeighbor} query can be formalized in relational algebra as:
 
 \begin{align*}
-& \pi_{\mathit{Route\_entry.Route}} \big( \sigma_{\mathit{Route\_entry.Route} \neq \mathit{Route\_routeDefinition_2.Route}} \big( \\
-& \quad \mathit{Route\_entry} \naturaljoin \mathit{Route\_routeDefinition_1} \naturaljoin \mathit{TrackElement\_sensor_1} \naturaljoin \\
-& \quad \mathit{TrackElement\_connectsTo} \naturaljoin \mathit{TrackElement\_sensor_2} \naturaljoin \mathit{Route\_routeDefinition_2} \antijoin \\
-& \quad \left( \mathit{Route\_exit} \naturaljoin \mathit{Route\_routeDefinition_3} \right) \\
+& \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{routeDefinition_2.Route}} \big( \\
+& \quad \mathit{entry} \naturaljoin \mathit{routeDefinition_1} \naturaljoin \mathit{sensor_1} \naturaljoin \\
+& \quad \mathit{connectsTo} \naturaljoin \mathit{sensor_2} \naturaljoin \mathit{routeDefinition_2} \antijoin \\
+& \quad \left( \mathit{exit} \naturaljoin \mathit{routeDefinition_3} \right) \\
 & \big) \big)
 \end{align*}
 
@@ -336,7 +344,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 % 
 %   OPTIONAL { 
 %            ?xSensor rdf:type base:Sensor .
-%            ?xSwitch base:TrackElement_sensor ?xSensor .
+%            ?xSwitch base:sensor ?xSensor .
 %            } .
 %   FILTER (!BOUND(?xSensor))
 % }
@@ -346,7 +354,7 @@ $$ \pi_{\mathit{Sensor\_id}} \left( \sigma_{\mathit{Segment\_length} \leq 0} \le
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-switchsensor}
-		\caption{The \textsf{SwitchSensor} query's pattern}
+		\caption{The \textsf{SwitchSensor} pattern}
 		\label{fig:trainbenchmark-switchsensor}
 \end{figure}
 
@@ -416,54 +424,58 @@ In the \emph{edit} phase the model is modified to change the result set returned
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-poslength}
-	\caption{The \textsf{PosLength} query's transformation in the Model transformation scenario}
+	\caption{The \textsf{PosLength} transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-poslength}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-routesensor}
-	\caption{The \textsf{RouteSensor} query's transformation in the Model transformation scenario}
+	\caption{The \textsf{RouteSensor} transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-routesensor}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-signalneighbor}
-	\caption{The \textsf{SignalNeighbor} query's transformation in the Model transformation scenario}
+	\caption{The \textsf{SignalNeighbor} transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-signalneighbor}
 \end{figure}
 
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-switchsensor}
-	\caption{The \textsf{SwitchSensor} query's transformation in the Model transformation scenario}
+	\caption{The \textsf{SwitchSensor} transformation in the Model transformation scenario}
 	\label{fig:trainbenchmark-transformation-xform-switchsensor}
 \end{figure}
 
 
 \begin{figure}
         \centering
-        \begin{subfigure}[b]{0.25\textwidth}
-                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-poslength}
+        \begin{subfigure}[b]{0.3\textwidth}
+        		\centering
+                \includegraphics[scale=0.35]{figures/trainbenchmark-transformation-user-poslength}
                 \caption{\textsf{PosLength}}
                 \label{fig:trainbenchmark-transformation-user-poslength}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-routesensor}
+                \centering
+                \includegraphics[scale=0.35]{figures/trainbenchmark-transformation-user-routesensor}
                 \caption{\textsf{RouteSensor}}
                 \label{fig:trainbenchmark-transformation-user-routesensor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-signalneighbor}
+                \centering
+                \includegraphics[scale=0.35]{figures/trainbenchmark-transformation-user-signalneighbor}
                 \caption{\textsf{SignalNeighbor}}
                 \label{fig:trainbenchmark-transformation-user-signalneighbor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.3\textwidth}
-                \includegraphics[width=\textwidth]{figures/trainbenchmark-transformation-user-switchsensor}
+                \centering
+                \includegraphics[scale=0.35]{figures/trainbenchmark-transformation-user-switchsensor}
                 \caption{\textsf{SwitchSensor}}
                 \label{fig:trainbenchmark-transformation-user-switchsensor}
         \end{subfigure}
@@ -480,7 +492,7 @@ The modifications in more detail:
     
     In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.
     
-    \item \emph{RouteSensor:} The \emph{route definition} edge between the randomly selected \emph{routes'} and their first connected \emph{sensor} are removed (\figref{fig:trainbenchmark-transformation-user-routesensor}).
+    \item \emph{RouteSensor:} The \emph{routeDefinition} edges between the randomly selected \emph{routes} and their first connected \emph{sensor} are removed (\figref{fig:trainbenchmark-transformation-user-routesensor}).
     
     \item \emph{SignalNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:trainbenchmark-transformation-user-signalneighbor}).
 
@@ -515,41 +527,9 @@ To break symmetry, the exact number of elements and cardinalities are randomized
 \begin{figure}[Htb]
 \begin{center}
 \includegraphics[width=\textwidth]{figures/instance/TrainMMb.pdf}
-\caption{Train metamodel and instance model characteristics}
+\caption{The railway metamodel and instance model characteristics}
 \label{fig:metamodel-instance-characteristics}
 \end{center}
 \end{figure}
 
 To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g.\ 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% is \emph{Segment}, thus 80.4\% of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g.\ there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
-
-\begin{figure}[Htb]
-\begin{center}
-\includegraphics[scale=0.5]{figures/rete-routesensor-layout.pdf}
-\caption{The Rete network for the \textsf{RouteSensor} query} 
-\label{fig:rete-routesensor-layout}
-\end{center}
-\end{figure}
-
-\begin{figure}[Htb]
-\begin{center}
-\includegraphics[scale=0.5]{figures/rete-poslength-layout.pdf}
-\caption{The Rete network for the \textsf{PosLength} query} 
-\label{fig:rete-poslength-layout}
-\end{center}
-\end{figure}
-
-\begin{figure}[Htb]
-\begin{center}
-\includegraphics[scale=0.5]{figures/rete-signalneighbor-layout.pdf}
-\caption{The Rete network for the \textsf{SignalNeighbor} query} 
-\label{fig:rete-signalneighbor-layout}
-\end{center}
-\end{figure}
-
-\begin{figure}[Htb]
-\begin{center}
-\includegraphics[scale=0.5]{figures/rete-switchsensor-layout.pdf}
-\caption{The Rete network for the \textsf{SwitchSensor} query} 
-\label{fig:rete-switchsensor-layout}
-\end{center}
-\end{figure}

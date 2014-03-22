@@ -8,33 +8,18 @@
 %     Comparison/contrast with other benchmarks, answers to RQs 
 % 
 
+
+\section{Benchmarking Environment}
+\label{sec:environment}
+
+
 \subsection{Measurement Setup}
 
-For the implementation details, source codes and raw results, see the
-benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetrics}}. In this
-section we describe the runtime environment, and highlight some design
-decisions.
+For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetrics}}. In this section we describe the runtime environment, and highlight some design decisions.
 
-The benchmark machine contains two quad core Intel Xeon L5420 (2.50 GHz) CPU, 32 GBs of RAM and a SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results,
-a bare metal 64 bit Ubuntu 12.04 OS was installed with unnecessary services
-(like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java
-environment and Eclipse Juno Modeling 64 bit for Linux for development, and for
-the \incquery{} and Java dependencies.
+The benchmark machine contains two quad-core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
-The performance measurements of a tool for a given query-model pair
-was independent from the others, i.e.\ for every tool only its codebase was
-loaded, and every scenario measurement (see \figref{fig:asebenchmark}) was run
-in a different JVM. Before the execution, OS file cache was cleared, and swap
-was disabled to avoid this kind of thrashing. Each test (including all phases)
-must be run within 15 minutes, otherwise it was killed.
-
-To obtain faithful execution times, we implemented a benchmarking framework,
-which accounted for the time measurements with nanosecond precision (that can have
-less accuracy!), and the clear separation of phases enforced by the defined
-interfaces. These model loading and querying functions were implemented using
-functionally equivalent calls of a given tool. See \autoref{tbl:tools-met} for
-the model management format and query language of the benchmarked tools. The
-benchmarks were realized as Java applications.
+The performance measurements of a tool for a given query-model pair was independent from the others, i.e.\ for every tool only its codebase was loaded, and every scenario measurement (see \figref{fig:asebenchmark}) was run in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
 
 \begin{table}[h]
 	\centering
@@ -46,19 +31,14 @@ benchmarks were realized as Java applications.
 	\incquery{} & EMF & IQPL & 0.7.0 \\ \hline
 	Sesame & RDF & SPARQL & 2.5.0 \\ \hline
 	\end{tabular}
-	\caption{Measured tools}
+	\caption{Tools used in the benchmark.}
 	\label{tbl:tools-met}
 \end{table}
 
-Before acquiring memory usage (free heap space) from the JVM, GC calls were
-triggered five times to sweep unfreed objects from the RAM. For a JVM, 25 GB
-heap limit was specified, but to compensate 64 bit pointers, OOPS (ordinary
-object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m
--XX:+UseCompressedOops -Xmx25g}).
+Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 25~GB heap limit was specified, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
 
-In  the benchmark all cases were run ten times, and the results were dumped into
-files, then processed by a spreadsheet software. Finally they are analyzed and
-visualized using the R statistical framework.
+In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
+
 
 \subsection{Method of Analysis}
 Our long-term goal is providing a catalog of reliable benchmark data that,
@@ -137,7 +117,7 @@ MARS~\cite{MARS-MR1091842} regression model) in future work.
 	    \caption{Sesame Check time}\end{subfigure} 
     \end{tabular}
 
-  \caption{$\abs{\tau}$ of correlating ($p<0.001$) metrics for each performance indicator}
+  \caption{$\abs{\tau}$ of correlating ($p<0.001$) metrics for each performance indicator.}
   \label{fig:correlation-spider}
 \end{center}
 \end{figure*}

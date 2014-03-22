@@ -1,5 +1,7 @@
 \chapter{Train Benchmark Implementation}
 
+In this chapter, we discuss the implementation details of the Train Benchmark. First, we describe the original framework and architecture of the original Train Benchmark. We also present the extended Train Benchmark~\cite{SCP2014}.
+
 \section{Original Version}
 
 \subsection{Framework}
@@ -73,7 +75,7 @@ Before acquiring memory usage (free heap space) from the JVM, GC calls were trig
 \todo{+init +destroy, getmemusage, getbmr, \ldots}
 Before every test
 there is an unmeasured initialization phase. Environment initialization
-instructions are executed, like clearing the operating system's file cache, triggering the
+instructions are executed, like clearing the file cache of the operating system, triggering the
 execution of the garbage collector and starting server processes outside the
 JVM if necessary (for example the Virtuoso server). At the end of each benchmark
 in a separate unmeasured phase memory usage is measured (after calling the GC).
@@ -81,7 +83,7 @@ Finally, the network connections are closed, data structures are disposed and
 separate server processes are stopped.
 
 
-\section{Discussion of fairness considerations}
+\section{Discussion of Fairness Considerations}
 Many different tools are measured in the benchmark which have various strenghts
 and weaknesses. Model and query description languages have different expressive
 power, however the benchmarking data model and queries are expressible in all
@@ -89,9 +91,9 @@ languages: executing them they return the correct number of invalid elements,
 and semantically they are mapped as closely as languages enable, without using
 cumbersome, unnatural expressions in a language.
 
-EMF provides a class diagram like metamodel description language. Objects are
+EMF provides a class diagram-like metamodel description language. Objects are
 classified into classes and connections between them are described by relations
-(or attributes, when the target object's type is not a class, but a primitive
+(or attributes, when the type of the target object is not a class, but a primitive
 type, e.g.\ \texttt{EInt}). Enumerations, generalizations between classes, inverse
 relations and simple cardinality restrictions are supported. A flat containment
 hierarchy is used: a special class instance is created as the root object which can
@@ -322,9 +324,9 @@ environments.
 Steps to generate diagrams automatically:
 \begin{enumerate}
   \item Switch to the \textsf{src/hu.bme.mit.trainbenchmark.analyze} in the mondo-trainbenchmark repository
-  \item Merge measured data into results.txt. The file contains one header line and multiple data record belonging to (optionally) multiple series.
+  \item Merge the measured data into \textsf{results.txt}. The file contains one header line and multiple data records belonging to (optionally) multiple series.
   \item Modify \textsf{configs.R} to introduce a new tool (specify the name of the tool in the \texttt{results.txt} file and on the diagrams), specify the line color and the type of the tool and in the \textsf{drawtools} variable enumerate tools to be plotted.
-  \item Execute \textsf{knitIt.sh}
+  \item Execute the \textsf{knitIt.sh} script.
   \item Inspect the generated \textsf{plotLines.html} and \textsf{plotLines-user.html} reports.
-  \item If the report should be zipped, execute \textsf{packHTML.sh} that generates \textsf{tbReport.zip}.
+  \item If the you want the report to be zipped in a single file, execute \textsf{packHTML.sh} that generates \textsf{tbReport.zip}.
 \end{enumerate}

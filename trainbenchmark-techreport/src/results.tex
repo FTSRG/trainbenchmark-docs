@@ -1,19 +1,8 @@
 \chapter{Benchmark Results}
 
-\section{Benchmarking Environment}
-\label{sec:environment}
-
-The benchmarking machine contains two quad core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
-
-The performance measurements were independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement was run in a different JVM. Before the execution, OS file cache was cleared, and swap was disabled to avoid this kind of thrashing. Each testcase must be run within a specified time limit (15 minutes), otherwise it was killed.
-
-For a JVM, 25~GB heap limit was specified, but to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on: (\code{-XX:MaxPermSize=256m -XX:+UseCompressedOops -Xmx25g}).
-
-In the benchmark all cases were run ten times, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
-
 \section{Tools}
 \label{tools}
-The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph-pattern like query language, or some custom solution.
+The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph pattern-like query language, or some custom solution.
 
 \begin{table}[h]
 	\centering
@@ -35,7 +24,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	4store & 1.1.4 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
 	Neo4j & 1.8 & Graph & Cypher & \ding{109} & \ding{109} & Java \\ \hline
 	\end{tabular}
-	\caption{Tools used in the benchmark}
+	\caption{Tools used in the benchmark.}
 	\label{tools}
 \end{table}
 
@@ -141,7 +130,7 @@ initial (Rete) cache build.
 	    \caption{Memory Usage -- SignalNeighbor}
 	    \label{fig:Memory_SignalNeighbor}
 	\end{subfigure}
-  \caption{Benchmark Results}
+  \caption{Benchmark results.}
   \label{fig:trainbenchmark-diagrams}
 \end{center}
 \end{figure}
@@ -149,8 +138,8 @@ initial (Rete) cache build.
 For the more complex \textsf{SignalNeighbor} query
 \autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat
 surprisingly) outperforms OCL solutions: it is noticeably faster for small
-modells ($2$s and $4$s), and over $435$k model elements OCL did not finish with
-the initial analysis in $12$ minutes. This performance gain might be attributed to
+modells (2 s and 4 s), and over 435k model elements OCL did not finish with
+the initial analysis in 12 minutes. This performance gain might be attributed to
 the more efficient (cached) enumeration of instances, and the possibility of
 backward navigation (with the help of auxiliary structures) on unidirectional
 references used by this query.
@@ -161,17 +150,17 @@ In the \emph{incremental case}, Eclipse OCL evaluates the query on each issue
 model size, resulting slow overall evaluation.
 
 For the \textsf{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact
-Analyzer performs the $100$ modifications in $350$ms regardless of the model
+Analyzer performs the 100 modifications in 350 ms regardless of the model
 size. On the same query, \incquery{} starts much faster, but its speed reduces
-on the larger models (from $9$ to $220$ms). On the other hand, the Impact
+on the larger models (from 9 to 220 ms). On the other hand, the Impact
 Analyzer is an order of magnitude slower on the \textsf{SignalNeighbor} query
-(\autoref{fig:SumInc_SignalNeighbor}) query: it does not finish in $12$ minutes
-for models over $61$k model elements, while \incquery{} handles every model
-regardless of size under $40$ms.
+(\autoref{fig:SumInc_SignalNeighbor}) query: it does not finish in 12 minutes
+for models over 61k model elements, while \incquery{} handles every model
+regardless of size under 40 ms.
 
 The performance of the Impact Analyzer is most likely affected by the previously
 mentioned unidirectional references. The slowdown of \incquery{} is probably
-caused by the increased number of matches (from $116$ to $8592$), as query
+caused by the increased number of matches (from 116 to 8592), as query
 results are always available in the output nodes of Rete networks, and only a
 linear traversal of these stored matches is needed to return them.
 
