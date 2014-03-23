@@ -9,7 +9,7 @@ In this chapter, we discuss the implementation details of the Train Benchmark. F
 \begin{figure}[!Htb]
 	\centering
 	\includegraphics[width=\textwidth]{figures/trainbenchmark-modules}
-	\caption{The Maven modules defined in the Train Benchmark. Note that artifact ids of the modules are shortened and their full id starts with \texttt{hu.bme.mit.trainbenchmark}.}
+	\caption{The Maven modules defined in the Train Benchmark. Note that artifact ids of the modules are shortened and the full ids start with \texttt{hu.bme.mit.trainbenchmark}.}
 	\label{fig:trainbenchmark-modules}
 \end{figure}
 
@@ -59,7 +59,7 @@ The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for b
 
 \subsection{API}
 
-\subsection{Measurement of running time}
+\subsection{Measurement of Running Time}
 
 To obtain faithful execution times, we implemented a benchmarking framework,
 which accounted for the time measurements with nanosecond precision (however, the accuracy may be lower than that),
@@ -69,7 +69,7 @@ functionally equivalent calls of a given tool. See \autoref{tbl:tools} for
 the model management format and query language of the benchmarked tools. The
 benchmarks were implemented as Java applications.
 
-\subsection{Measurement of memory consumption}
+\subsection{Measurement of Memory Consumption}
 Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the memory.
 
 \todo{+init +destroy, getmemusage, getbmr, \ldots}
@@ -159,7 +159,7 @@ modes of Neo4j.
 	\multicolumn{1}{ |l| }{\bf Incremental}     & long  & short & long  & short & more & less \\ \hline
 	\multicolumn{1}{ |l| }{\bf Non-incremental} & short & long  & short & long  & less & more \\ \hline	
 	\end{tabular}
-\caption{Incremental and non-incremental approaches}
+\caption{Incremental and non-incremental approaches.}
 \label{tbl:incNonInc}
 \end{table}
 

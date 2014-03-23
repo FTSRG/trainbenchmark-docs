@@ -58,9 +58,9 @@ Sesame gives an API specification for many tools, and also provides its own impl
 % acquiring their matches.
 
 \subsection{Graph Database}
-RDF is a graph based structure in itself, but more general graph databases exist like Neo4j \cite{neo4j}. The data model is based on graphs, where any node or arc can be labeled. Cypher can be used to query such labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so memdisk is created during the benchmark.
+RDF is a graph based structure in itself, but more general graph databases exist like Neo4j \cite{neo4j}. The data model is based on graphs, where any node or arc can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
 
-\section{Original version}
+\section{Original Version}
 
 
 \subsection{Measurement Results}
@@ -145,8 +145,8 @@ backward navigation (with the help of auxiliary structures) on unidirectional
 references used by this query.
 
 \subsubsection{Incremental Query Evaluation}
-In the \emph{incremental case}, Eclipse OCL evaluates the query on each issue
-(i.e.\ : hundred times) from scratch, its execution time increases linearly with
+In the \emph{incremental case}, Eclipse OCL evaluates the query on each run
+(100 times) from scratch, its execution time increases linearly with
 model size, resulting slow overall evaluation.
 
 For the \textsf{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact
