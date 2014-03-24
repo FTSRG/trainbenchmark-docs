@@ -115,7 +115,7 @@ The edges (relationships) are represented with the following relational schemas:
 
 \subsubsection{Graph Patterns}
 
-Blue rectangles and arrows mark simple constraints, while red rectangles and arrows represent negative application conditions. The query returns with the nodes in hollow blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
+In the following, we represent the graph pattern representation for the violation of each well-formedness constraint. Opaque blue rectangles and dashed arrows mark positive constraints, while red rectangles and arrows represent negative application conditions (NACs). The result of the query (also referred as the \emph{match set}) is marked with transparent blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -368,6 +368,8 @@ $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 In the \emph{edit} phase the model is modified to change the result set returned in the succeeding re-check phase.
 
+The Train Benchmark defines a quick fix model transformation for each query. The transformations are also represented as graph transformations. The insertions are shown in green with a \guillemotleft{}new\guillemotright{} caption, while deletions are marked with a red cross and a \guillemotleft{}del\guillemotright{} caption. In general, the goal of these transformations is to remove a subset of the invalid elements from the model.
+
 \begin{table}[Htb]
 	\centering
 	\scriptsize
@@ -500,7 +502,7 @@ The modifications in more detail:
     \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting their relationship to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such a relationship, so no relationships are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
         
   \end{itemize}
-  \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query.
+  \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query. The transformations provide quick fix-like refactoring operations.
   \begin{itemize}
     
     \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:trainbenchmark-transformation-xform-poslength}).
