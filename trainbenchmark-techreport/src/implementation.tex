@@ -27,6 +27,10 @@ The \texttt{hu.bme.mit.trainbenchmark} module is the parent module which contain
 
 The \texttt{hu.bme.mit.trainbenchmark.model} module contains the reference metamodel represented in EMF.
 
+\paragraph{Opening EMF instance models.} If you would like to view the EMF instance models, right click the \textsf{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \textsf{hu.bme.mit.trainbenchmark.instancemodels} project. The \textsf{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang up for a long time.) If you also wish to generate an editor, open the \textsf{models/Metamodel.genmodel} file. Right click the \textsf{Metamodel} root element and choose \textbf{Generate All}. Start a new runtime Eclipse. The \textsf{concept} files are now opened by the \textbf{Concept Editor}.
+
+
+
 The \texttt{hu.bme.mit.trainbenchmark.config} module contains classes and constants used by the \emph{generator} and the \emph{benchmark} projects.
 
 
@@ -330,3 +334,4 @@ Steps to generate diagrams automatically:
   \item Inspect the generated \textsf{plotLines.html} and \textsf{plotLines-user.html} reports.
   \item If the you want the report to be zipped in a single file, execute \textsf{packHTML.sh} that generates \textsf{tbReport.zip}.
 \end{enumerate}
+
