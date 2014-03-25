@@ -1,5 +1,37 @@
 \chapter{Benchmark Results}
 
+
+\section{Benchmarking Environment}
+\label{sec:environment}
+
+
+\subsection{Measurement Setup}
+
+For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetrics}}. In this section we describe the runtime environment, and highlight some design decisions.
+
+The benchmark machine contains two quad-core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
+
+The performance measurements of a tool for a given query-model pair was independent from the others, i.e.\ for every tool only its codebase was loaded, and every scenario measurement (see \figref{fig:asebenchmark}) was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
+
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\begin{tabular}{ | l | c | l | r | }
+	\hline 
+	\textbf{Tool} & \textbf{Model} & \textbf{Query Language} & \textbf{Version} \\ \hline
+	Java & EMF & Java & 6.0 \\ \hline
+	\incquery{} & EMF & IQPL & 0.7.0 \\ \hline
+	Sesame & RDF & SPARQL & 2.5.0 \\ \hline
+	\end{tabular}
+	\caption{Tools used in the benchmark.}
+	\label{tbl:tools-met}
+\end{table}
+
+Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 25~GB heap limit was specified, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
+
+In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
+
+
 \section{Tools}
 \label{tools}
 The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph pattern-like query language, or some custom solution.

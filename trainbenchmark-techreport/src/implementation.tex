@@ -27,12 +27,9 @@ The \texttt{hu.bme.mit.trainbenchmark} module is the parent module which contain
 
 The \texttt{hu.bme.mit.trainbenchmark.model} module contains the reference metamodel represented in EMF.
 
-\paragraph{Opening EMF instance models.} If you would like to view the EMF instance models, right click the \textsf{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \textsf{hu.bme.mit.trainbenchmark.instancemodels} project. The \textsf{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang up for a long time.) If you also wish to generate an editor, open the \textsf{models/Metamodel.genmodel} file. Right click the \textsf{Metamodel} root element and choose \textbf{Generate All}. Start a new runtime Eclipse. The \textsf{concept} files are now opened by the \textbf{Concept Editor}.
+\paragraph{Opening EMF instance models.} If you would like to view the EMF instance models, right click the \texttt{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \texttt{hu.bme.mit.trainbenchmark.instancemodels} project. The \texttt{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang up for a long time.) If you also wish to generate an editor, open the \texttt{models/Metamodel.genmodel} file. Right click the \textsf{Metamodel} root element and choose \textbf{Generate All}. Start a new runtime Eclipse. The \textsf{concept} files are now opened by the \textbf{Concept Editor}.
 
-
-
-The \texttt{hu.bme.mit.trainbenchmark.config} module contains classes and constants used by the \emph{generator} and the \emph{benchmark} projects.
-
+The \texttt{hu.bme.mit.trainbenchmark.config} module contains classes and constants used by the \texttt{generator} and the \texttt{benchmark} projects.
 
 
 \subsubsection{Representation-specific modules}
@@ -327,11 +324,11 @@ environments.
 \subsection{Generating diagrams automatically}
 Steps to generate diagrams automatically:
 \begin{enumerate}
-  \item Switch to the \textsf{src/hu.bme.mit.trainbenchmark.analyze} in the mondo-trainbenchmark repository
-  \item Merge the measured data into \textsf{results.txt}. The file contains one header line and multiple data records belonging to (optionally) multiple series.
-  \item Modify \textsf{configs.R} to introduce a new tool (specify the name of the tool in the \texttt{results.txt} file and on the diagrams), specify the line color and the type of the tool and in the \textsf{drawtools} variable enumerate tools to be plotted.
-  \item Execute the \textsf{knitIt.sh} script.
-  \item Inspect the generated \textsf{plotLines.html} and \textsf{plotLines-user.html} reports.
-  \item If the you want the report to be zipped in a single file, execute \textsf{packHTML.sh} that generates \textsf{tbReport.zip}.
+  \item Switch to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the mondo-trainbenchmark repository
+  \item Merge the measured data into \texttt{results.txt}. The file contains one header line and multiple data records belonging to (optionally) multiple series.
+  \item Modify \texttt{configs.R} to introduce a new tool (specify the name of the tool in the \texttt{results.txt} file and on the diagrams), specify the line color and the type of the tool and in the \texttt{drawtools} variable enumerate tools to be plotted.
+  \item Execute the \texttt{knitIt.sh} script.
+  \item Inspect the generated \texttt{plotLines.html} and \texttt{plotLines-user.html} reports.
+  \item If the you want the report to be zipped in a single file, execute \texttt{packHTML.sh} that generates \texttt{tbReport.zip}.
 \end{enumerate}
 
