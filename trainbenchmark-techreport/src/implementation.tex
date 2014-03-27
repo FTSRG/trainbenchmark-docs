@@ -1,10 +1,8 @@
 \chapter{Train Benchmark Implementation}
 
-In this chapter, we discuss the implementation details of the Train Benchmark. First, we describe the original framework and architecture of the original Train Benchmark. We also present the extended Train Benchmark~\cite{SCP2014}.
+In this chapter, we discuss the implementation details of the Train Benchmark.
 
-\section{Original Version}
-
-\subsection{Framework}
+\section{Performance Benchmark Framework}
 
 \begin{figure}[!Htb]
 	\centering
@@ -59,272 +57,17 @@ The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for b
 
 To access 4store through a graph-like API, we developed a Java client\footnote{\url{https://git.inf.mit.bme.hu/w?p=projects/bigmodel/4store-graph-client.git}, \\ clone URI: \url{git@git.inf.mit.bme.hu:projects/bigmodel/4store-graph-client.git}} with a focus on high performance.
 
-\subsection{Services}
+\subsection{Program parameters}
+\subsubsection{Generator}
+\subsubsection{Running the benchmark}
 
-\subsection{API}
-
-\subsection{Measurement of Running Time}
-
-To obtain faithful execution times, we implemented a benchmarking framework,
-which accounted for the time measurements with nanosecond precision (however, the accuracy may be lower than that),
- and the clear separation of phases enforced by the defined
-interfaces. These model loading and querying functions were implemented using
-functionally equivalent calls of a given tool. See \autoref{tbl:tools} for
-the model management format and query language of the benchmarked tools. The
-benchmarks were implemented as Java applications.
-
-\subsection{Measurement of Memory Consumption}
-Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the memory.
-
-\todo{+init +destroy, getmemusage, getbmr, \ldots}
-Before every test
-there is an unmeasured initialization phase. Environment initialization
-instructions are executed, like clearing the file cache of the operating system, triggering the
-execution of the garbage collector and starting server processes outside the
-JVM if necessary (for example the Virtuoso server). At the end of each benchmark
-in a separate unmeasured phase memory usage is measured (after calling the GC).
-Finally, the network connections are closed, data structures are disposed and
-separate server processes are stopped.
-
-
-\section{Discussion of Fairness Considerations}
-Many different tools are measured in the benchmark which have various strenghts
-and weaknesses. Model and query description languages have different expressive
-power, however the benchmarking data model and queries are expressible in all
-languages: executing them they return the correct number of invalid elements,
-and semantically they are mapped as closely as languages enable, without using
-cumbersome, unnatural expressions in a language.
-
-EMF provides a class diagram-like metamodel description language. Objects are
-classified into classes and connections between them are described by relations
-(or attributes, when the type of the target object is not a class, but a primitive
-type, e.g.\ \texttt{EInt}). Enumerations, generalizations between classes, inverse
-relations and simple cardinality restrictions are supported. A flat containment
-hierarchy is used: a special class instance is created as the root object which can
-hold all individuals. On the instance level EMF objects and instance relations between them 
-are created as described in \autoref{sec:instanceGeneration}.
-
-In ontologies, the OWL2 language supports all constructs that can be expressed in
-EMF, thus the EMF metamodel is mapped to OWL2 TBox. The mapping is done by hand as
-described in Sec. 16 of~\cite{OMG2009ODM}. Ontology instance model elements are
-generated similarly to the EMF objects. Since an OWL2 file can be serialized
-into RDF/XML, the same file is used as input for RDF databases and OWL
-reasoners.
-
-Neo4j defines a vertex-attributed, edge-labeled graph structure for describing
-models. Here instance objects can be mapped to graph nodes and instance
-relations to graph edges. Metamodel information can be introduced into the graph
-as labels. Key-value labels of nodes describe their types, instance names or
-value of attributes (like the length of a Segment). The type of an edge is described by its \emph{label}.
-Initially the generated model is loaded from a GraphML file~\cite{GraphML},
-which -- similarly to RDF/XML or XMI for EMF -- is an XML-based file format.
-
-For the SQL test a custom relational schema is created as metamodel. Instance
-model elements are stored in records, while primitive type attributes as
-attributes and relations as joins between tables. The input is also a text
-file, but it is not in XML format, it consists of SQL insert commands.
-
-Queries are formulated similarly for the benchmarked tools. Variables are used
-to bind them to objects. Types of variables and relation types between two
-variables are constrained. For integer checks special check/filter constraints
-are used; while the absence of instance model structures are described with
-negation in all languages.
-
-\todo{Az alábbi bekezdésből jön implementációs feladat, vagy a threats to validity-ben kell róla valamit írni?}
-
-Of course the unique featuress of tools or the lack of language expressiveness is not
-highlighted in the benchmark, in order to be able to compare them. For example,
-object type constraints are prescribed in the query, where the language allowed it.
-However in Java and OCL they are omitted, since it would be strange to read
-unnecessary \texttt{instanceof} and \texttt{oclIsKindOf} expressions. On the other
-hand, Drools requires these constraints, as variables are bound based on the
-class it belongs to and relation constraints can be expressed with this given
-information. While EMF and OWL supports cardinality constraints and inverse
-relations, RDF and RDFS do not support it. The former is not tested in the
-benchmark and the latter can be worked around by switching the subject and
-object variables in a SPARQL query.
-The handling of types and subsumption hierarchies were crucial for the
-benchmark and fortunately it is supported by most languages, although
-reasoning capabilities must be turned on for ontology tools to work with this
-implicit information. Other extra strengths special for a given tool were not
-used, like complex cardinality constraints or transitive closure axioms in
-ontology, transitive closure of the IQPL query language or high availability
-modes of Neo4j.
-
-% OCL: org.eclipse.ocl.ecore.source_3.2.0.v20120522-1637.jar/org/eclipse/ocl/opposites/
-
-
-\begin{table}[Htb]
-	\centering
-	\begin{tabular}{l|c|c|c|c|c|c|}
-	\cline{2-7}
-	& \multicolumn{4}{ c| }{\bf Running time } & \multicolumn{2}{ c| }{\bf Resource usage} \\ \cline{2-7}
-	& \bf Read & \bf Check1 & \bf Edit & \bf Check2 & \bf Memory & \bf Computation \\ \hline
-	\multicolumn{1}{ |l| }{\bf Incremental}     & long  & short & long  & short & more & less \\ \hline
-	\multicolumn{1}{ |l| }{\bf Non-incremental} & short & long  & short & long  & less & more \\ \hline	
-	\end{tabular}
-\caption{Incremental and non-incremental approaches.}
-\label{tbl:incNonInc}
-\end{table}
-
-Incremental and non-incremental engines use different computational approach,
-which results in different characteristics as described by
-\figref{tbl:incNonInc}. A clearly non-incremental tool does no extra work
-during the load or the modification phases, but parses the model into its memory and
-modifies the structure. In contrast an incremental tool usually builds some
-auxiliary data structure (e.g.\ caches or indexes) on load and maintains this
-during modification (besides performing the modification) resulting in longer running time. On the other hand incremental tools can return results quickly,
-because they only read it from cache or perform queries using the auxiliary
-information (for fast access provided by indexes, utilize scope reduction or
-rule reduction techniques). However, non-incremental tools must traverse the
-whole model to search for invalid elements resulting in longer query response
-time. In conclusion, incremental tools usually need less computation time when
-the task is not batch dominated (i.e.\ there are no large transactions with rare
-queries), while non-incremental tools need less memory (because there are no
-auxiliary helper structures). This is why read+check1 and edit+check2 aggregated
-values are used to compare all kind of tools.
-
-Another differentiating factor can be query optimizaton. Formulating the same
-constraint using different query primitives or different query ordering can
-affect query performance highly. In the field of relational databases it has a
-great literature used in tools (like MySQL or the RDBMS-backed Virtuoso), while
-for graph query languages less research has been undertaken this field. 
-\todo{cite needed} In the benchmark\ldots \todo{mit is kezdtünk vele\ldots}
-
-\section{Questions to answer / Related work\ldots / Motivation (todo disassemble)}
-
-\subsection{Why not existing benchmarks?}
-
-There are already available benchmark definitions, however we created a new one
-for measuring different tool capabilities. One of the most well known RDF
-benchmark is the Berlin SPARQL Benchmark (BSBM)~\cite{BerlinBenchmark}, which
-models an e-commerce use-case. BSBM concentrates on throughput performance (in a
-steady state) of parameterized queries, while our benchmark measures batch and
-incremental query evaluation performance of fixed constraint checking queries.
-The SP$^2$Bench~\cite{SP2Bench} works on an unstructured dataset (DBLP) suited
-for RDF data representation with the goal of measuring query evaluation
-performance of SPARQL engines, concentrating on testing every feature of the
-SPARQL language. In opposite, our benchmark queries a structured dataset and 
-the queries can be implemented in multiple query and data representation languages.
-Moreover, our benchmark scenarios address continous evolution of the dataset,
-which is a future work in SP$^2$Bench and also not addressed in~\cite{SIB} and
-\cite{DBpediaSparql}.
-
-Other ontology benchmarks are the Lehigh University Benchmark (LUBM)
-\cite{LUBMBenchmark} and its improved version, the UOBM Ontology Benchmark
-\cite{UOBM}. These are tailored for measuring reasoning capabilities of ontology
-reasoners, while our goal is to compare query evaluation performaces.
-
-Model transformation tools are compared annually in the Transformation Tool
-Contest~\cite{TTC} by solving model synchronisation, model execution and
-simulation, verification use-cases from different application domains. The aim
-is to compare expressiveness, usability and performance of different
-tools in the field. \todo{kiegészíteni, +hivatkozás}
-
-From the EMF domain we have not found general application benchmarks or
-comparison of EMF query technologies (like Eclipse OCL or EMF Query). However
-there are performance measurements~\cite{EMF-performance} about core EMF
-functions and different EMF configurations. We tried some relevant
-configuration from these tips, but they were not effective, so we stuck at the
-default EMF implementation.
-
-We have not used relational database benchmarks, because the main scope of this
-article are graph-based databases and MySQL was included only for a rough
-comparison. RDBMS benchmarks usually use relational schemas (and not graph-based
-metamodels) and measure throughput with concurrent modifications in a similar manner 
-to the TPC-C~\cite{tpc-c} benchmark.
-
-Egyed published papers about verifying and fixing inconsistencies in UML models
-\cite{Egyed-fixingInconsistencies, Egyed-instantConsistency} with performance
-and memory consumption measurements~\cite{Egyed-incConsistency} of the
-UMLAnalyzer tool. They measured 19 rules and 30 independent UML models, scaling
-up to 100\ 000 elements. The tool evaluates OCL expressions in sub-millisecond
-time using an impact analyzer approach.
-
-Praxis~\cite{falleri-praxis} uses rule-reduction technique to provide incremental
-instance model validation. It represents the model and edits using an operation
-based approach. Technically Java, UML or Movida metamodels can be used and
-conforming instances as well as edit operations are translated to Prolog facts.
-Constraints are represented as Prolog rules, which are evaluated when they are
-triggered based on the user-defined impact list. The paper reports evaluation
-performance in the 0.1 second range (without measuring the conversion time) and
-very low (below megabyte during evaluation and tens of megabytes during
-modification at maximum) memory usage.
-
-To summarize, our benchmark concentrates on the model validation use-case, where
-constraints (formulated as queries) are fixed and instance models are evolving.
-The benchmark measures the batch phase and incremental phases separately and
-evaluates them for multiple modeling domains (EMF, RDF, OWL, GDB, RDBMS).
-
-% Social Network Intelligence Benchmark (SIB):
-%   Olyan kérdéseket gyűjtöttek, ahol SPARQL jó. _Csak query_, throughput. (Ügyes SPARQL konstrukciók.)
-% DBpedia SPARQL Benchmark:
-%   Csak query, throughput. De real world.
-
-\subsection{Why this specific domain?}
-This domain is selected because it is small (contains only nine concepts), easy
-to understand and no deep domain knowledge is required. All queries can be
-expressed over the described metamodel and the railway terms suggest the field
-of critical (or critical embedded) systems, where instance model validation is
-used during the software development process.
-
-\subsection{Why these instance models?}
-Instance models are generated systematically from pre-defined blocks. This
-reflects how large models of common design applications are built: domain
-engineers connect modules with minimal variations, chosen from predefined
-library elements. Large number of instance model elements can also be
-generated automatically by a program, which connects building blocks created from
-templates.
-
-\subsection{Are these queries representative?}
-
-
-% MORE threats : )
-We tried to mitigate \emph{internal validity} threats by reducing the number of
-uncontrolled variables during measurements: a physical machine was used with all
-unnecessary software components turned off and every execution was isolated into
-a freshly initialized JVM.
-
-The queries are semantically equivalent in the different query languages and the
-result sets are the same for every model. Additionally, to ensure comparable
-results the query implementations were reviewed: the OCL
-implementation by Ed Willink from the Eclipse OCL project.
-%, the usage of Impact Analyzer by Axel Uhl from the Impact Analyzer developer team. 
-The graph patterns were written by the developers of \incquery{}.
-
-The metamodel and the query specifications were motivated by an industrial case
-study. The queries feature commonly used validation tasks such as
-attribute and reference checks or cycle detection. We tried to ensure that the
-instance models have a similar structure and distribution to other models by
-parameterizing the generation process based on our experience with other
-domains. To summarize, we believe that the railway domain and the generated
-instance models represent other domain-specific languages and instance
-models well.
-
-Our current measurements only loaded and executed a single query in each run.
-When loading multiple queries, query interference may change the results
-greatly. A more detailed evaluation of this issue is planned for the future.
-
-Considering resource-constrained environments, we believe that limiting
-available memory will alter the results the most, as the memory management
-overhead will reduce the performance of \incquery{}.
-
-It is important to note that heap usage were measured after executing a garbage
-collection, so these measurements do not contain memory usage of temporary
-constructs. This means that maximum heap usage might have been larger. Furthermore,
-limiting heap space by the maximum usage results in excessive garbage collection
-and thus an increased runtime. However, in our experience setting the limit to
-twice the measured value prohibits such issues.
-
-In case of the benchmark queries, we measured a 1.5~GB heap size in case of a
-model with 3.5 million model elements that we believe is manageable in a developer
-workstation with 4--8~GB of RAM. On the other hand, when handling such large
-models the existing user interface itself could become a bottleneck. Thus we
-believe, our measurement results hold also in the integrated development
-environments.
-
+\subsection{Extending the framework with custom tools, queries or models}
+\subsubsection{Extending the model generator with new syntaxes}
+\subsubsection{Adding a tool to measure performance}
 
 \subsection{Generating diagrams automatically}
+\todo{R library dependencies}
+
 Steps to generate diagrams automatically:
 \begin{enumerate}
   \item Switch to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the mondo-trainbenchmark repository
@@ -334,4 +77,3 @@ Steps to generate diagrams automatically:
   \item Inspect the generated \texttt{plotLines.html} and \texttt{plotLines-user.html} reports.
   \item If the you want the report to be zipped in a single file, execute \texttt{packHTML.sh} that generates \texttt{tbReport.zip}.
 \end{enumerate}
-
