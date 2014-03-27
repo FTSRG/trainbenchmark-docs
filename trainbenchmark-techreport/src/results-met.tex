@@ -1,16 +1,7 @@
-\section{Experimental Evaluation}
+\section{Evaluation of Metrics}
 \label{sec:eval}
-% Baba, 5 columns
-%     Setup (hw-sw environment, measurement and data collection details)
-%     Results
-%         Figures, tables: results 
-%     Analysis
-%     Comparison/contrast with other benchmarks, answers to RQs 
-% 
 
-
-
-\subsection{Method of Analysis}
+\subsection{Method of Analysing Metrics}
 Our long-term goal is providing a catalog of reliable benchmark data that,
 based on metrics of the model and the queries, will allow the engineer to
 extrapolate the expected performance characteristics of various query
@@ -92,7 +83,7 @@ MARS~\cite{MARS-MR1091842} regression model) in future work.
 \end{center}
 \end{figure*}
 
-\subsection{Results}
+\subsection{Metrics Colleration Results}
 For each tool performance indicator and each metric, we conducted Kendall's correlation test to see whether the data available is sufficient to form a statistically significant support of correlation between the performance indicator and the metric. For metrics that were found to correlate, the absolute value of Kendall's $\tau$ correlation coefficient is displayed on a spider chart specific to the performance indicator of the tool (see \autoref{fig:correlation-spider}); positive correlation values are displayed as red triangles, while negative ones as blue squares.  
 
 \subsubsection{Evaluation}
@@ -113,7 +104,7 @@ Note that since only statistically significant correlations are included, a low 
 % [5/18/13 8:30:26 AM] Varró, Daniel: továbbá a végén arról, hogy a szakirodalomból ismert metrikák mennyire bizonyultak használhatónak vagy használhatatlannak
 % [5/18/13 8:31:12 AM] Varró, Daniel: A negatív eredményeket / meglepetéseket is el kellene magyaráznunk, nemcsak a pozitív korrelációt
 
-\subsubsection{Threats to Validity}
+\subsection{Threats to Validity}
 Regarding the technological foundations and methodology of our measurements, the
 most important threats to validity stem from \emph{time measurement uncertainty}
 and distortions due to transient effects such as \emph{garbage collection} in
