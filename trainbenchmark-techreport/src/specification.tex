@@ -132,25 +132,6 @@ In the following, we represent the graph pattern representation for the violatio
 \end{minipage}
 \end{figure}
 
-% 
-% \lstset{language=SQL,morekeywords={PREFIX,FILTER,OPTIONAL,BOUND}}
-% 
-% \begin{lstlisting}[caption=The \textsf{PosLength} query in SPARQL, label=lst:poslength-sparql]
-% PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
-% PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-% PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-% PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-% 
-% SELECT DISTINCT ?xSegment
-% WHERE
-% {
-%     ?xSegment rdf:type base:Segment .
-%     ?xSegment base:length ?length .
-% 
-%     FILTER (?length <= 0)
-% }
-% \end{lstlisting}
-
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-poslength}
@@ -191,37 +172,6 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \end{minipage}
 \end{figure}
 
-% \begin{lstlisting}[caption=The \textsf{RouteSensor} query in SPARQL, label=lst:routesensor-sparql]
-% PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
-% PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-% PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-% PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-% 
-% SELECT DISTINCT ?xSensor
-% WHERE
-% {
-%     ?xRoute rdf:type base:Route .
-%     ?xSwitchPosition rdf:type base:SwitchPosition .
-%     ?xSwitch rdf:type base:Switch .
-%     ?xSensor rdf:type base:Sensor .
-%     ?xRoute base:switchPosition ?xSwitchPosition .
-%     ?xSwitchPosition base:switch ?xSwitch .
-%     ?xSwitch base:sensor ?xSensor .
-% 
-%     FILTER NOT EXISTS {
-%         ?xRoute ?routeDefinition ?xSensor .
-%     } .
-% }
-% \end{lstlisting}
-% 
-% \begin{lstlisting}[caption=SPARQL 1.0 formula for the NAC part of the \textsf{RouteSensor} query, label=lst:routesensor-sparql-nac]
-%     OPTIONAL {
-%         ?xRoute ?routeDefinition ?xSensor .
-%         FILTER (sameTerm(base:routeDefinition, ?routeDefinition))
-%     } .
-%     FILTER (!bound(?routeDefinition))
-% \end{lstlisting}
-
 \begin{figure}[Htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-routesensor}
@@ -230,13 +180,6 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \end{figure}
 
 \paragraph{Relational algebraic form.}  The \textsf{RouteSensor} query can be formalized in relational algebra as:
-
-%\begin{align*}
-%& \pi_{\mathit{Route}} \big( \\
-%& \quad \mathit{switchPosition} \naturaljoin \mathit{switch} \naturaljoin \\
-%& \quad \mathit{sensor} \antijoin \mathit{routeDefinition} \\
-%& \big)
-%\end{align*}
 
 \[
 \pi_{\mathit{Route}} \big( \mathit{switchPosition} \naturaljoin \mathit{switch} \naturaljoin \mathit{sensor} \antijoin \mathit{routeDefinition} \big)
@@ -258,41 +201,6 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
   \label{lst:signalneighbor-sparql}
 \end{minipage}
 \end{figure}
-
-% \begin{lstlisting}[caption=The \textsf{SignalNeighbor} query in SPARQL, label=lst:signalneighbor-sparql]
-% PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
-% PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-% PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-% PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-% 
-% SELECT DISTINCT ?xRoute1
-% WHERE
-% {
-%   ?xRoute1 rdf:type base:Route .
-%   ?xSensor1 rdf:type base:Sensor .
-%   ?xSensor2 rdf:type base:Sensor .
-%   ?xSignal rdf:type base:Signal .
-%   ?xTrackElement1 rdf:type base:Trackelement .
-%   ?xTrackElement2 rdf:type base:Trackelement .
-%   
-%   ?xRoute1 base:exit ?xSignal .
-%   ?xRoute1 base:routeDefinition ?xSensor1 .
-%   ?xTrackElement1 base:sensor ?xSensor1 .
-%   ?xTrackElement1 base:connectsTo ?xTrackElement2 .
-%   ?xTrackElement2 base:sensor ?xSensor2 .
-%   
-%   ?xRoute3 rdf:type base:Route .
-%   ?xRoute3 base:routeDefinition ?xSensor2 .
-%   FILTER ( ?xRoute3 != ?xRoute1 )
-%   
-%   OPTIONAL { 
-%            ?xRoute2 rdf:type base:Route .
-%            ?xRoute2 base:entry ?xSignal .
-%            ?xRoute2 base:routeDefinition ?xSensor2 .
-%            } .
-%   FILTER (!BOUND(?xRoute2))
-% }
-% \end{lstlisting}
 
 \begin{figure}[Htb]
 		\centering
@@ -327,25 +235,6 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
   \label{lst:switchsensor-sparql}
 \end{minipage}
 \end{figure}
-
-% \begin{lstlisting}[caption=The \textsf{RouteSensor} query in SPARQL, label=lst:switchsensor-sparql]
-% PREFIX base: <http://www.semanticweb.org/ontologies/2011/1/TrainRequirementOntology.owl#>
-% PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-% PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-% PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-% 
-% SELECT DISTINCT ?xSwitch
-% WHERE
-% {
-%   ?xSwitch rdf:type base:Switch .
-% 
-%   OPTIONAL { 
-%            ?xSensor rdf:type base:Sensor .
-%            ?xSwitch base:sensor ?xSensor .
-%            } .
-%   FILTER (!BOUND(?xSensor))
-% }
-% \end{lstlisting}
 
 
 \begin{figure}[Htb]
