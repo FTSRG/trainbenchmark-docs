@@ -79,9 +79,9 @@ implementation of the \code{locals\_3} query is depicted.
 % \end{figure*}
 % 
 
-In the IncQuery Pattern Language \cite{IQlanguage} (\figref{fig:iqlocals3}), object constraints and reference constraints are used to describe the structure, and individuals matching the \code{Seg1} variable are returned.
+In the IncQuery Pattern Language~\cite{IQlanguage} (\figref{fig:iqlocals3}), object constraints and reference constraints are used to describe the structure, and individuals matching the \code{Seg1} variable are returned.
 
-Using the SPARQL \cite{Sparql} notation (\figref{fig:sparqllocals3}), triples describe the same structural constraint, and the semantically equivalent query returns distinct matches of the \code{xSeg1} variable.
+Using the SPARQL~\cite{Sparql} notation (\figref{fig:sparqllocals3}), triples describe the same structural constraint, and the semantically equivalent query returns distinct matches of the \code{xSeg1} variable.
 
 The query function was also coded in Java (illustrated in \figref{fig:javalocals3}). The model is traversed by embedded iterations and for every \code{Segment} the connections are checked. The implementation does not contain any search plan specific optimization (i.e.\ the embedding order of \code{for} cycles is ad-hoc), but it cuts unnecessary search branches at the earliest possibility.  This coding style represents an experienced programmer, who writes good quality source code. This way, such Java implementation could be used as a baseline in the future, to compare multiple tools qualitatively.
 

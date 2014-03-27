@@ -38,7 +38,7 @@ To measure performance for re-validating a model after modifications, four bench
 \subsection{Use Case Scenarios of the Benchmark}
 \label{sec:scenarios}
 
-Paper \cite{icgt08-bhrv} analyzes performance of algorithms used for graph
+Paper~\cite{icgt08-bhrv} analyzes performance of algorithms used for graph
 pattern query evaluation and identifies two use cases where efficient
 \emph{incremental model validation} is required. The batch part of our benchmark
 consists of the execution of the read and first check phases. Inspired by paper
@@ -120,7 +120,7 @@ In the following, we represent the graph pattern representation for the violatio
 
 \paragraph{Description.} The \textsf{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
 
-\paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark \cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
+\paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark~\cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
 
 \begin{figure}[Htb]
 \centering
@@ -532,4 +532,4 @@ To break symmetry, the exact number of elements and cardinalities are randomized
 \end{center}
 \end{figure}
 
-To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g.\ 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% is \emph{Segment}, thus 80.4\% of the model is TrackElement. The average number of the given relation for an instance is displayed for associations: e.g.\ there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
+To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g.\ 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% are \emph{Segment}s, thus 80.4\% are \emph{TrackElement}s. The average number of the given relation for an instance is displayed for associations: e.g.\ there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.

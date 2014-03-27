@@ -34,12 +34,12 @@ In the benchmark all cases were run 10 times, and the results were dumped into f
 
 \section{Tools}
 \label{tools}
-The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide graph pattern-like query language, or some custom solution.
+The measured tools generally work on graph-based models (like EMF~\cite{EMF} or RDF~\cite{RDF}), and provide a graph pattern-like query language. \autoref{tbl:tools} shows the list of current implementations.
 
 \begin{table}[h]
 	\centering
 	\footnotesize
-	\begin{tabular}{  | l | l | l | m{1.4cm} | c | >{\centering}m{1.9cm} | m{2.3cm} | }
+	\begin{tabular}{  | l | r | l | m{1.4cm} | c | >{\centering}m{1.9cm} | m{2.3cm} | }
 	\hline
 	\multicolumn{1}{|c|}{\bf Tool} & 
 	\multicolumn{1}{c|}{\bf Version} & 
@@ -49,51 +49,52 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	\bf In-memory only & 
 	\bf Implementation language \\ \hline 
 	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
-	Eclipse OCL & 3.1.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
-	OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
-	\incquery{} & 0.7.0 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
-	Sesame & 2.5.0 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
-	4store & 1.1.4 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
-	Neo4j & 1.8 & Graph & Cypher & \ding{109} & \ding{109} & Java \\ \hline
+	Eclipse OCL & 3.3.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
+	%OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
+	\incquery{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	Drools & 5.4.0 & EMF & DRL & \ding{108} & \ding{108} & Java \\ \hline
+	Sesame & 2.7.9 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
+	4store & 1.1.5 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
+	Neo4j & 1.9.2 & Graph & Cypher & \ding{109} & \ding{109} & Java \\ \hline
 	\end{tabular}
 	\caption{Tools used in the benchmark.}
-	\label{tools}
+	\label{tbl:tools}
 \end{table}
 
 
+\subsection{EMF-based Tools}
 
-
-
-\subsection{Java}
+\subsubsection{Java}
 An imperative \emph{local search-based} approach was implemented in Java, operating on \emph{Eclipse Modeling Framework (EMF)}~\cite{EMF} models. Queries are implemented as Java functions, traversing a model without any search plan optimization, but they cut unnecessary search branches at the earliest possibility.
 
-\subsection{Eclipse OCL}
+\subsubsection{Eclipse OCL}
 
 The OCL~\cite{OCL} language is commonly used for querying EMF model instances in validation frameworks. It is a standardized navigation-based query language, applicable over a range of modeling formalisms. Taking advantage of the expressive features and wide-spread adoption of this query language, the project Eclipse OCL~\cite{EclipseOCL} provides a powerful query interface that evaluates such expressions over EMF models.
 
-\subsection{OCL Impact Analyser}
-The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
+%\subsection{OCL Impact Analyzer}
+%The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\subsection{\incquery{}}
+\subsubsection{\incquery{}}
+\incquery{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using RETE~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
 
-\incquery{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using RETE~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL \cite{iqpl}), which is evaluated over EMF models.
+\subsubsection{Drools}
+Incremental query evaluation is also supported by the \concept{Drools}~\cite{Drools} rule engine developed by Red Hat. It is based on a variant of RETE~\cite{rete} (object-oriented RETE). Queries can be formalized using its own rule description language. Queries can be constructed by naming the ''when'' part of rules and acquiring their matches. While Drools is not and EMF tool per se, the Drools implementation of the \tb{} works on EMF models.
 
-\subsection{Sesame}
+\subsection{RDF-based Tools}
 
-Sesame gives an API specification for many tools, and also provides its own implementation. The tool evaluates queries over RDF that are formulated as SPARQL \cite{Sparql} graph patterns.
+\subsubsection{Sesame}
+Sesame gives an API specification for many tools, and also provides its own implementation. The tool evaluates queries over RDF that are formulated as SPARQL~\cite{Sparql} graph patterns.
 
-% \subsection{Drools}
-% Incremental query evaluation is also supported by the \concept{Drools}
-% \cite{Drools} rule engine developed by Red Hat. It is based on a variant of RETE \cite{rete}
-% (object-oriented RETE). Queries can be formalized using its own rule description
-% language. Queries can be constructed by naming the ''when'' part of rules and
-% acquiring their matches.
+\subsubsection{4store}
+4store~\cite{harris20094store} is an open source, distributed triplestore implemented in C. The main goal of 4store is to provide a high performance storage and query engine for semantic web applications. 
 
-\subsection{Graph Database}
-RDF is a graph based structure in itself, but more general graph databases exist like Neo4j \cite{neo4j}. The data model is based on graphs, where any node or arc can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
+\subsection{Graph-based Tools}
+
+\subsubsection{Neo4j}
+As part of the NoSQL movement, database management systems emerged with a focus on graph storage and processing. As of 2014, the most popular graph database is 
+Neo4j~\cite{neo4j}. The data model is based on graphs, where any node or edge can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
 
 \section{Original Version}
-
 
 \subsection{Measurement Results}
 \label{sec:results}

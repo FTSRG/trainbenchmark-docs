@@ -53,7 +53,7 @@ The \texttt{hu.bme.mit.trainbenchmark.generator.*} modules are responsible for g
 
 \subsubsection{Benchmark modules}
 
-The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for benchmarking. For the list of current implementations, see \autoref{tools}.
+The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for benchmarking. For the list of current implementations, see \autoref{tbl:tools}.
 
 \subsubsection{4store}
 
@@ -106,7 +106,7 @@ are created as described in \autoref{sec:instanceGeneration}.
 
 In ontologies, the OWL2 language supports all constructs that can be expressed in
 EMF, thus the EMF metamodel is mapped to OWL2 TBox. The mapping is done by hand as
-described in Sec. 16 of \cite{OMG2009ODM}. Ontology instance model elements are
+described in Sec. 16 of~\cite{OMG2009ODM}. Ontology instance model elements are
 generated similarly to the EMF objects. Since an OWL2 file can be serialized
 into RDF/XML, the same file is used as input for RDF databases and OWL
 reasoners.
@@ -197,17 +197,17 @@ for graph query languages less research has been undertaken this field.
 
 There are already available benchmark definitions, however we created a new one
 for measuring different tool capabilities. One of the most well known RDF
-benchmark is the Berlin SPARQL Benchmark (BSBM) \cite{BerlinBenchmark}, which
+benchmark is the Berlin SPARQL Benchmark (BSBM)~\cite{BerlinBenchmark}, which
 models an e-commerce use-case. BSBM concentrates on throughput performance (in a
 steady state) of parameterized queries, while our benchmark measures batch and
 incremental query evaluation performance of fixed constraint checking queries.
-The SP$^2$Bench \cite{SP2Bench} works on an unstructured dataset (DBLP) suited
+The SP$^2$Bench~\cite{SP2Bench} works on an unstructured dataset (DBLP) suited
 for RDF data representation with the goal of measuring query evaluation
 performance of SPARQL engines, concentrating on testing every feature of the
 SPARQL language. In opposite, our benchmark queries a structured dataset and 
 the queries can be implemented in multiple query and data representation languages.
 Moreover, our benchmark scenarios address continous evolution of the dataset,
-which is a future work in SP$^2$Bench and also not addressed in \cite{SIB} and
+which is a future work in SP$^2$Bench and also not addressed in~\cite{SIB} and
 \cite{DBpediaSparql}.
 
 Other ontology benchmarks are the Lehigh University Benchmark (LUBM)
@@ -216,14 +216,14 @@ Other ontology benchmarks are the Lehigh University Benchmark (LUBM)
 reasoners, while our goal is to compare query evaluation performaces.
 
 Model transformation tools are compared annually in the Transformation Tool
-Contest \cite{TTC} by solving model synchronisation, model execution and
+Contest~\cite{TTC} by solving model synchronisation, model execution and
 simulation, verification use-cases from different application domains. The aim
 is to compare expressiveness, usability and performance of different
 tools in the field. \todo{kiegészíteni, +hivatkozás}
 
 From the EMF domain we have not found general application benchmarks or
 comparison of EMF query technologies (like Eclipse OCL or EMF Query). However
-there are performance measurements \cite{EMF-performance} about core EMF
+there are performance measurements~\cite{EMF-performance} about core EMF
 functions and different EMF configurations. We tried some relevant
 configuration from these tips, but they were not effective, so we stuck at the
 default EMF implementation.
@@ -232,16 +232,16 @@ We have not used relational database benchmarks, because the main scope of this
 article are graph-based databases and MySQL was included only for a rough
 comparison. RDBMS benchmarks usually use relational schemas (and not graph-based
 metamodels) and measure throughput with concurrent modifications in a similar manner 
-to the TPC-C \cite{tpc-c} benchmark.
+to the TPC-C~\cite{tpc-c} benchmark.
 
 Egyed published papers about verifying and fixing inconsistencies in UML models
 \cite{Egyed-fixingInconsistencies, Egyed-instantConsistency} with performance
-and memory consumption measurements \cite{Egyed-incConsistency} of the
+and memory consumption measurements~\cite{Egyed-incConsistency} of the
 UMLAnalyzer tool. They measured 19 rules and 30 independent UML models, scaling
 up to 100\ 000 elements. The tool evaluates OCL expressions in sub-millisecond
 time using an impact analyzer approach.
 
-Praxis \cite{falleri-praxis} uses rule-reduction technique to provide incremental
+Praxis~\cite{falleri-praxis} uses rule-reduction technique to provide incremental
 instance model validation. It represents the model and edits using an operation
 based approach. Technically Java, UML or Movida metamodels can be used and
 conforming instances as well as edit operations are translated to Prolog facts.
@@ -288,9 +288,9 @@ a freshly initialized JVM.
 The queries are semantically equivalent in the different query languages and the
 result sets are the same for every model. Additionally, to ensure comparable
 results the query implementations were reviewed: the OCL
-implementation by Ed Willink from the Eclipse OCL project, the usage of Impact
-Analyzer by Axel Uhl from the Impact Analyzer developer team. The graph patterns
-were written by the developers of \incquery{}.
+implementation by Ed Willink from the Eclipse OCL project.
+%, the usage of Impact Analyzer by Axel Uhl from the Impact Analyzer developer team. 
+The graph patterns were written by the developers of \incquery{}.
 
 The metamodel and the query specifications were motivated by an industrial case
 study. The queries feature commonly used validation tasks such as

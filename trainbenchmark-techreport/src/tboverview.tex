@@ -9,7 +9,7 @@ transformations.
 
 One of the the most computationally expensive tasks in modeling applications are
 \emph{model queries}. While there are a number of existing benchmarks for
-queries over relational databases \cite{tpc-c} or graph stores
+queries over relational databases~\cite{tpc-c} or graph stores
 \cite{BerlinBenchmark, SP2Bench}, modeling tool workloads are significantly
 different. Specifically, modeling tools use much more complex queries than
 typical transactional systems, and the real world performance is more affected by
@@ -18,7 +18,7 @@ or transformation) than throughput (i.e.\ the amount of parallel transactions).
 
 
 \section{Overview}
-To address this challenge, the Train Benchmark \cite{TB:SCP2013,TBwebsite} is a macro
+To address this challenge, the Train Benchmark~\cite{TB:SCP2013,TBwebsite} is a macro
 benchmark that aims to measure batch and incremental query evaluation
 performance, in a scenario that is specifically modeled after \emph{model
 validation} in (domain-specific) modeling tools: at first, the entire model is
@@ -80,7 +80,7 @@ elements).
 \section{Queries and Transformations}
 Queries are defined informally in plain text (in a tool independent way) and
 also formalized using the standard OCL language as a reference implementation
-(available on the benchmark website \cite{TBwebsite}). The queries range from
+(available on the benchmark website~\cite{TBwebsite}). The queries range from
 simple attribute value checks to complex navigation operations consisting of
 several (4+) joins.
 
@@ -105,8 +105,8 @@ contains a benchmark suite for queries implemented in Java, Eclipse OCL and
 \incquery{}.
 
 Measurements are recorded automatically in a machine-processable format (CSV)
-that is automatically processed by R \cite{TB:R} scripts. An extended version of the Train
-Benchmark \cite{TB:ASE2013} features several (instance model, query-specific and
+that is automatically processed by R~\cite{TB:R} scripts. An extended version of the Train
+Benchmark~\cite{TB:ASE2013} features several (instance model, query-specific and
 combined) \emph{metrics} that can be used to characterize the ``difficulty'' of
 benchmark cases numerically, and -- since they can be evaluated automatically
 for other domain/model/query combinations -- allow to compare the benchmark
