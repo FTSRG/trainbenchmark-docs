@@ -2,9 +2,7 @@
 
 In this chapter, we discuss the implementation details of the Train Benchmark. The installation guide is available in the MONDO wiki.\footnote{\url{https://opensourceprojects.eu/p/mondo/wiki/TrainBenchmark/}}
 
-\section{Performance Benchmark Framework}
-
-\subsection{Architecture}
+\section{Architecture}
 
 For the integration of the Train Benchmark projects and their third party dependencies, we use Apache Maven~\cite{Maven}. The dependencies are shown in \figref{fig:trainbenchmark-modules}.
 
@@ -17,21 +15,21 @@ For the integration of the Train Benchmark projects and their third party depend
 
 In this section, we briefly describe the tasks and responsibilities of each module.
 
-\subsubsection{Parent module}
+\subsection{Parent module}
 
 The \texttt{hu.bme.mit.trainbenchmark} module is the parent module which contains the modules used in the Train Benchmark. Building this Maven module builds all child modules as well.
 
-\subsubsection{Central modules}
+\subsection{Central modules}
 
 The \texttt{hu.bme.mit.trainbenchmark.model} module contains the reference metamodel represented in EMF.
 
 The \texttt{hu.bme.mit.trainbenchmark.config} module contains classes and constants used by the \texttt{generator} and the \texttt{benchmark} projects.
 
-\subsubsection{Representation-specific modules}
+\subsection{Representation-specific modules}
 
 The \texttt{hu.bme.mit.trainbenchmark.emf} and \texttt{hu.bme.mit.trainbenchmark.rdf} modules contain classes and constants used by the particular representations.
 
-\subsubsection{Generator modules}
+\subsection{Generator modules}
 
 The \texttt{hu.bme.mit.trainbenchmark.generator.*} modules are responsible for generating the instance models for the benchmarks.
 
@@ -43,11 +41,11 @@ The \texttt{hu.bme.mit.trainbenchmark.generator.*} modules are responsible for g
 \end{itemize}
 
 
-\subsubsection{Benchmark modules}
+\subsection{Benchmark modules}
 
 The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for benchmarking. For the list of current implementations, see \autoref{tbl:tools}.
 
-\subsubsection{4store}
+\subsection{4store}
 
 To access 4store through a graph-like API, we developed a Java client\footnote{\url{https://git.inf.mit.bme.hu/w?p=projects/bigmodel/4store-graph-client.git}, \\ clone URI: \url{git@git.inf.mit.bme.hu:projects/bigmodel/4store-graph-client.git}} with a focus on high performance.
 
@@ -55,9 +53,9 @@ To access 4store through a graph-like API, we developed a Java client\footnote{\
 %\subsubsection{Extending the model generator with new syntaxes}
 %\subsubsection{Adding a tool to measure performance}
 
-\subsection{Generating diagrams automatically}
+\section{Generating diagrams automatically}
 
-\subsubsection{Dependencies}
+\subsection{Dependencies}
 
 \begin{enumerate}
   \item Go to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the \texttt{mondo-trainbenchmark} repository.
@@ -66,7 +64,7 @@ To access 4store through a graph-like API, we developed a Java client\footnote{\
   \item Install the required R packages by issuing the following command: \texttt{R --file=install.R}. 
 \end{enumerate}
 
-\subsubsection{Steps to generate diagrams automatically}
+\subsection{Steps to generate diagrams automatically}
 
 \begin{enumerate}
   \item Go to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the \texttt{mondo-trainbenchmark} repository.
@@ -77,7 +75,7 @@ To access 4store through a graph-like API, we developed a Java client\footnote{\
   \item If the you want the report to be zipped in a single file, execute \texttt{packHTML.sh} that generates \texttt{tbReport.zip}.
 \end{enumerate}
 
-\subsection{Command-line arguments}
+\section{Command-line arguments}
 
 All runnable Train Benchmark projects are configured through command-line arguments:
 
@@ -106,6 +104,6 @@ The \texttt{benchmark} projects have additional arguments:
  -seriesCount <arg>                                        number of the run benchmark series
 \end{lstlisting}
 
-\subsection{Opening EMF install models}
+\section{Opening EMF instance models}
 
 If you would like to view the EMF instance models, right click the \texttt{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \texttt{hu.bme.mit.trainbenchmark.instancemodels} project. The \texttt{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang for a long time.)
