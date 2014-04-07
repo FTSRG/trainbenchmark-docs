@@ -111,44 +111,48 @@ initial (Rete) cache build.
 % authors. However, the initialisation of the OCL Impact Analyser also occurs in
 % this phase resulting in (roughly negligible) higher execution time.
 
-\begin{figure}[ht]
-\begin{center}
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-	    \caption{Batch Query Evaluation Time -- RouteSensor}
-	    \label{fig:BatchValid_RouteSensor}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-	    \caption{Batch Query Evaluation Time -- SignalNeighbor}
-	    \label{fig:BatchValid_SignalNeighbor}
-	\end{subfigure} \\
+% \begin{figure}[ht]
+% \begin{center}
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
+% 	    \caption{Batch Query Evaluation Time -- RouteSensor}
+% 	    \label{fig:BatchValid_RouteSensor}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
+% 	    \caption{Batch Query Evaluation Time -- SignalNeighbor}
+% 	    \label{fig:BatchValid_SignalNeighbor}
+% 	\end{subfigure} \\
+% 
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_RouteSensor}
+% 	    \caption{Incremental Query Evaluation Time -- RouteSensor}
+% 	    \label{fig:SumInc_RouteSensor}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_SignalNeighbor}
+% 	    \caption{Incremental Query Evaluation Time -- SignalNeighbor}
+% 	    \label{fig:SumInc_SignalNeighbor}
+% 	\end{subfigure} \\
+% 
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_RouteSensor}
+% 	    \caption{Memory Usage -- RouteSensor}
+% 	    \label{fig:Memory_RouteSensor}
+% 	\end{subfigure}
+% 	\begin{subfigure}[t]{0.48\textwidth}\centering
+% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_SignalNeighbor}
+% 	    \caption{Memory Usage -- SignalNeighbor}
+% 	    \label{fig:Memory_SignalNeighbor}
+% 	\end{subfigure}
+%   \caption{Benchmark results.}
+%   \label{fig:trainbenchmark-diagrams}
+% \end{center}
+% \end{figure}
 
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_RouteSensor}
-	    \caption{Incremental Query Evaluation Time -- RouteSensor}
-	    \label{fig:SumInc_RouteSensor}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_SignalNeighbor}
-	    \caption{Incremental Query Evaluation Time -- SignalNeighbor}
-	    \label{fig:SumInc_SignalNeighbor}
-	\end{subfigure} \\
-
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_RouteSensor}
-	    \caption{Memory Usage -- RouteSensor}
-	    \label{fig:Memory_RouteSensor}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.48\textwidth}\centering
-	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_SignalNeighbor}
-	    \caption{Memory Usage -- SignalNeighbor}
-	    \label{fig:Memory_SignalNeighbor}
-	\end{subfigure}
-  \caption{Benchmark results.}
-  \label{fig:trainbenchmark-diagrams}
-\end{center}
-\end{figure}
+\benchmarkresult{User_Check0_PosLength}{BMR}
+\benchmarkresult{User_Check0_PosLength}{BMR}
+\benchmarkresult{User_Check0_PosLength}{BMR}
 
 For the more complex \textsf{SignalNeighbor} query
 \autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat
