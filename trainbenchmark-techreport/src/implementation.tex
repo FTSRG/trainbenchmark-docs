@@ -53,57 +53,6 @@ To access 4store through a graph-like API, we developed a Java client\footnote{\
 %\subsubsection{Extending the model generator with new syntaxes}
 %\subsubsection{Adding a tool to measure performance}
 
-\section{Generating diagrams automatically}
-
-\subsection{Dependencies}
-
-\begin{enumerate}
-  \item Go to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the \texttt{mondo-trainbenchmark} repository.
-  \item Install R, install the \texttt{r-base}, \texttt{r-base-dev} package.
-  \item If you wish to edit the R files, it is strongly recommended to install RStudio.\footnote{\url{http://www.rstudio.com/ide/download/desktop}}.
-  \item Install the required R packages by issuing the following command: \texttt{R -f install.R}. 
-\end{enumerate}
-
-\subsection{Steps to generate diagrams automatically}
-
-\begin{enumerate}
-  \item Go to the \texttt{src/hu.bme.mit.trainbenchmark.analyze} in the \texttt{mondo-trainbenchmark} repository.
-  \item Merge the measured data into \texttt{results.txt}. The file contains one header line and multiple data records belonging to (optionally) multiple series.
-  \item Modify \texttt{configs.R} to introduce a new tool (specify the name of the tool in the \texttt{results.txt} file and on the diagrams), specify the line color and the type of the tool and in the \texttt{drawtools} variable enumerate tools to be plotted.
-  \item Execute the \texttt{knitIt.sh} script.
-  \item Inspect the generated \texttt{plotLines.html} and \texttt{plotLines-user.html} reports.
-  \item If the you want the report to be zipped in a single file, execute \texttt{packHTML.sh} that generates \texttt{tbReport.zip}.
-\end{enumerate}
-
-\section{Command-line arguments}
-
-All runnable Train Benchmark projects are configured through command-line arguments:
-
-\begin{lstlisting}[keywordstyle=\ttfamily]
- -scenario <arg>               Batch/User/XForm
- -sizes <arg>                  model sizes, e.g. 4 or 1-8 or 1,8-512
- -workspacePath <arg>          path of the Eclipse workspace with all projects
-\end{lstlisting}
-
-The \texttt{benchmark} projects have additional arguments:
-
-\begin{lstlisting}[keywordstyle=\ttfamily]
- -benchmarkMode <arg>                                      run benchmark specific (non-functional) procedures,
-                                                                  like cleaning the OS cache
- -iterationCount <arg>                                     number of modify-check iterations
- -modificationConstant <arg>                               modification constant for the modification method
- -modificationConstantPosLength <arg>                      amount of modification for the PosLength test
- -modificationConstantRouteSensor <arg>                    amount of modification for the RouteSensor test
- -modificationConstantSignalNeighbor <arg>                 amount of modification for the SignalNeighbor test
- -modificationConstantSwitchSensor <arg>                   amount of modification for the SwitchSensor test
- -modificationMethod <arg>                                 options:
-                                                           constant -- modify a fixed number of elements,
-                                                           resultSet -- modify based a number of elements based on the size of the results set
- -queries <arg>                                            a comma-separated list of the queries to run,
-                                                                  e.g. PosLength,RouteSensor
- -seriesCount <arg>                                        number of the run benchmark series
-\end{lstlisting}
-
 \section{Opening EMF instance models}
 
 If you would like to view the EMF instance models, right click the \texttt{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \texttt{hu.bme.mit.trainbenchmark.instancemodels} project. The \texttt{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang for a long time.)
