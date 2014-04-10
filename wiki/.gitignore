@@ -1,4 +1,4 @@
 *.md
 *.pdf
 *.html
-compile-upload.sh
+release.sh
