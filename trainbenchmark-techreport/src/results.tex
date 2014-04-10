@@ -78,21 +78,86 @@ As part of the NoSQL movement, database management systems emerged with a focus 
 Neo4j~\cite{neo4j}. The data model is based on graphs, where any node or edge can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
 
 \section{Measurement Results for Performance Comparison}
-
 \label{sec:results}
 
-The measurement results of the benchmark is displayed on
-\autoref{fig:trainbenchmark-diagrams}. These diagrams show the batch query
-performance, incremental evaluation time, and memory usage of each tools, for
-different model sizes. Additionally, the initial and the updated result set size
-is displayed under the model sizes for the batch and incremental queries,
-respectively.
+The measurement results of the benchmark are displayed below. These diagrams show the batch query performance, incremental evaluation time, and memory usage of each tools, for different model sizes. Additionally, the initial and the updated result set size is displayed under the model sizes for the batch and incremental queries, respectively.
 
-The left column shows charts of the \textsf{RouteSensor} query,
-while the more complex \textsf{SignalNeighbor} is presented in the right column.
-The remaining \textsf{PosLength} and \textsf{SwitchSensor} queries are only presented
-at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
-\textsf{RouteSensor} case.
+%The left column shows charts of the \textsf{RouteSensor} query,
+%while the more complex \textsf{SignalNeighbor} is presented in the right column.
+%The remaining \textsf{PosLength} and \textsf{SwitchSensor} queries are only presented
+%at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
+%\textsf{RouteSensor} case.
+
+
+\subsection{Batch Validation (User Scenario)}
+
+\benchmarkresult{User_ReadPCheck0_PosLength}{Batch validation times for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{User_ReadPCheck0_RouteSensor}{Batch validation times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_ReadPCheck0_SignalNeighbor}{Batch validation times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_ReadPCheck0_SwitchSensor}{Batch validation times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+
+\subsection{Batch Validation (XForm Scenario)}
+
+\benchmarkresult{XForm_ReadPCheck0_PosLength}{Batch validation times for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_ReadPCheck0_RouteSensor}{Batch validation times for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_ReadPCheck0_SignalNeighbor}{Batch validation times for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_ReadPCheck0_SwitchSensor}{Batch validation times for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+
+\subsection{Revalidation (User Scenario)}
+
+\benchmarkresult{User_SumModifyPSumReCheck_PosLength}{Revalidation times for the \textsf{PosLength} query.}
+\benchmarkresult{User_SumModifyPSumReCheck_RouteSensor}{Revalidation times for the \textsf{RouteSensor} query.}
+\benchmarkresult{User_SumModifyPSumReCheck_SignalNeighbor}{Revalidation times for the \textsf{SignalNeighbor} query.}
+\benchmarkresult{User_SumModifyPSumReCheck_SwitchSensor}{Revalidation times for the \textsf{SwitchSensor} query.}
+
+\subsection{Revalidation (XForm Scenario)}
+
+\benchmarkresult{XForm_SumModifyPSumReCheck_PosLength}{Revalidation times for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumModifyPSumReCheck_RouteSensor}{Revalidation times for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumModifyPSumReCheck_SignalNeighbor}{Revalidation times for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumModifyPSumReCheck_SwitchSensor}{Revalidation times for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+
+\subsection{Total Time (User Scenario)}
+
+\benchmarkresult{User_SumTime_PosLength}{Total time for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{User_SumTime_RouteSensor}{Total time for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_SumTime_SignalNeighbor}{Total time for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_SumTime_SwitchSensor}{Total time for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+
+\subsection{Total Time (XForm Scenario)}
+
+\benchmarkresult{XForm_SumTime_PosLength}{Total time for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumTime_RouteSensor}{Total time for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumTime_SignalNeighbor}{Total time for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{XForm_SumTime_SwitchSensor}{Total time for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+
+\subsection{Memory Usage (User Scenario)}
+
+\benchmarkresult{User_Memory_PosLength}{Memory consumption of the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{User_Memory_RouteSensor}{Memory consumption of the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_Memory_SignalNeighbor}{Memory consumption of the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{User_Memory_SwitchSensor}{Memory consumption of the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+
+\subsection{Memory Usage (XForm Scenario)}
+
+\benchmarkresult{User_Memory_PosLength}{Memory consumption of the \textsf{PosLength} query in the \textsf{XForm} scenario.}
+\benchmarkresult{User_Memory_RouteSensor}{Memory consumption of the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{User_Memory_SignalNeighbor}{Memory consumption of the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
+\benchmarkresult{User_Memory_SwitchSensor}{Memory consumption of the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+
+\subsection{Series of Edit Times (User Scenario)}
+
+\benchmarkresult{series_DetEdit_64_PosLength}{Series of edit times for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_16_RouteSensor}{Series of edit times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_1_SignalNeighbor}{Series of edit times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_128_SwitchSensor}{Series of edit times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+
+\subsection{Series of Incremental Revalidation Times (User Scenario)}
+
+\benchmarkresult{series_DetCheck_64_PosLength}{Series of incremental revalidation times for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_16_RouteSensor}{Series of incremental revalidation times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_1_SignalNeighbor}{Series of incremental revalidation times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_128_SwitchSensor}{Series of incremental revalidation times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
 
 \subsection{Batch Query Evaluation}
 In case of batch query evaluation, both OCL implementations use the same
@@ -149,10 +214,6 @@ initial (Rete) cache build.
 %   \label{fig:trainbenchmark-diagrams}
 % \end{center}
 % \end{figure}
-
-\benchmarkresult{User_Check0_PosLength}{BMR}
-\benchmarkresult{User_Check0_PosLength}{BMR}
-\benchmarkresult{User_Check0_PosLength}{BMR}
 
 For the more complex \textsf{SignalNeighbor} query
 \autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat

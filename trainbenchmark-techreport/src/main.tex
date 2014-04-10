@@ -39,6 +39,7 @@
 \usepackage{tabu}
 \usepackage{multirow}
 \usepackage{mathastext}
+\usepackage{float}
 
 \newlength{\hsbw}
 \newcommand{\comment}[1]{\mbox{}\par\vspace{0.25in}%
@@ -170,7 +171,7 @@
 \let\codeCap\texttt
 
 \newcommand{\benchmarkresult}[2]{
-\begin{figure}[!Htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/benchmark-results/#1}
 	\caption{#2}
