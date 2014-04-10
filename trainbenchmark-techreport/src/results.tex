@@ -88,62 +88,37 @@ The measurement results of the benchmark are displayed below. These diagrams sho
 %at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
 %\textsf{RouteSensor} case.
 
-
 \subsection{Batch Validation (User Scenario)}
 
-\benchmarkresult{User_ReadPCheck0_PosLength}{Batch validation times for the \textsf{PosLength} query in the \textsf{User} scenario.}
-\benchmarkresult{User_ReadPCheck0_RouteSensor}{Batch validation times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_ReadPCheck0_SignalNeighbor}{Batch validation times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_ReadPCheck0_SwitchSensor}{Batch validation times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+\forallqueries{\benchmarkresult{User_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{User} scenario.}}
 
 \subsection{Batch Validation (XForm Scenario)}
 
-\benchmarkresult{XForm_ReadPCheck0_PosLength}{Batch validation times for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_ReadPCheck0_RouteSensor}{Batch validation times for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_ReadPCheck0_SignalNeighbor}{Batch validation times for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_ReadPCheck0_SwitchSensor}{Batch validation times for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+\forallqueries{\benchmarkresult{XForm_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
 \subsection{Revalidation (User Scenario)}
 
-\benchmarkresult{User_SumModifyPSumReCheck_PosLength}{Revalidation times for the \textsf{PosLength} query.}
-\benchmarkresult{User_SumModifyPSumReCheck_RouteSensor}{Revalidation times for the \textsf{RouteSensor} query.}
-\benchmarkresult{User_SumModifyPSumReCheck_SignalNeighbor}{Revalidation times for the \textsf{SignalNeighbor} query.}
-\benchmarkresult{User_SumModifyPSumReCheck_SwitchSensor}{Revalidation times for the \textsf{SwitchSensor} query.}
+\forallqueries{\benchmarkresult{User_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query.}}
 
 \subsection{Revalidation (XForm Scenario)}
 
-\benchmarkresult{XForm_SumModifyPSumReCheck_PosLength}{Revalidation times for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumModifyPSumReCheck_RouteSensor}{Revalidation times for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumModifyPSumReCheck_SignalNeighbor}{Revalidation times for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumModifyPSumReCheck_SwitchSensor}{Revalidation times for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+\forallqueries{\benchmarkresult{XForm_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
 \subsection{Total Time (User Scenario)}
 
-\benchmarkresult{User_SumTime_PosLength}{Total time for the \textsf{PosLength} query in the \textsf{User} scenario.}
-\benchmarkresult{User_SumTime_RouteSensor}{Total time for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_SumTime_SignalNeighbor}{Total time for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_SumTime_SwitchSensor}{Total time for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+\forallqueries{\benchmarkresult{User_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{User} scenario.}}
 
 \subsection{Total Time (XForm Scenario)}
 
-\benchmarkresult{XForm_SumTime_PosLength}{Total time for the \textsf{PosLength} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumTime_RouteSensor}{Total time for the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumTime_SignalNeighbor}{Total time for the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{XForm_SumTime_SwitchSensor}{Total time for the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+\forallqueries{\benchmarkresult{XForm_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
 \subsection{Memory Usage (User Scenario)}
 
-\benchmarkresult{User_Memory_PosLength}{Memory consumption of the \textsf{PosLength} query in the \textsf{User} scenario.}
-\benchmarkresult{User_Memory_RouteSensor}{Memory consumption of the \textsf{RouteSensor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_Memory_SignalNeighbor}{Memory consumption of the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
-\benchmarkresult{User_Memory_SwitchSensor}{Memory consumption of the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+\forallqueres{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
 
 \subsection{Memory Usage (XForm Scenario)}
 
-\benchmarkresult{User_Memory_PosLength}{Memory consumption of the \textsf{PosLength} query in the \textsf{XForm} scenario.}
-\benchmarkresult{User_Memory_RouteSensor}{Memory consumption of the \textsf{RouteSensor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{User_Memory_SignalNeighbor}{Memory consumption of the \textsf{SignalNeighbor} query in the \textsf{XForm} scenario.}
-\benchmarkresult{User_Memory_SwitchSensor}{Memory consumption of the \textsf{SwitchSensor} query in the \textsf{XForm} scenario.}
+\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
 \subsection{Series of Edit Times (User Scenario)}
 

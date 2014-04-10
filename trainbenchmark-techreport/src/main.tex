@@ -40,6 +40,7 @@
 \usepackage{multirow}
 \usepackage{mathastext}
 \usepackage{float}
+\usepackage{pgffor}
 
 \newlength{\hsbw}
 \newcommand{\comment}[1]{\mbox{}\par\vspace{0.25in}%
@@ -178,6 +179,7 @@
 	\label{fig:#1}
 \end{figure}}
 
+\newcommand{\forallqueries}[1]{\foreach \n in {PosLength,RouteSensor,SignalNeighbor,SwitchSensor}{#1}}
 
 \begin{document}
 
