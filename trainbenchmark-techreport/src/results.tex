@@ -34,7 +34,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
 	Eclipse OCL & 3.3.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
 	%OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
-	\incquery{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	\eiq{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
 	Drools & 5.4.0 & EMF & DRL & \ding{108} & \ding{108} & Java \\ \hline
 	Sesame & 2.7.9 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
 	4store & 1.1.5 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
@@ -57,11 +57,12 @@ The OCL~\cite{OCL} language is commonly used for querying EMF model instances in
 %\subsection{OCL Impact Analyzer}
 %The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\subsubsection{\incquery{}}
-\incquery{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
+\subsubsection{\eiq{}}
+\eiq{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
 
 \subsubsection{Drools}
 Incremental query evaluation is also supported by the \concept{Drools}~\cite{Drools} rule engine developed by Red Hat. It is based on a variant of Rete~\cite{rete} (object-oriented Rete). Queries can be formalized using its own rule description language. Queries can be constructed by naming the ''when'' part of rules and acquiring their matches. While Drools is not an EMF tool per se, the Drools implementation of the \tb{} works on EMF models.
+
 
 \subsection{RDF-based Tools}
 
@@ -70,6 +71,10 @@ Sesame gives an API specification for many tools, and also provides its own impl
 
 \subsubsection{4store}
 4store~\cite{harris20094store} is an open source, distributed triplestore implemented in C. The main goal of 4store is to provide a high performance storage and query engine for semantic web applications. 
+
+\subsubsection{\iqd}
+\iqd{}~\cite{Izso:2013:IIG:2487766.2487772} is a distributed incremental graph query engine developed in the Budapest University of Technology and Economics. The goal of \iqd{} is to provide a scalable query engine by using a cluster of servers instead of a single workstation.
+
 
 \subsection{Graph-based Tools}
 
@@ -114,7 +119,7 @@ The measurement results of the benchmark are displayed below. These diagrams sho
 
 \subsection{Memory Usage (User Scenario)}
 
-\forallqueres{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
+\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
 
 \subsection{Memory Usage (XForm Scenario)}
 
