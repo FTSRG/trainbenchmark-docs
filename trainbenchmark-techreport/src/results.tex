@@ -4,15 +4,16 @@
 \section{Benchmarking Environment}
 \label{sec:environment}
 
-For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetrics}}. In this section we describe the runtime environment, and highlight some design decisions.
+For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{https://incquery.net/publications/trainbenchmark}}. In this section we describe the runtime environment, and highlight some design decisions.
 
-The benchmark machine contains two quad-core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 LTS OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
+The benchmark machine contains two dual-core Intel Xeon (3.00~GHz) CPU, 12~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.10 OS was installed with unnecessary services (like \texttt{cron}) turned off. Oracle JVM version 1.7.0\_51 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
 The performance measurements of a tool was independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement of a scenario was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
 
-Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 25~GB heap limit was specified, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
+Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified.
+%, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
 
-In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
+In the benchmark all cases were run 6 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
 
 
 \section{Tools}
@@ -78,8 +79,9 @@ As part of the NoSQL movement, database management systems emerged with a focus 
 Neo4j~\cite{neo4j}. The data model is based on graphs, where any node or edge can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
 
 \section{Measurement Results for Performance Comparison}
-
 \label{sec:results}
+
+
 
 The measurement results of the benchmark is displayed on
 \autoref{fig:trainbenchmark-diagrams}. These diagrams show the batch query
@@ -150,9 +152,15 @@ initial (Rete) cache build.
 % \end{center}
 % \end{figure}
 
-\benchmarkresult{User_Check0_PosLength}{BMR}
-\benchmarkresult{User_Check0_PosLength}{BMR}
-\benchmarkresult{User_Check0_PosLength}{BMR}
+%\benchmarkresult{User_ReadPCheck0_PosLength}{Batch Validation - PosLength}
+%\benchmarkresult{User_ReadPCheck0_SwitchSensor}{Batch Validation - SwitchSensor}
+%\benchmarkresult{User_ReadPCheck0_RouteSensor}{Batch Validation - RouteSensor}
+%\benchmarkresult{User_ReadPCheck0_SignalNeighbor}{Batch Validation - SignalNeighbor}
+
+\benchmarkresult{XForm_ReadPCheck0_PosLength}{Batch Validation - PosLength}
+\benchmarkresult{XForm_ReadPCheck0_SwitchSensor}{Batch Validation - SwitchSensor}
+\benchmarkresult{XForm_ReadPCheck0_RouteSensor}{Batch Validation - RouteSensor}
+\benchmarkresult{XForm_ReadPCheck0_SignalNeighbor}{Batch Validation - SignalNeighbor}
 
 For the more complex \textsf{SignalNeighbor} query
 \autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat
