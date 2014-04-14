@@ -56,7 +56,7 @@ in several query formalisms. Due to the
 close analogies between graph patterns and SPARQL queries, we can consider these
 metrics applying to graph pattern-like queries in general. This allows us to
 formulate and calculate metrics expressed on the graph patterns interpreted by
-\incquery{}, and characterize the complexity of the equivalent SPARQL query with
+\eiq{}, and characterize the complexity of the equivalent SPARQL query with
 the same metric value.
 
 As superficial metrics for graph pattern complexity, we propose the number of
@@ -118,7 +118,7 @@ common parts of multiple patterns into reusable helper patterns.
 
 \subsection{Modified Metamodel}
 
-\begin{figure}[Hhtb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=12cm]{figures/TrainMMMet.pdf}
 \caption{The railway metamodel (metrics version).}
@@ -252,7 +252,7 @@ body, but with an increasing number of parameters. The first of these queries
 parameter is the blue object. Other queries use the same body, but add sen1,
 then sen2, then other variables to the parameter list.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \begin{center}
     \includegraphics[scale=0.4]{figures/parameters.pdf}
     \caption{The \codeCap{Params} and \codeCap{ParamsCircle} pattern schemas (first step).}
@@ -269,7 +269,7 @@ number of attribute check constraints. These check constraints filter results
 based on the \emph{year, height} and \emph{length} value of the segments \emph{seg1} and
 \emph{seg2}, resulting in seven queries.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \begin{center}
     \includegraphics[scale=0.4]{figures/checks.pdf}
     \caption{The \codeCap{Checks} pattern schema.}
@@ -286,7 +286,7 @@ a new segment is matched, and the previous pattern is encapsulated in a negative
 pattern call. $i=5$ queries are defined in the benchmark, described by the
 schema in \figref{fig:asenegs}.
 
-\begin{figure}[!ht]
+\begin{figure}[htb]
 \begin{center}
     \includegraphics[scale=0.4]{figures/negs.pdf}
     \caption{The \codeCap{Negs} pattern schema.}

@@ -1,12 +1,12 @@
-\chapter{Train Benchmark Implementation}
+\section{Implementation architecture}
 
 In this chapter, we discuss the implementation details of the Train Benchmark. The installation guide is available in the MONDO wiki.\footnote{\url{https://opensourceprojects.eu/p/mondo/wiki/TrainBenchmark/}}
 
-\section{Architecture}
+%\section{Architecture}
 
 For the integration of the Train Benchmark projects and their third party dependencies, we use Apache Maven~\cite{Maven}. The dependencies are shown in \figref{fig:trainbenchmark-modules}.
 
-\begin{figure}[!Htb]
+\begin{figure}%[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{figures/trainbenchmark-modules}
 	\caption{The Maven modules defined in the Train Benchmark. Note that artifact ids of the modules are shortened and the full ids start with \texttt{hu.bme.mit.trainbenchmark}.}
@@ -47,12 +47,13 @@ The \texttt{hu.bme.mit.trainbenchmark.benchmark.*} modules are responsible for b
 
 \subsection{4store}
 
-To access 4store through a graph-like API, we developed a Java client\footnote{\url{https://git.inf.mit.bme.hu/w?p=projects/bigmodel/4store-graph-client.git}, \\ clone URI: \url{git@git.inf.mit.bme.hu:projects/bigmodel/4store-graph-client.git}} with a focus on high performance.
+To access 4store through a graph-like API, we developed a Java client with a focus on high performance.
+
+\begin{itemize}
+  \item Homepage: \url{https://git.inf.mit.bme.hu/w?p=projects/bigmodel/4store-graph-client.git}
+  \item Clone URI: \url{https://anonymous@git.inf.mit.bme.hu/r/projects/bigmodel/4store-graph-client.git}
+\end{itemize}
 
 %\subsection{Extending the framework with custom tools, queries or models}
 %\subsubsection{Extending the model generator with new syntaxes}
 %\subsubsection{Adding a tool to measure performance}
-
-\section{Opening EMF instance models}
-
-If you would like to view the EMF instance models, right click the \texttt{hu.bme.mit.trainbenchmark.model} project and choose \textbf{Run As} | \textbf{Eclipse Application}) to start a new runtime Eclipse. Import the \texttt{hu.bme.mit.trainbenchmark.instancemodels} project. The \texttt{concept} files can be opened with the \textbf{Sample Reflective Model Editor}. (Warning: opening large models may cause the Eclipse instance to hang for a long time.)

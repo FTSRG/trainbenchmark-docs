@@ -15,7 +15,7 @@ As a result of a testcase run, the \emph{execution times} of each phase, the \em
 \subsection{Phases}
 \label{sec:phases}
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 	\centering
 	%\includegraphics[scale=0.5]{figures/phases}
 	\includegraphics[width=\textwidth]{figures/trainbenchmark-sequence}
@@ -65,7 +65,7 @@ use cases:
 \subsection{Metamodel}
 \label{sec:domain}
 
-\begin{figure}[htb!]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=1\columnwidth]{figures/TrainMM.pdf}
 \caption{The railway metamodel used in the Train Benchmark.}
@@ -122,7 +122,7 @@ In the following, we represent the graph pattern representation for the violatio
 
 \paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark~\cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \centering
 \begin{minipage}{0.5\textwidth}
   { \alignListing
@@ -132,7 +132,7 @@ In the following, we represent the graph pattern representation for the violatio
 \end{minipage}
 \end{figure}
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-poslength}
 		\caption{The \textsf{PosLength} pattern.}
@@ -150,7 +150,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
@@ -162,7 +162,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \paragraph{Remark.} Note that the negative application condition (NAC) part (\texttt{FILTER NOT EXISTS}) is a SPARQL 1.1 feature. In SPARQL 1.0, we have to use the approach shown in \lstref{lst:routesensor-sparql-nac10}.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
@@ -172,7 +172,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \end{minipage}
 \end{figure}
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-routesensor}
 		\caption{The NAC of the \textsf{RouteSensor} pattern in SPARQL 1.0.}
@@ -192,7 +192,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
@@ -202,7 +202,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \end{minipage}
 \end{figure}
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 		\centering
 		\includegraphics[scale=0.4]{figures/trainbenchmark-signalneighbor}
 		\caption{The \textsf{SignalNeighbor} pattern.}
@@ -226,7 +226,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textsf{RouteSensor} and the \textsf{SignalNeighbor} queries.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
@@ -237,7 +237,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \end{figure}
 
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-switchsensor}
 	\caption{The \textsf{SwitchSensor} pattern.}
@@ -256,7 +256,7 @@ In the \emph{edit} phase the model is modified to change the result set returned
 
 The Train Benchmark defines a quick fix model transformation for each query. The transformations are also represented as graph transformations. The insertions are shown in green with a \guillemotleft{}new\guillemotright{} caption, while deletions are marked with a red cross and a \guillemotleft{}del\guillemotright{} caption. In general, the goal of these transformations is to remove a subset of the invalid elements from the model.
 
-\begin{table}[Htb]
+\begin{table}[htb]
 	\centering
 	\scriptsize
 	\begin{tabular}{r|r|r|r|r|r|r|r|r|r|}
@@ -309,28 +309,28 @@ The Train Benchmark defines a quick fix model transformation for each query. The
 	\label{tbl:modify_type}
 \end{table}
 
-\begin{figure}[!Htb]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-poslength}
 	\caption{The \textsf{PosLength} transformation in the Model transformation scenario.}
 	\label{fig:trainbenchmark-transformation-xform-poslength}
 \end{figure}
 
-\begin{figure}[!Htb]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-routesensor}
 	\caption{The \textsf{RouteSensor} transformation in the Model transformation scenario.}
 	\label{fig:trainbenchmark-transformation-xform-routesensor}
 \end{figure}
 
-\begin{figure}[!Htb]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-signalneighbor}
 	\caption{The \textsf{SignalNeighbor} transformation in the Model transformation scenario.}
 	\label{fig:trainbenchmark-transformation-xform-signalneighbor}
 \end{figure}
 
-\begin{figure}[!Htb]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-switchsensor}
 	\caption{The \textsf{SwitchSensor} transformation in the Model transformation scenario.}
@@ -413,7 +413,7 @@ In the first phase of the benchmark, a previously generated \concept{instance mo
 
 To break symmetry, the exact number of elements and cardinalities are randomized. This brings artificially generated models \emph{closer to real world instances}, and \emph{prevents query tools from this kind of efficient storing} of instance models. During the generation of the railway system model, errors are injected at random positions. The initial number of constraint violating elements that are low (below one percent of the total number of elements), and are deterministically placed, thanks to \emph{pseudorandom} generation. These errors have to be found in the check phase of the benchmark, and can be corrected during the edit phase.
 
-\begin{figure}[Htb]
+\begin{figure}[htb]
 \begin{center}
 \includegraphics[width=\textwidth]{figures/instance/TrainMMb.pdf}
 \caption{The railway metamodel and instance model characteristics.}

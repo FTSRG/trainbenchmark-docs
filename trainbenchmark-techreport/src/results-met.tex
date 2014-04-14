@@ -60,13 +60,13 @@ MARS~\cite{MARS-MR1091842} regression model) in future work.
 	    \caption{Java Check time}\end{subfigure} \\
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-memory.pdf}
-	    \caption{\incquery{} Memory}\end{subfigure} &
+	    \caption{\eiq{} Memory}\end{subfigure} &
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-read.pdf}
-	    \caption{\incquery{} Read time}\end{subfigure} &
+	    \caption{\eiq{} Read time}\end{subfigure} &
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-check.pdf}
-	    \caption{\incquery{} Check time}\end{subfigure} \\
+	    \caption{\eiq{} Check time}\end{subfigure} \\
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-sesame-memory.pdf}
 	    \caption{Sesame Memory}\end{subfigure} &
@@ -93,7 +93,7 @@ However, check times show a more diverse picture. The check times for the Java i
 
 Interestingly, the best Sesame check time predictor turned out to be the number of pattern variables, and there is no significant correlation with any direct model metrics. 
 
-Check times in \incquery{} are very strongly correlated to the number of matches -- which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \incquery{} read time. It can also be highlighted that \incquery{} seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
+Check times in \eiq{} are very strongly correlated to the number of matches -- which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \eiq{} read time. It can also be highlighted that \eiq{} seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
 \paragraph{Metrics}
 Overall, it can be said that model-only metrics are useful in predicting the performance of model persistence operations. However, query-based and combined metrics (such as our proposed \emph{abs-} and \emph{relDifficulty}) are necessary to provide a more thorough picture.
 Note that since only statistically significant correlations are included, a low magnitude correlation does not necessarily mean a measurement error. It is possible that there is a true link between the two variables, but the $\tau$ value is lowered by other metrics that strongly influence the performance indicator. 

@@ -4,16 +4,15 @@
 \section{Benchmarking Environment}
 \label{sec:environment}
 
-For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{https://incquery.net/publications/trainbenchmark}}. In this section we describe the runtime environment, and highlight some design decisions.
+For the implementation details, source codes and raw results, see the benchmark website\footnote{\url{http://incquery.net/publications/benchmarkmetrics}}. In this section we describe the runtime environment, and highlight some design decisions.
 
-The benchmark machine contains two dual-core Intel Xeon (3.00~GHz) CPU, 12~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.10 OS was installed with unnecessary services (like \texttt{cron}) turned off. Oracle JVM version 1.7.0\_51 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
+The benchmark machine contains two quad-core Intel Xeon L5420 (2.50~GHz) CPU, 32~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.04 LTS OS was installed with unnecessary services (like \texttt{cron}) turned off. OpenJDK JVM version 1.6.0\_24 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
 The performance measurements of a tool was independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement of a scenario was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
 
-Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified.
-%, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
+Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 25~GB heap limit was specified, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
 
-In the benchmark all cases were run 6 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
+In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
 
 
 \section{Tools}
@@ -35,7 +34,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
 	Eclipse OCL & 3.3.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
 	%OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
-	\incquery{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	\eiq{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
 	Drools & 5.4.0 & EMF & DRL & \ding{108} & \ding{108} & Java \\ \hline
 	Sesame & 2.7.9 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
 	4store & 1.1.5 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
@@ -58,11 +57,12 @@ The OCL~\cite{OCL} language is commonly used for querying EMF model instances in
 %\subsection{OCL Impact Analyzer}
 %The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\subsubsection{\incquery{}}
-\incquery{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
+\subsubsection{\eiq{}}
+\eiq{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
 
 \subsubsection{Drools}
 Incremental query evaluation is also supported by the \concept{Drools}~\cite{Drools} rule engine developed by Red Hat. It is based on a variant of Rete~\cite{rete} (object-oriented Rete). Queries can be formalized using its own rule description language. Queries can be constructed by naming the ''when'' part of rules and acquiring their matches. While Drools is not an EMF tool per se, the Drools implementation of the \tb{} works on EMF models.
+
 
 \subsection{RDF-based Tools}
 
@@ -72,6 +72,10 @@ Sesame gives an API specification for many tools, and also provides its own impl
 \subsubsection{4store}
 4store~\cite{harris20094store} is an open source, distributed triplestore implemented in C. The main goal of 4store is to provide a high performance storage and query engine for semantic web applications. 
 
+\subsubsection{\iqd}
+\iqd{}~\cite{Izso:2013:IIG:2487766.2487772} is a distributed incremental graph query engine developed in the Budapest University of Technology and Economics. The goal of \iqd{} is to provide a scalable query engine by using a cluster of servers instead of a single workstation.
+
+
 \subsection{Graph-based Tools}
 
 \subsubsection{Neo4j}
@@ -79,164 +83,60 @@ As part of the NoSQL movement, database management systems emerged with a focus 
 Neo4j~\cite{neo4j}. The data model is based on graphs, where any node or edge can be labeled. Cypher can be used to query labeled graphs using its own graph pattern notation. This engine also uses disk for data storing, so a RAM disk is created during the benchmark.
 
 \section{Measurement Results for Performance Comparison}
+
 \label{sec:results}
 
+The measurement results of the benchmark are displayed below. These diagrams show the batch query performance, incremental evaluation time, and memory usage of each tools, for different model sizes. Additionally, the initial and the updated result set size is displayed under the model sizes for the batch and incremental queries, respectively.
 
+%The left column shows charts of the \textsf{RouteSensor} query,
+%while the more complex \textsf{SignalNeighbor} is presented in the right column.
+%The remaining \textsf{PosLength} and \textsf{SwitchSensor} queries are only presented
+%at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
+%\textsf{RouteSensor} case.
 
-The measurement results of the benchmark is displayed on
-\autoref{fig:trainbenchmark-diagrams}. These diagrams show the batch query
-performance, incremental evaluation time, and memory usage of each tools, for
-different model sizes. Additionally, the initial and the updated result set size
-is displayed under the model sizes for the batch and incremental queries,
-respectively.
+\subsection{Batch Validation (User Scenario)}
 
-The left column shows charts of the \textsf{RouteSensor} query,
-while the more complex \textsf{SignalNeighbor} is presented in the right column.
-The remaining \textsf{PosLength} and \textsf{SwitchSensor} queries are only presented
-at the benchmark website~\cite{TBwebsite}, as their results are very similar to the
-\textsf{RouteSensor} case.
+\forallqueries{\benchmarkresult{User_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{User} scenario.}}
 
-\subsection{Batch Query Evaluation}
-In case of batch query evaluation, both OCL implementations use the same
-algorithm, thus their execution time is roughly the same. The roughly negligible
-differences are due to the initialization of the OCL Impact Analyzer.
+\subsection{Batch Validation (XForm Scenario)}
 
-For the \emph{batch query} evaluation of the \textsf{RouteSensor} query
-\autoref{fig:BatchValid_RouteSensor} shows that \incquery{} performs similarly
-to Eclipse OCL. It is slightly faster for small models (2 s and 3 s
-respectively), but is slower for large models (up to 125 s and 78 s), where
-this 50\% slowdown (once in the whole scenario) can be attributed to the
-initial (Rete) cache build.
+\forallqueries{\benchmarkresult{XForm_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-% Both OCL measurements use Eclipse OCL for the batch phase,
-% because the Impact Analyser is not built for this purpose according to the
-% authors. However, the initialisation of the OCL Impact Analyser also occurs in
-% this phase resulting in (roughly negligible) higher execution time.
+\subsection{Revalidation (User Scenario)}
 
-% \begin{figure}[ht]
-% \begin{center}
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-% 	    \caption{Batch Query Evaluation Time -- RouteSensor}
-% 	    \label{fig:BatchValid_RouteSensor}
-% 	\end{subfigure}
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_BatchValid_RouteSensor}
-% 	    \caption{Batch Query Evaluation Time -- SignalNeighbor}
-% 	    \label{fig:BatchValid_SignalNeighbor}
-% 	\end{subfigure} \\
-% 
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_RouteSensor}
-% 	    \caption{Incremental Query Evaluation Time -- RouteSensor}
-% 	    \label{fig:SumInc_RouteSensor}
-% 	\end{subfigure}
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_SumInc_SignalNeighbor}
-% 	    \caption{Incremental Query Evaluation Time -- SignalNeighbor}
-% 	    \label{fig:SumInc_SignalNeighbor}
-% 	\end{subfigure} \\
-% 
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_RouteSensor}
-% 	    \caption{Memory Usage -- RouteSensor}
-% 	    \label{fig:Memory_RouteSensor}
-% 	\end{subfigure}
-% 	\begin{subfigure}[t]{0.48\textwidth}\centering
-% 	    \includegraphics[width=0.9\textwidth]{figures/trainBenchmark_User_Memory_SignalNeighbor}
-% 	    \caption{Memory Usage -- SignalNeighbor}
-% 	    \label{fig:Memory_SignalNeighbor}
-% 	\end{subfigure}
-%   \caption{Benchmark results.}
-%   \label{fig:trainbenchmark-diagrams}
-% \end{center}
-% \end{figure}
+\forallqueries{\benchmarkresult{User_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query.}}
 
-%\benchmarkresult{User_ReadPCheck0_PosLength}{Batch Validation - PosLength}
-%\benchmarkresult{User_ReadPCheck0_SwitchSensor}{Batch Validation - SwitchSensor}
-%\benchmarkresult{User_ReadPCheck0_RouteSensor}{Batch Validation - RouteSensor}
-%\benchmarkresult{User_ReadPCheck0_SignalNeighbor}{Batch Validation - SignalNeighbor}
+\subsection{Revalidation (XForm Scenario)}
 
-\benchmarkresult{XForm_ReadPCheck0_PosLength}{Batch Validation - PosLength}
-\benchmarkresult{XForm_ReadPCheck0_SwitchSensor}{Batch Validation - SwitchSensor}
-\benchmarkresult{XForm_ReadPCheck0_RouteSensor}{Batch Validation - RouteSensor}
-\benchmarkresult{XForm_ReadPCheck0_SignalNeighbor}{Batch Validation - SignalNeighbor}
+\forallqueries{\benchmarkresult{XForm_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-For the more complex \textsf{SignalNeighbor} query
-\autoref{fig:BatchValid_SignalNeighbor} depicts that \incquery{} (somewhat
-surprisingly) outperforms OCL solutions: it is noticeably faster for small
-modells (2 s and 4 s), and over 435k model elements OCL did not finish with
-the initial analysis in 12 minutes. This performance gain might be attributed to
-the more efficient (cached) enumeration of instances, and the possibility of
-backward navigation (with the help of auxiliary structures) on unidirectional
-references used by this query.
+\subsection{Total Time (User Scenario)}
 
-\subsection{Incremental Query Evaluation}
-In the \emph{incremental case}, Eclipse OCL evaluates the query on each run
-(100 times) from scratch, its execution time increases linearly with
-model size, resulting slow overall evaluation.
+\forallqueries{\benchmarkresult{User_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{User} scenario.}}
 
-For the \textsf{RouteSensor} query (\autoref{fig:SumInc_RouteSensor}), the Impact
-Analyzer performs the 100 modifications in 350 ms regardless of the model
-size. On the same query, \incquery{} starts much faster, but its speed reduces
-on the larger models (from 9 to 220 ms). On the other hand, the Impact
-Analyzer is an order of magnitude slower on the \textsf{SignalNeighbor} query
-(\autoref{fig:SumInc_SignalNeighbor}) query: it does not finish in 12 minutes
-for models over 61k model elements, while \incquery{} handles every model
-regardless of size under 40 ms.
+\subsection{Total Time (XForm Scenario)}
 
-The performance of the Impact Analyzer is most likely affected by the previously
-mentioned unidirectional references. The slowdown of \incquery{} is probably
-caused by the increased number of matches (from 116 to 8592), as query
-results are always available in the output nodes of Rete networks, and only a
-linear traversal of these stored matches is needed to return them.
+\forallqueries{\benchmarkresult{XForm_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Threats to Validity}
-We tried to mitigate \emph{internal validity} threats by reducing the number of
-uncontrolled variables during measurements: a physical machine was used with all
-unnecessary software components turned off and every execution was isolated into
-a freshly initialized JVM.
+\subsection{Memory Usage (User Scenario)}
 
-The queries are semantically equivalent in the different query languages and the
-result sets are the same for every model. Additionally, to ensure comparable
-results the created high-quality query implementations were reviewed: the OCL
-implementation by Ed Willink from the Eclipse OCL project, the usage of Impact
-Analyzer by Axel Uhl from the Impact Analyzer developer team. The graph patterns
-were written by the developers of \incquery{}.
+\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
 
-Considering \emph{external validity}, the generalization of the results largely
-depends on how representative the metamodels, the models and the queries are
-compared to real use cases. In section \ref{specification-extended} metrics were
-defined to describe complexity of models and queries, however comparing them to
-real world ones remains a future work.
+\subsection{Memory Usage (XForm Scenario)}
 
-The metamodel and the query specifications were motivated by an industrial case
-study, and the selected queries feature commonly used validation tasks such as
-attribute and reference checks or cycle detection. We tried to ensure that the
-instance models have a similar structure and distribution to other models by
-parameterizing the generation process based on our experience with other
-domains. To summarize, we believe that the train domain and the generated
-instance models represent other domain-specific languages and available instance
-models well.
+\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-Our current measurements only loaded and executed a single query in each run.
-When loading multiple queries, query interference may change the results
-greatly. A more detailed evaluation of this issue is planned for the future.
+\subsection{Series of Edit Times (User Scenario)}
 
-Considering resource-constrained environments, we believe that limiting
-available memory will alter the results the most, as the memory management
-overhead will reduce the performance of \incquery{}.
+\benchmarkresult{series_DetEdit_64_PosLength}{Series of edit times for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_16_RouteSensor}{Series of edit times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_1_SignalNeighbor}{Series of edit times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetEdit_128_SwitchSensor}{Series of edit times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
 
-It is important to note that heap usage were measured after executing a garbage
-collection, so these measurements do not contain memory usage of temporary
-constructs. This means that maximum heap usage might have been larger. Furthermore,
-limiting heap space by the maximum usage results in excessive garbage collection
-and thus an increased runtime. However, in our experience setting the limit to
-two times the measured values, such issues do not occur.
+\subsection{Series of Incremental Revalidation Times (User Scenario)}
 
-In case of the benchmark queries, we measured a $1.5$GB heap size in case of a
-model with $3.5$M model elements that we believe is manageable in a developer
-machine with $4$--$8$GB of RAM. On the other hand, when handling such large
-models the existing user interface itself could become a bottleneck. Thus we
-believe, our measurement results hold also in the integrated development
-environments.
+\benchmarkresult{series_DetCheck_64_PosLength}{Series of incremental revalidation times for the \textsf{PosLength} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_16_RouteSensor}{Series of incremental revalidation times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_1_SignalNeighbor}{Series of incremental revalidation times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
+\benchmarkresult{series_DetCheck_128_SwitchSensor}{Series of incremental revalidation times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
+
