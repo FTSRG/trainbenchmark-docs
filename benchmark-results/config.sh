@@ -1,6 +1,6 @@
 export minSize=1
 export maxSize=512
-export tools="$tools neo4j-ramdisk fourstore fourstore-ramdisk"
+export tools="$tools neo4j-ramdisk fourstore fourstore-ramdisk mysql"
 export xmx=6G
 export scenarios="User XForm"
 export timeout="15m"
