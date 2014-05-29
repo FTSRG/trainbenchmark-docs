@@ -2,9 +2,7 @@
 
 \todo{This section needs significant revision.}
 
-\subsection{Batch Query Evaluation}
-
-TODO
+\subsection{Batch validation}
 
 % all characteristics are polynomial, slopes are similar: mostly constant factor differences
 % dominated by model de-serialization for simpler queries
@@ -13,6 +11,17 @@ TODO
 % slow: MySQL, Neo4j, Neo4jRAM, Drools
 % medium: Sesame, Java
 % fast: OCL, IncQuery
+
+As it can be seen in the plots of \autoref{sec:results:batchvalidation}, the overall execution time characteristics of all tools are similar. With the exception of the \emph{SignalNeighbor} query, even the (asymptotic) slopes are identical, which means that there is only a constant multiplier difference between the various tools. The \emph{SignalNeighbor} query proved to be significantly more complex than the others (as indicated by metrics evaluation results) as the slopes for some tools (Java, Eclipse OCL and Drools) are larger, indicating an exponential disadvantage compared to the fastest tools (e.g. Neo4j, EMF-IncQuery and Sesame).
+
+Taking a closer look at the dominantly constant-multiplier differences for queries \emph{PosLength}, \emph{SwitchSensor} and \emph{RouteSensor}, the measured tools can be approximately grouped into three categories:
+\begin{itemize}
+  \item The \emph{fastest tools} are Eclipse OCL and EMF-IncQuery, which is no surprise since they operate on in-memory structures and use non-trivial optimizations supported by their evaluation engines.
+  \item Sesame, Java and Drools qualify as the \emph{medium} of the spectrum, explained by the fact that they use in-memory structures but lack the optimization capabilities of EMF-IncQuery and Eclipse OCL. This is somewhat surprising for Drools as it is advertised to incorporate optimization capabilities, yet this is not seen in our results.
+  \item MySQL and Neo4j correspond to the \emph{slower end}, possibly explained by their use of less optimized disk-oriented data structures and underoptimized query evaluation engines (especially the Cypher engine in the case of Neo4j). The usage of RAM disks can alleviate the speed disadvantage only insignificantly.
+\end{itemize}
+
+\paragraph{IncQuery-specific observations}
 
 % In case of batch query evaluation, both OCL implementations use the same
 % algorithm, thus their execution time is roughly the same. The roughly negligible
@@ -39,12 +48,21 @@ TODO
 % backward navigation (with the help of auxiliary structures) on unidirectional
 % references used by this query.
 
-\subsection{Incremental Query Evaluation}
+\paragraph{Differences between the User and Xform scenarios}
+
+
+
+\subsection{Incremental revalidation}
 TODO
 
 % characteristic difference between search-based and incremental tools
 % 
 % fast: IncQuery, Drools. IncQuery much faster for complex queries
+
+\paragraph{IncQuery-specific observations}
+
+increase in time explained by increasing result set which must be read completely
+(best seen for \emph{SignalNeighbor})
 
 % In the \emph{incremental case}, Eclipse OCL evaluates the query on each run
 % (100 times) from scratch, its execution time increases linearly with
@@ -65,7 +83,23 @@ TODO
 % results are always available in the output nodes of Rete networks, and only a
 % linear traversal of these stored matches is needed to return them.
 
-\subsection{Surprises}
+\paragraph{Differences between the User and Xform scenarios}
+
+\subsection{Highlights of interest}
+
+\paragraph{Execution time differences can be huge}
+0.5-3 orders of magnitude
+
+\paragraph{MySQL is surprisingly fast in some cases}
+TODO
+
+\paragraph{Model serialization technology affects the ``constant'' component}
+TODO
+
+\paragraph{RAM disks don't make much of a difference.}
+TODO
+
+\paragraph{JIT HotSpot optimizations kick in late.}
 TODO
 
 \subsection{Threats to Validity}

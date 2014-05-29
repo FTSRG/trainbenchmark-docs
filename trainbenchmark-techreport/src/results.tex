@@ -1,5 +1,5 @@
 \chapter{Benchmark Results}
-
+\label{cha:benchmarkresults}
 
 \section{Benchmarking Environment}
 \label{sec:environment}
@@ -10,7 +10,8 @@ The benchmark machine contains two dual-core Intel Xeon (3.00~GHz) CPU, 12~GBs o
 
 The performance measurements of a tool was independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement of a scenario was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
 
-Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified. Note that we are aware that this is a limited approach to memory usage measurements as it only takes ``retained'' heap consumption into account, and does not characterize the transient memory usage characteristics (i.e. allocations while the query evaluation is running). This shortcoming is planned to be addressed in future work.
+% TODO re-introduce memory measurements
+% Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified. Note that we are aware that this is a limited approach to memory usage measurements as it only takes ``retained'' heap consumption into account, and does not characterize the transient memory usage characteristics (i.e. allocations while the query evaluation is running). This shortcoming is planned to be addressed in future work.
 %, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
 
 In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
@@ -97,7 +98,7 @@ MySQL~\cite{mysql} is one of the most well-known and widely used open-source rel
 \section{Measurement Results for Performance Comparison}
 \label{sec:results}
 
-The measurement results of the benchmark are displayed below. These diagrams show the batch query performance, incremental evaluation time, and memory usage of each tools, for different model sizes. Additionally, the initial and the updated result set size is displayed under the model sizes for the batch and incremental queries, respectively.
+The measurement results of the benchmark are displayed below. These diagrams show the batch query performance and incremental evaluation time of each tool, for different model sizes. Additionally, the initial and the updated result set size is displayed under the model sizes for the batch and incremental queries, respectively.
 
 \subsection{How to read the charts}
 % log scales
@@ -157,12 +158,12 @@ Each plot shows execution times corresponding to a combination of one of the que
 \subsubsection{Total Time (XForm Scenario)}
 \forallqueries{\benchmarkresult{XForm_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Memory usage}
-\label{sec:results:memoryusage}
-\subsubsection{Memory Usage (User Scenario)}
-\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
-\subsubsection{Memory Usage (XForm Scenario)}
-\forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{XForm} scenario.}}
+% \subsection{Memory usage}
+% \label{sec:results:memoryusage}
+% \subsubsection{Memory Usage (User Scenario)}
+% \forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
+% \subsubsection{Memory Usage (XForm Scenario)}
+% \forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
 \subsection{Series of Edit times}
 \label{sec:results:seriesedit}
