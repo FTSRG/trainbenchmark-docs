@@ -99,47 +99,82 @@ MySQL~\cite{mysql} is one of the most well-known and widely used open-source rel
 
 The measurement results of the benchmark are displayed below. These diagrams show the batch query performance, incremental evaluation time, and memory usage of each tools, for different model sizes. Additionally, the initial and the updated result set size is displayed under the model sizes for the batch and incremental queries, respectively.
 
-\subsection{Batch Validation (User Scenario)}
+\subsection{How to read the charts}
+% log scales
+% low-order polynomial characteristics: slope is the order
+% ``constant'' difference: constant factor (order of magnitude) difference
+% incomplete series: timeout
 
+The charts are presented with logarithmic scales on both axes. This means that the general ``linear'' appearance of all measurement series correspond to a low-order polynomial big-O characteristic where the slope of the plot determines the dominant order (exponent). Moreover, a constant difference on these plots corresponds to a constant order-of-magnitude (i.e. constant multiplier) difference. As the execution runs with a timeout, incomplete measurement series indicate that the time limit has been reached during execution.
+ 
+% phases
+% batch validation = R+C0
+% total revalidation = sum ExCx
+% total time = everything together
+% memory usage = retained heap after execution finished
+% series of edit times = how Ex times vary depending on iteration number
+
+The execution phases as described in \autoref{sec:phases} have been grouped into several aggregated results as follows:
+
+\begin{itemize}
+  \item \emph{Batch validation} (\autoref{sec:results:batchvalidation}) corresponds to the sum of \emph{read} and \emph{check} execution times, as it models a batch validation scenario where the model is read and validated.
+  \item \emph{Revalidation} (\autoref{sec:results:revalidation}) corresponds to the sum of \emph{edit}-\emph{recheck} times as it represents the cumulative execution time of model editing-revalidation cycles.
+  \item \emph{Total time} (\autoref{sec:results:totaltime}) represents the combined execution time of the entire measurement cycle, giving an overall performance indicator.
+  \item \emph{Series of edit times} (\autoref{sec:results:seriesedit}) presents a deeper analysis to show how long each \emph{edit-re-check} cycle takes. These plots are useful for observing transient effects such as JIT HotSpot compilation.
+  \item \emph{Series of revalidation times} (\autoref{sec:results:seriesrevalidation}) present the same for the \emph{re-check} phase.
+\end{itemize}
+
+% observe variations with increasing query complexity (PL-RS-SS-SN)
+
+Each plot shows execution times corresponding to a combination of one of the queries of \autoref{sec:queries} and a tranformation scenario as defined in \autoref{sec:transformatios}. The plots offer insights into performance characteristics in three major ways:
+
+\begin{itemize}
+  \item \emph{Execution time vs. instance model size.} Each plot can be directly interpreted as an evaluation of performance against increasing model size, where different tool characteristics can be compared in a single plot.
+  \item \emph{Characteristics vs. increasing query complexity.} As the queries are of different complexity, comparing the plots within the same transformation scenario group but against different queries is useful to judge tool characteristics against increasing query complexity (or query result size, shown as ``Results'' on the Y axis).
+  \item \emph{Characteristics vs. increasing transformation complexity.} As the transformation scenarios are characteristically different (e.g. with respect to the amount of objects modified by the transformation sequence -- as shown on the X axis as ``Modifications''), comparing the plots with the same query but against different scenarions is useful to judge tool characteristics against various transformation complexities.
+\end{itemize}
+
+
+
+\subsection{Batch Validation}
+\label{sec:results:batchvalidation}
+\subsubsection{Batch Validation (User Scenario)}
 \forallqueries{\benchmarkresult{User_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{User} scenario.}}
-
-\subsection{Batch Validation (XForm Scenario)}
-
+\subsubsection{Batch Validation (XForm Scenario)}
 \forallqueries{\benchmarkresult{XForm_ReadPCheck0_\n}{Batch validation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Revalidation (User Scenario)}
-
-\forallqueries{\benchmarkresult{User_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query.}}
-
-\subsection{Revalidation (XForm Scenario)}
-
+\subsection{Revalidation}
+\label{sec:results:revalidation}
+\subsubsection{Revalidation (User Scenario)}
+\forallqueries{\benchmarkresult{User_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query in the \textsc{User} scenario.}}
+\subsubsection{Revalidation (XForm Scenario)}
 \forallqueries{\benchmarkresult{XForm_SumModifyPSumReCheck_\n}{Revalidation times for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Total Time (User Scenario)}
-
+\subsection{Total time}
+\label{sec:results:totaltime}
+\subsubsection{Total Time (User Scenario)}
 \forallqueries{\benchmarkresult{User_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{User} scenario.}}
-
-\subsection{Total Time (XForm Scenario)}
-
+\subsubsection{Total Time (XForm Scenario)}
 \forallqueries{\benchmarkresult{XForm_SumTime_\n}{Total time for the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Memory Usage (User Scenario)}
-
+\subsection{Memory usage}
+\label{sec:results:memoryusage}
+\subsubsection{Memory Usage (User Scenario)}
 \forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{User} scenario.}}
-
-\subsection{Memory Usage (XForm Scenario)}
-
+\subsubsection{Memory Usage (XForm Scenario)}
 \forallqueries{\benchmarkresult{User_Memory_\n}{Memory consumption of the \textsf{\n} query in the \textsf{XForm} scenario.}}
 
-\subsection{Series of Edit Times (User Scenario)}
-
+\subsection{Series of Edit times}
+\label{sec:results:seriesedit}
+\subsubsection{Series of Edit Times (User Scenario)}
 \benchmarkresult{series_DetEdit_64_PosLength}{Series of edit times for the \textsf{PosLength} query in the \textsf{User} scenario.}
 \benchmarkresult{series_DetEdit_16_RouteSensor}{Series of edit times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
 \benchmarkresult{series_DetEdit_1_SignalNeighbor}{Series of edit times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
 \benchmarkresult{series_DetEdit_128_SwitchSensor}{Series of edit times for the \textsf{SwitchSensor} query in the \textsf{User} scenario.}
 
-\subsection{Series of Incremental Revalidation Times (User Scenario)}
-
+\subsection{Series of Incremental Revaliation Times}
+\label{sec:results:seriesrevalidation}
+\subsubsection{Series of Incremental Revalidation Times (User Scenario)}
 \benchmarkresult{series_DetCheck_64_PosLength}{Series of incremental revalidation times for the \textsf{PosLength} query in the \textsf{User} scenario.}
 \benchmarkresult{series_DetCheck_16_RouteSensor}{Series of incremental revalidation times for the \textsf{RouteSensor} query in the \textsf{User} scenario.}
 \benchmarkresult{series_DetCheck_1_SignalNeighbor}{Series of incremental revalidation times for the \textsf{SignalNeighbor} query in the \textsf{User} scenario.}
