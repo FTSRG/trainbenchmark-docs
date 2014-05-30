@@ -21,39 +21,39 @@ Taking a closer look at the dominantly constant-multiplier differences for queri
   \item MySQL and Neo4j correspond to the \emph{slower end}, possibly explained by their use of less optimized disk-oriented data structures and underoptimized query evaluation engines (especially the Cypher engine in the case of Neo4j). The usage of RAM disks can alleviate the speed disadvantage only insignificantly.
 \end{itemize}
 
-\paragraph{IncQuery-specific observations}
+\paragraph{IncQuery vs. OCL specific observations}
 
 % In case of batch query evaluation, both OCL implementations use the same
 % algorithm, thus their execution time is roughly the same. The roughly negligible
 % differences are due to the initialization of the OCL Impact Analyzer.
-% 
-% For the \emph{batch query} evaluation of the \textsf{RouteSensor} query
-% \autoref{fig:BatchValid_RouteSensor} shows that \eiq{} performs similarly
-% to Eclipse OCL. It is slightly faster for small models (2 s and 3 s
-% respectively), but is slower for large models (up to 125 s and 78 s), where
-% this 50\% slowdown (once in the whole scenario) can be attributed to the
-% initial (Rete) cache build.
+ 
+From the \emph{batch query} evaluation of the \textsf{PosLength},
+\textsf{SwitchSensor} and \textsf{RouteSensor} queries
+(\autoref{sec:results:batchvalidation}), it can be seen that \eiq{} performs
+similarly to Eclipse OCL. It is slightly faster for small models (2 s and 3 s
+respectively), but is slower for large models (up to 125 s and 78 s), where this
+50\% slowdown (once in the whole scenario) can be attributed to the initial
+(Rete) cache build.
 
 % Both OCL measurements use Eclipse OCL for the batch phase,
 % because the Impact Analyser is not built for this purpose according to the
 % authors. However, the initialisation of the OCL Impact Analyser also occurs in
 % this phase resulting in (roughly negligible) higher execution time.
 
-% For the more complex \textsf{SignalNeighbor} query
-% \autoref{fig:BatchValid_SignalNeighbor} depicts that \eiq{} (somewhat
-% surprisingly) outperforms OCL solutions: it is noticeably faster for small
-% modells (2 s and 4 s), and over 435k model elements OCL did not finish with
-% the initial analysis in 12 minutes. This performance gain might be attributed to
-% the more efficient (cached) enumeration of instances, and the possibility of
-% backward navigation (with the help of auxiliary structures) on unidirectional
-% references used by this query.
+However, for the more complex \textsf{SignalNeighbor} query, it is observed that
+\eiq{} outperforms Eclipse OCL by a large margin solutions: it is noticeably
+faster for small modells (2 s and 4 s), and over 435k model elements OCL did not
+finish with the initial analysis in 12 minutes. This performance gain might be
+attributed to the more efficient (cached) enumeration of instances, and the
+possibility of backward navigation (with the help of auxiliary structures) on
+unidirectional references used by this query.
 
 \paragraph{Differences between the User and Xform scenarios}
-
+As noted in \autoref{sec:transformatios}, the main difference between the \textsf{User} and \textsf{Xform} scenarios is the amount of model manipulation operations, which is significantly larger for the \textsf{Xform} scenario. For the \emph{batch validation} case, the differences manifest in the size of the query results sets, which are again larger for most queries in the \textsf{Xform} scenario. By comparing corresponding plots, it is observed that the overall evaluation time is affected linearly by this difference (explained by the specification which requires a complete reading through the entire result list), meaning that all tools are capable of handling this efficiently.
 
 
 \subsection{Incremental revalidation}
-TODO
+
 
 % characteristic difference between search-based and incremental tools
 % 
