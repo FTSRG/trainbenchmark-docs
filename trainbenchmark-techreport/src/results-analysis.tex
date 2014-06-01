@@ -1,6 +1,5 @@
 \section{Analysis of results}
-
-\todo{This section needs significant revision.}
+\label{sec:results:analysis}
 
 \subsection{Batch validation}
 
@@ -12,7 +11,7 @@
 % medium: Sesame, Java
 % fast: OCL, IncQuery
 
-As it can be seen in the plots of \autoref{sec:results:batchvalidation}, the overall execution time characteristics of all tools are similar. With the exception of the \emph{SignalNeighbor} query, even the (asymptotic) slopes are identical, which means that there is only a constant multiplier difference between the various tools. The \emph{SignalNeighbor} query proved to be significantly more complex than the others (as indicated by metrics evaluation results) as the slopes for some tools (Java, Eclipse OCL and Drools) are larger, indicating an exponential disadvantage compared to the fastest tools (e.g. Neo4j, EMF-IncQuery and Sesame).
+As it can be seen in the plots of \autoref{sec:results:batchvalidation}, the overall execution time characteristics of all tools are similar. With the exception of the \emph{SignalNeighbor} query, even the (asymptotic) slopes are identical, which means that there is only a constant multiplier difference between the various tools. The \emph{SignalNeighbor} query proved to be significantly more complex than the others (as indicated by metrics evaluation results) as the slopes for some tools (Java, Eclipse OCL and Drools) are larger, indicating an exponential disadvantage compared to the fastest tools (e.g. Neo4j, \eiq{} and Sesame).
 
 Taking a closer look at the dominantly constant-multiplier differences for queries \emph{PosLength}, \emph{SwitchSensor} and \emph{RouteSensor}, the measured tools can be approximately grouped into three categories:
 \begin{itemize}
@@ -21,7 +20,7 @@ Taking a closer look at the dominantly constant-multiplier differences for queri
   \item MySQL and Neo4j correspond to the \emph{slower end}, possibly explained by their use of less optimized disk-oriented data structures and underoptimized query evaluation engines (especially the Cypher engine in the case of Neo4j). The usage of RAM disks can alleviate the speed disadvantage only insignificantly.
 \end{itemize}
 
-\paragraph{IncQuery vs. OCL specific observations}
+\paragraph{IncQuery vs. OCL specific observations.}
 
 % In case of batch query evaluation, both OCL implementations use the same
 % algorithm, thus their execution time is roughly the same. The roughly negligible
@@ -48,21 +47,22 @@ attributed to the more efficient (cached) enumeration of instances, and the
 possibility of backward navigation (with the help of auxiliary structures) on
 unidirectional references used by this query.
 
-\paragraph{Differences between the User and Xform scenarios}
-As noted in \autoref{sec:transformatios}, the main difference between the \textsf{User} and \textsf{Xform} scenarios is the amount of model manipulation operations, which is significantly larger for the \textsf{Xform} scenario. For the \emph{batch validation} case, the differences manifest in the size of the query results sets, which are again larger for most queries in the \textsf{Xform} scenario. By comparing corresponding plots, it is observed that the overall evaluation time is affected linearly by this difference (explained by the specification which requires a complete reading through the entire result list), meaning that all tools are capable of handling this efficiently.
 
 
 \subsection{Incremental revalidation}
-
+As designed, this phase illustrates the characteristic difference between traditional, ``batch'' query engines and incremental tools clearly. \emph{Total revalidation time} (shown on the X axis in the plots of \autoref{sec:results:revalidation}) corresponds to the execution time of editing and re-checking operations, i.e. it approximates an incremental model transformation sequence for incremental tools and a batch transformation + batch query evaluation sequence for traditional tools.
 
 % characteristic difference between search-based and incremental tools
 % 
 % fast: IncQuery, Drools. IncQuery much faster for complex queries
 
-\paragraph{IncQuery-specific observations}
+The characteristic advantage of incremental tools (i.e. \eiq{} and Drools) is best seen on the Y axes of the plots, as these tools are typically 1-2 orders of magnitude (i.e. 10 to 100 times) faster than the rest. Since the plots include editing and result retrieval operations that scale linearly with model size, the overall low-order polynomial characteristics apply to all of the tools. The \textsf{SignalNeighbor} query again highlights \eiq's clear advantage when dealing with very complex queries: it beats all other tools by 3-5 orders of magnitude.
 
-increase in time explained by increasing result set which must be read completely
-(best seen for \emph{SignalNeighbor})
+
+% \paragraph{IncQuery vs. OCL-specific observations}
+% 
+% increase in time explained by increasing result set which must be read completely
+% (best seen for \emph{SignalNeighbor})
 
 % In the \emph{incremental case}, Eclipse OCL evaluates the query on each run
 % (100 times) from scratch, its execution time increases linearly with
@@ -83,71 +83,67 @@ increase in time explained by increasing result set which must be read completel
 % results are always available in the output nodes of Rete networks, and only a
 % linear traversal of these stored matches is needed to return them.
 
-\paragraph{Differences between the User and Xform scenarios}
-
 \subsection{Highlights of interest}
 
-\paragraph{Execution time differences can be huge}
-0.5-3 orders of magnitude
+\paragraph{Differences between the User and Xform scenarios.}
+As noted in \autoref{sec:transformatios}, the main difference between the \textsf{User} and \textsf{Xform} scenarios is the amount of model manipulation operations, which is significantly larger for the \textsf{Xform} scenario. The query result sets are also larger for the \textsf{Xform} scenario. By comparing corresponding plots, it is observed that the overall evaluation time is affected linearly by this difference (explained by the specification which requires a complete reading through the entire result list), meaning that all tools are capable of handling this efficiently.
 
-\paragraph{MySQL is surprisingly fast in some cases}
-TODO
+\paragraph{Execution time differences can be huge.}
+While the overall characteristics of all tools are similar (low order polynomial with a constant component), we have recorded a rather large variation of execution times (0.5-4 orders of magnitude difference). This confirms our expectation that model persistence, (de)serialization, query evaluation and model transformation technologies can have a huge overall impact on MDE performance. 
 
-\paragraph{Model serialization technology affects the ``constant'' component}
-TODO
+\paragraph{RAM disks matter less than anticipated.}
+Some measurements using 4store and Neo4j were performed with both SSD-based and RAMdisk-based storage backends. Overall, as it is seen from total time measurements (\autoref{sec:results:totaltime}), RAMdisk-based variants were about twice as fast -- which is less than we originally anticipated.
 
-\paragraph{RAM disks don't make much of a difference.}
-TODO
+\paragraph{Hand-coded Java and MySQL are surprisingly fast in some cases.}
+We created the hand-coded Java and MySQL implementations as baselines to which more sophisticated tools can be measured. While the advanced tools are the clear winners overall, the Java and MySQL baselines were surprisingly fast in several configurations. We interpret this as a sign that more sophisticated tools, and specifically MDE technologies still have a lot of performance enhancement potential to be unlocked.
 
 \paragraph{JIT HotSpot optimizations kick in late.}
-TODO
+As seen in \autoref{sec:results:seriesedit} and even better in \autoref{sec:results:seriesrevalidation}, the execution time for certain operations executed in cycles can decrease dramatically over time. In the Java Runtime environment, this effect is best explained by Just-in-time (HotSpot) compiling by the Java Virtual Machine. Overall, it can be concluded that at least 30-50 complex operation iterations are advised to be executed in a benchmarking environment to obtain results that are relevant to long running software.
 
 \subsection{Threats to Validity}
 
 \subsubsection{Internal threats}
 
-\paragraph{Mitigating measurement risks}
+\paragraph{Mitigating measurement risks.}
 We tried to mitigate \emph{internal validity} threats by reducing the number of
 uncontrolled variables during measurements: a physical machine was used with all
 unnecessary software components turned off and every execution was isolated into
 a freshly initialized JVM.
 
-\paragraph{Ensuring functional equivalence and correctness}
+\paragraph{Ensuring functional equivalence and correctness.}
 The queries are semantically equivalent in the different query languages and the
 result sets are the same for every model. 
-
 Our current measurements only loaded and executed a single query in each run.
 When loading multiple queries, query interference may change the results
 greatly. A more detailed evaluation of this issue is planned for the future.
 
-
-\paragraph{Memory measurements}
-It is important to note that heap usage were measured after executing a garbage
-collection, so these measurements do not contain memory usage of temporary
-constructs. This means that maximum heap usage might have been larger. Furthermore,
-limiting heap space by the maximum usage results in excessive garbage collection
-and thus an increased runtime. However, in our experience setting the limit to
-two times the measured values, such issues do not occur.
-
+% \paragraph{Memory measurements.}
+% It is important to note that heap usage were measured after executing a garbage
+% collection, so these measurements do not contain memory usage of temporary
+% constructs. This means that maximum heap usage might have been larger. Furthermore,
+% limiting heap space by the maximum usage results in excessive garbage collection
+% and thus an increased runtime. However, in our experience setting the limit to
+% two times the measured values, such issues do not occur.
 
 
-\paragraph{Code reviews}
-Additionally, to ensure comparable
-results the created high-quality query implementations were reviewed: the OCL
-implementation by Ed Willink from the Eclipse OCL project, the usage of Impact
-Analyzer by Axel Uhl from the Impact Analyzer developer team. The graph patterns
-were written by the developers of \eiq{}. SPARQL code was reviewed by a semantic web expert. Drools rules were reviewed by the JBoss Drools developer team. 
+\paragraph{Code reviews.}
+Additionally, to ensure comparable results the created high-quality query
+implementations were reviewed: the OCL implementation by Ed Willink from the
+Eclipse OCL project, the usage of Impact Analyzer by Axel Uhl from the Impact
+Analyzer developer team. The graph patterns were written by the developers of
+\eiq{}. SPARQL code was reviewed by a semantic web expert. Drools rules were
+reviewed by the JBoss Drools developer team.
 
 \subsubsection{External threats}
 
-\paragraph{Metrics and generalizability of results}
+\paragraph{Metrics and generalizability of results.}
 Considering \emph{external validity}, the generalization of the results largely
 depends on how representative the metamodels, the models and the queries are
 compared to real use cases. In section \ref{specification-extended} metrics were
 defined to describe complexity of models and queries, however comparing them to
 real world ones remains a future work.
 
-\paragraph{Industrial relevance}
+\paragraph{Industrial relevance.}
 The metamodel and the query specifications were motivated by an industrial case
 study, and the selected queries feature commonly used validation tasks such as
 attribute and reference checks or cycle detection. We tried to ensure that the
@@ -157,14 +153,14 @@ domains. To summarize, we believe that the train domain and the generated
 instance models represent other domain-specific languages and available instance
 models well.
 
-\paragraph{Resource usage}
-Considering resource-constrained environments, we believe that limiting
-available memory will alter the results the most, as the memory management
-overhead will reduce the performance of \eiq{}.
-
-In case of the benchmark queries, we measured a $1.5$GB heap size in case of a
-model with $3.5$M model elements that we believe is manageable in a developer
-machine with $4$--$8$GB of RAM. On the other hand, when handling such large
-models the existing user interface itself could become a bottleneck. Thus we
-believe, our measurement results hold also in the integrated development
-environments.
+% \paragraph{Resource usage.}
+% Considering resource-constrained environments, we believe that limiting
+% available memory will alter the results the most, as the memory management
+% overhead will reduce the performance of \eiq{}.
+% 
+% In case of the benchmark queries, we measured a $1.5$GB heap size in case of a
+% model with $3.5$M model elements that we believe is manageable in a developer
+% machine with $4$--$8$GB of RAM. On the other hand, when handling such large
+% models the existing user interface itself could become a bottleneck. Thus we
+% believe, our measurement results hold also in the integrated development
+% environments.
