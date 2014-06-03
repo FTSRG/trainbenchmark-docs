@@ -35,7 +35,7 @@ The \texttt{hu.bme.mit.trainbenchmark.generator.*} modules are responsible for g
 
 \begin{itemize}
   \item \texttt{emf}: generates an EMF instance model.
-  \item \texttt{emfuuid}: generates an EMF instance model with UUIDs.
+  \item \texttt{emfuuid}: generates an EMF instance model with UUIDs. A UUID (universally unique identifier) identifies an EObject uniquely, and is generated automatically by the EMF framework. In the output file, UUIDs are used to reference other objects, and not XPath expressions, speeding up the serialization process.
   \item \texttt{graph}: generates a property graph model in the specified format: GraphML (default), Blueprints GraphSON, Faunus GraphSON.
   \item \texttt{rdf}: generates an RDF instance model.
   \item \texttt{sql}: generates an SQL script which creates and loads the appropriate database tables.
