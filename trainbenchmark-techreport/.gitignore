@@ -1,3 +1,5 @@
 /pdf
-/trainbenchmark-techrepor.synctex.gz
+*.synctex.gz
 /tmp
+*.bbl
+*.blg
