@@ -1,6 +1,7 @@
 DOCUMENT=main
 
 pdflatex:
+	mkdir -p ../pdf
 	pdflatex $(DOCUMENT)
 	bibtex $(DOCUMENT)
 	pdflatex $(DOCUMENT)
@@ -8,6 +9,7 @@ pdflatex:
 	mv $(DOCUMENT).pdf ../pdf
 
 xelatex:
+	mkdir -p ../pdf
 	xelatex $(DOCUMENT)
 	bibtex $(DOCUMENT)
 	xelatex $(DOCUMENT)
