@@ -8,6 +8,6 @@ SELECT DISTINCT ?xSensor WHERE {
   xSwitch base:sensor ?xSensor .
 
   FILTER NOT EXISTS {
-    ?xRoute ?routeDefinition ?xSensor .
+    ?xRoute base:routeDefinition ?xSensor .
   } .
 }
