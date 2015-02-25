@@ -49,7 +49,7 @@ use cases:
   \item \concept{Batch validation scenario} (\textsf{Batch}):
   In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use case is performed when a model editor is opened and initial validations are issued by the designer. 
   
-  \item \concept{Automated model repair scenairo} (\textsf{XForm}):
+  \item \concept{Automated model repair scenairo} (\textsf{Repair}):
   The automated model repair scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is repaired, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
   
   Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
