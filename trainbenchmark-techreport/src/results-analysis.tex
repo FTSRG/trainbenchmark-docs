@@ -85,20 +85,20 @@ The characteristic advantage of incremental tools (i.e. \eiq{} and Drools) is be
 
 \subsection{Highlights of interest}
 
-\paragraph{Differences between the User and Xform scenarios.}
-As noted in \autoref{sec:transformatios}, the main difference between the \textsf{User} and \textsf{Xform} scenarios is the amount of model manipulation operations, which is significantly larger for the \textsf{Xform} scenario. The query result sets are also larger for the \textsf{Xform} scenario. By comparing corresponding plots, it is observed that the overall evaluation time is affected linearly by this difference (explained by the specification which requires a complete reading through the entire result list), meaning that all tools are capable of handling this efficiently.
+\paragraph{Differences between the User and Repair scenarios.}
+As noted in \autoref{sec:transformatios}, the main difference between the \textsf{User} and \textsf{Repair} scenarios is the amount of model manipulation operations, which is significantly larger for the \textsf{Repair} scenario. The query result sets are also larger for the \textsf{Repair} scenario. By comparing corresponding plots, it is observed that the overall evaluation time is affected linearly by this difference (explained by the specification which requires a complete reading through the entire result list), meaning that all tools are capable of handling this efficiently.
 
 \paragraph{Execution time differences can be huge.}
-While the overall characteristics of all tools are similar (low order polynomial with a constant component), we have recorded a rather large variation of execution times (0.5-4 orders of magnitude difference). This confirms our expectation that model persistence, (de)serialization, query evaluation and model transformation technologies can have a huge overall impact on MDE performance. 
+While the overall characteristics of all tools are similar (low order polynomial with a constant component), we have recorded a rather large variation of execution times (0.5--4 orders of magnitude difference). This confirms our expectation that model persistence, (de)serialization, query evaluation and model transformation technologies can have a huge overall impact on MDE performance. 
 
 \paragraph{RAM disks matter less than anticipated.}
-Some measurements using 4store and Neo4j were performed with both SSD-based and RAMdisk-based storage backends. Overall, as it is seen from total time measurements (\autoref{sec:results:totaltime}), RAMdisk-based variants were about twice as fast -- which is less than we originally anticipated.
+Some measurements using 4store and Neo4j were performed with both SSD-based and RAM disk-based storage backends. Overall, as it is seen from total time measurements (\autoref{sec:results:totaltime}), RAM disk-based variants were about twice as fast -- which is less than we originally anticipated.
 
 \paragraph{Hand-coded Java and MySQL are surprisingly fast in some cases.}
 We created the hand-coded Java and MySQL implementations as baselines to which more sophisticated tools can be measured. While the advanced tools are the clear winners overall, the Java and MySQL baselines were surprisingly fast in several configurations. We interpret this as a sign that more sophisticated tools, and specifically MDE technologies still have a lot of performance enhancement potential to be unlocked.
 
 \paragraph{JIT HotSpot optimizations kick in late.}
-As seen in \autoref{sec:results:seriesedit} and even better in \autoref{sec:results:seriesrevalidation}, the execution time for certain operations executed in cycles can decrease dramatically over time. In the Java Runtime environment, this effect is best explained by Just-in-time (HotSpot) compiling by the Java Virtual Machine. Overall, it can be concluded that at least 30-50 complex operation iterations are advised to be executed in a benchmarking environment to obtain results that are relevant to long running software.
+As seen in \autoref{sec:results:seriesedit} and even better in \autoref{sec:results:seriesrevalidation}, the execution time for certain operations executed in cycles can decrease dramatically over time. In the Java Runtime environment, this effect is best explained by Just-in-time (HotSpot) compiling by the Java Virtual Machine. Overall, it can be concluded that at least 30--50 complex operation iterations are advised to be executed in a benchmarking environment to obtain results that are relevant to long running software.
 
 \subsection{Threats to Validity}
 

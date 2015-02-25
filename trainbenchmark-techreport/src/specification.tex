@@ -49,8 +49,8 @@ use cases:
   \item \concept{Batch validation scenario} (\textsf{Batch}):
   In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use case is performed when a model editor is opened and initial validations are issued by the designer. 
   
-  \item \concept{Model transformation scenario} (\textsf{XForm}):
-  The automated model transformation scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is corrected, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
+  \item \concept{Automated model repair scenairo} (\textsf{XForm}):
+  The automated model repair scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is repaired, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
   
   Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
   
@@ -254,14 +254,14 @@ $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 In the \emph{edit} phase the model is modified to change the result set returned in the succeeding re-check phase.
 
-The Train Benchmark defines a quick fix model transformation for each query. The transformations are also represented as graph transformations. The insertions are shown in green with a \guillemotleft{}new\guillemotright{} caption, while deletions are marked with a red cross and a \guillemotleft{}del\guillemotright{} caption. In general, the goal of these transformations is to remove a subset of the invalid elements from the model.
+The Train Benchmark defines model transformations for each query. The transformations are also represented as graph transformations. The insertions are shown in green with a \guillemotleft{}new\guillemotright{} caption, while deletions are marked with a red cross and a \guillemotleft{}del\guillemotright{} caption. In general, the goal of these transformations is to remove a subset of the invalid elements from the model.
 
 \begin{table}[htb]
 	\centering
 	\scriptsize
 	\begin{tabular}{r|r|r|r|r|r|r|r|r|r|}
 	\cline{2-9}
-	& \multicolumn{4}{ c| }{\bf User (modify = 10)} & \multicolumn{4}{ c| }{\bf Model transformation (modify = Res1 × 10\%)} \\ \hline
+	& \multicolumn{4}{ c| }{\bf User (modify = 10)} & \multicolumn{4}{ c| }{\bf Repair (modify = Res1 × 10\%)} \\ \hline
 	\multicolumn{1}{ |r| }{\bf\#Objects} & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 \\ \hline
 	\multicolumn{1}{ |r| }{6032}         & 928 & 19 & 10 & 29 & 967 & 94 & 9 & 85 \\ \hline
 	\multicolumn{1}{ |r| }{11710}        & 1804 & 41 & 10 & 51 & 1936 & 193 & 19 & 174 \\ \hline
@@ -285,7 +285,7 @@ The Train Benchmark defines a quick fix model transformation for each query. The
 	
 	During the modification the user always performs 10 random edits (fixed low constant) which \emph{increase} the number of erroneous elements. These edit operations modify only some elements of the model and do not add or remove modules containing multiple instance model elements.
 
-	\item In the \emph{model transformation scenario} the initial number of errors is higher (1.5\% of objects for the \textsf{RouteSensor} case). This scenario models the case when these errors are processed by a model transformation program automatically.
+	\item In the \emph{Repair scenario} the initial number of errors is higher (1.5\% of objects for the \textsf{RouteSensor} case). This scenario models the case when these errors are (partially) processed by a model transformation program automatically.
 
 	In the edit phase the program modifies 10\% of the elements of the result set retrieved from the batch query. These modifications always correct an invalid element in the model, so the number of invalid elements \emph{decreases} (see \autoref{tbl:modify_type}).
 
@@ -298,7 +298,7 @@ The Train Benchmark defines a quick fix model transformation for each query. The
 	\centering
 	\begin{tabular}{l|l|l|l|l|l|}
 	\cline{2-5}
-	& \multicolumn{2}{ c| }{\bf User} & \multicolumn{2}{ c| }{\bf Model transformation} \\ \cline{2-5}
+	& \multicolumn{2}{ c| }{\bf User} & \multicolumn{2}{ c| }{\bf Repair} \\ \cline{2-5}
 	& \bf Modification type & \bf RSS change & \bf Modification type & \bf RSS change \\ \hline
 	\multicolumn{1}{ |l| }{\bf PosLength}      & Update & Increase & Update & Decrease \\ \hline
 	\multicolumn{1}{ |l| }{\bf SwitchSensor}   & Delete & Increase & Add    & Decrease \\ \hline
@@ -308,35 +308,6 @@ The Train Benchmark defines a quick fix model transformation for each query. The
 	\caption{Modification type for the queries.}
 	\label{tbl:modify_type}
 \end{table}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-poslength}
-	\caption{The \textsf{PosLength} transformation in the Model transformation scenario.}
-	\label{fig:trainbenchmark-transformation-xform-poslength}
-\end{figure}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-routesensor}
-	\caption{The \textsf{RouteSensor} transformation in the Model transformation scenario.}
-	\label{fig:trainbenchmark-transformation-xform-routesensor}
-\end{figure}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-signalneighbor}
-	\caption{The \textsf{SignalNeighbor} transformation in the Model transformation scenario.}
-	\label{fig:trainbenchmark-transformation-xform-signalneighbor}
-\end{figure}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-transformation-xform-switchsensor}
-	\caption{The \textsf{SwitchSensor} transformation in the Model transformation scenario.}
-	\label{fig:trainbenchmark-transformation-xform-switchsensor}
-\end{figure}
-
 
 \begin{figure}
         \centering
@@ -368,7 +339,7 @@ The Train Benchmark defines a quick fix model transformation for each query. The
                 \label{fig:trainbenchmark-transformation-user-switchsensor}
         \end{subfigure}
         \caption{Transformations in the User scenario.}
-        \label{fig:trainbenchmark-transformations-xform}
+        \label{fig:trainbenchmark-transformations-repair}
 \end{figure}
 
 
@@ -385,23 +356,57 @@ The modifications in more detail:
 
     \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting all their edges to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such an edge, so no edges are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
         
-  \end{itemize}
-  \item \emph{Model transformation scenario:} in this case elements to be edited are selected from the result of the previous query. The transformations provide quick fix-like refactoring operations.
+\end{itemize}
+  
+  
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{\textwidth}
+        		\centering
+                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-poslength}
+                \caption{\textsf{PosLength}}
+                \label{fig:trainbenchmark-transformation-repair-poslength}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[b]{\textwidth}
+                \centering
+                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-routesensor}
+                \caption{\textsf{RouteSensor}}
+                \label{fig:trainbenchmark-transformation-repair-routesensor}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[b]{\textwidth}
+                \centering
+                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-signalneighbor}
+                \caption{\textsf{SignalNeighbor}}
+                \label{fig:trainbenchmark-transformation-repair-signalneighbor}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[b]{\textwidth}
+                \centering
+                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-switchsensor}
+                \caption{\textsf{SwitchSensor}}
+                \label{fig:trainbenchmark-transformation-repair-switchsensor}
+        \end{subfigure}
+        \caption{Transformations in the Repair scenario.}
+        \label{fig:trainbenchmark-transformations-repair}
+\end{figure}
+  
+  \item \emph{Repair scenario:} in this case elements to be edited are selected from the result of the previous query. The transformations provide quick fix-like repair operations.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:trainbenchmark-transformation-xform-poslength}).
+    \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:trainbenchmark-transformation-repair-poslength}).
     
-    \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-xform-routesensor}).
+    \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-repair-routesensor}).
     
-    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not hold for the actual route (\figref{fig:trainbenchmark-transformation-xform-signalneighbor}).
+    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not hold for the actual route (\figref{fig:trainbenchmark-transformation-repair-signalneighbor}).
         
     \item \emph{SwitchSensor:} Random elements are selected from the set of invalid \emph{switches} and are connected to newly created \emph{sensors}.
     
-    In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:trainbenchmark-transformation-xform-switchsensor}).
+    In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:trainbenchmark-transformation-repair-switchsensor}).
     
   \end{itemize}
 \end{itemize}
- 
 
 
 \subsection{Instance Model Generation}
