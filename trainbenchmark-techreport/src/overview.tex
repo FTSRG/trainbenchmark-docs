@@ -24,25 +24,7 @@ performance, in a scenario that is specifically modeled after \emph{model
 validation} in (domain-specific) modeling tools: at first, the entire model is
 validated, then after each model manipulation (e.g.\ the deletion of a
 reference) is followed by an immediate re-validation. The benchmark measures
-execution times for four phases:
-
-\begin{enumerate}
- \item During the \emph{read} phase, the instance model
- is loaded from hard drive to memory. This includes the parsing of the input as
- well as initializing data structures of the tool. 
- 
- \item In the \emph{check} phase, the instance model is queried to identify
- invalid elements. This can be as simple as reading the results from cache, or
- the model can be traversed based on some index. The result of this phase  
- is the set of the erroneous objects.
- 
- \item In the \emph{edit} phase, the model is modified to simulate effects of
- manual user edits. Here the size of the change set can be adjusted to
- correspond to small manual edits as well as large model transformations.
- 
- \item The re-validation of the model is carried out in the \emph{re-check}
- phase similarly to the \emph{check} phase.
-\end{enumerate}
+execution times for four phases: (1) \emph{read} (2) \emph{check} (3) \emph{edit} (4) \emph{re-check}.
 
 The Train Benchmark computes two derived results based on the recorded data:
 (1) \emph{batch validation time} (the sum of the \emph{read} and \emph{check} phases)
