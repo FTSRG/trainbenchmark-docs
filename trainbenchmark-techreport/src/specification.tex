@@ -102,7 +102,7 @@ For formulating the queries in relational algebra we define the following relati
 \begin{itemize}
   \item $ \mathit{Route}\left(\mathit{id}\right) $
   \item $ \mathit{Sensor}\left(\mathit{id}, \mathit{Segment\_length}\right) $
-  \item $ \mathit{Signal}\left(\mathit{id}\right) $
+  \item $ \mathit{Semaphore}\left(\mathit{id}\right) $
   \item $ \mathit{Switch}\left(\mathit{id}\right) $
   \item $ \mathit{SwitchPosition}\left(\mathit{id}\right) $
   \item $ \mathit{TrackElement}\left(\mathit{id}\right) $
@@ -111,10 +111,10 @@ For formulating the queries in relational algebra we define the following relati
 The edges\footnote{also called relationships or references in various implementations} are represented with the following relational schemas:
 
 \begin{itemize}
-  \item $ \mathit{entry}\left(\mathit{Route}, \mathit{Signal}\right) $
-  \item $ \mathit{exit}\left(\mathit{Route}, \mathit{Signal}\right) $
-  \item $ \mathit{switchPosition}\left(\mathit{Route}, \mathit{SwitchPosition}\right) $
-  \item $ \mathit{routeDefinition}\left(\mathit{Route}, \mathit{Sensor}\right) $
+  \item $ \mathit{entry}\left(\mathit{Route}, \mathit{Semaphore}\right) $
+  \item $ \mathit{exit}\left(\mathit{Route}, \mathit{Semaphore}\right) $
+  \item $ \mathit{follows}\left(\mathit{Route}, \mathit{SwitchPosition}\right) $
+  \item $ \mathit{definedBy}\left(\mathit{Route}, \mathit{Sensor}\right) $
   \item $ \mathit{switch}\left(\mathit{SwitchPosition}, \mathit{Switch}\right) $
   \item $ \mathit{sensor}\left(\mathit{Switch}, \mathit{Sensor}\right) $
   \item $ \mathit{connectsTo}\left(\mathit{TrackElement}, \mathit{TrackElement}\right) $
@@ -200,13 +200,13 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \paragraph{Relational algebraic form.}  The \textsf{RouteSensor} query can be formalized in relational algebra as:
 
 \[
-\pi_{\mathit{Route}} \big( \mathit{switchPosition} \naturaljoin \mathit{switch} \naturaljoin \mathit{sensor} \antijoin \mathit{routeDefinition} \big)
+\pi_{\mathit{Route}} \big( \mathit{follows} \naturaljoin \mathit{switch} \naturaljoin \mathit{sensor} \antijoin \mathit{definedBy} \big)
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{SemaphoreNeighbor}
 
-\paragraph{Description.} The \textsf{SemaphoreNeighbor} well-formedness constraint requires that the routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{fig:pattern-semaphoreneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:semaphoreneighbor-sparql}.
+\paragraph{Description.} The \textsf{SemaphoreNeighbor} well-formedness constraint requires that the routes that are connected through sensors and track elements have to belong to the same semaphore. Therefore, the query (\figref{fig:pattern-semaphoreneighbor}) checks for routes which have an exit semaphore and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same semaphore and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:semaphoreneighbor-sparql}.
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
 
@@ -230,10 +230,10 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \paragraph{Relational algebraic form.} The \textsf{SemaphoreNeighbor} query can be formalized in relational algebra as:
 
 \begin{align*}
-& \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{routeDefinition_2.Route}} \big( \\
-& \quad \mathit{entry} \naturaljoin \mathit{routeDefinition_1} \naturaljoin \mathit{sensor_1} \naturaljoin \\
-& \quad \mathit{connectsTo} \naturaljoin \mathit{sensor_2} \naturaljoin \mathit{routeDefinition_2} \antijoin \\
-& \quad \left( \mathit{exit} \naturaljoin \mathit{routeDefinition_3} \right) \\
+& \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{definedBy_2.Route}} \big( \\
+& \quad \mathit{entry} \naturaljoin \mathit{definedBy_1} \naturaljoin \mathit{sensor_1} \naturaljoin \\
+& \quad \mathit{connectsTo} \naturaljoin \mathit{sensor_2} \naturaljoin \mathit{definedBy_2} \antijoin \\
+& \quad \left( \mathit{exit} \naturaljoin \mathit{definedBy_3} \right) \\
 & \big) \big)
 \end{align*}
 
@@ -368,7 +368,7 @@ The modifications in more detail:
     
     \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
     
-    \item \emph{RouteSensor:} The \emph{routeDefinition} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-user-routesensor}).
+    \item \emph{RouteSensor:} The \emph{definedBy} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-user-routesensor}).
     
     \item \emph{SemaphoreNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:transformation-user-semaphoreneighbor}). (According to the metamodel, a \emph{route} may only have 0 or 1 \emph{entry} edges).
 

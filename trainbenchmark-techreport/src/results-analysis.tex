@@ -11,7 +11,7 @@
 % medium: Sesame, Java
 % fast: OCL, IncQuery
 
-As it can be seen in the plots of \autoref{sec:results:batchvalidation}, the overall execution time characteristics of all tools are similar. With the exception of the \emph{SignalNeighbor} query, even the (asymptotic) slopes are identical, which means that there is only a constant multiplier difference between the various tools. The \emph{SignalNeighbor} query proved to be significantly more complex than the others (as indicated by metrics evaluation results) as the slopes for some tools (Java, Eclipse OCL and Drools) are larger, indicating an exponential disadvantage compared to the fastest tools (e.g. Neo4j, \eiq{} and Sesame).
+As it can be seen in the plots of \autoref{sec:results:batchvalidation}, the overall execution time characteristics of all tools are similar. With the exception of the \emph{SemaphoreNeighbor} query, even the (asymptotic) slopes are identical, which means that there is only a constant multiplier difference between the various tools. The \emph{SemaphoreNeighbor} query proved to be significantly more complex than the others (as indicated by metrics evaluation results) as the slopes for some tools (Java, Eclipse OCL and Drools) are larger, indicating an exponential disadvantage compared to the fastest tools (e.g. Neo4j, \eiq{} and Sesame).
 
 Taking a closer look at the dominantly constant-multiplier differences for queries \emph{PosLength}, \emph{SwitchSensor} and \emph{RouteSensor}, the measured tools can be approximately grouped into three categories:
 \begin{itemize}
@@ -39,7 +39,7 @@ respectively), but is slower for large models (up to 125 s and 78 s), where this
 % authors. However, the initialisation of the OCL Impact Analyser also occurs in
 % this phase resulting in (roughly negligible) higher execution time.
 
-However, for the more complex \textsf{SignalNeighbor} query, it is observed that
+However, for the more complex \textsf{SemaphoreNeighbor} query, it is observed that
 \eiq{} outperforms Eclipse OCL by a large margin solutions: it is noticeably
 faster for small modells (2 s and 4 s), and over 435k model elements OCL did not
 finish with the initial analysis in 12 minutes. This performance gain might be
@@ -56,13 +56,13 @@ As designed, this phase illustrates the characteristic difference between tradit
 % 
 % fast: IncQuery, Drools. IncQuery much faster for complex queries
 
-The characteristic advantage of incremental tools (i.e. \eiq{} and Drools) is best seen on the Y axes of the plots, as these tools are typically 1-2 orders of magnitude (i.e. 10 to 100 times) faster than the rest. Since the plots include editing and result retrieval operations that scale linearly with model size, the overall low-order polynomial characteristics apply to all of the tools. The \textsf{SignalNeighbor} query again highlights \eiq's clear advantage when dealing with very complex queries: it beats all other tools by 3-5 orders of magnitude.
+The characteristic advantage of incremental tools (i.e. \eiq{} and Drools) is best seen on the Y axes of the plots, as these tools are typically 1-2 orders of magnitude (i.e. 10 to 100 times) faster than the rest. Since the plots include editing and result retrieval operations that scale linearly with model size, the overall low-order polynomial characteristics apply to all of the tools. The \textsf{SemaphoreNeighbor} query again highlights \eiq's clear advantage when dealing with very complex queries: it beats all other tools by 3-5 orders of magnitude.
 
 
 % \paragraph{IncQuery vs. OCL-specific observations}
 % 
 % increase in time explained by increasing result set which must be read completely
-% (best seen for \emph{SignalNeighbor})
+% (best seen for \emph{SemaphoreNeighbor})
 
 % In the \emph{incremental case}, Eclipse OCL evaluates the query on each run
 % (100 times) from scratch, its execution time increases linearly with
@@ -72,8 +72,8 @@ The characteristic advantage of incremental tools (i.e. \eiq{} and Drools) is be
 % Analyzer performs the 100 modifications in 350 ms regardless of the model
 % size. On the same query, \eiq{} starts much faster, but its speed reduces
 % on the larger models (from 9 to 220 ms). On the other hand, the Impact
-% Analyzer is an order of magnitude slower on the \textsf{SignalNeighbor} query
-% (\autoref{fig:SumInc_SignalNeighbor}) query: it does not finish in 12 minutes
+% Analyzer is an order of magnitude slower on the \textsf{SemaphoreNeighbor} query
+% (\autoref{fig:SumInc_SemaphoreNeighbor}) query: it does not finish in 12 minutes
 % for models over 61k model elements, while \eiq{} handles every model
 % regardless of size under 40 ms.
  
