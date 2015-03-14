@@ -112,7 +112,15 @@ The edges\footnote{also called relationships or references in various implementa
 
 \subsubsection{Graph Patterns}
 
-In the following, we represent the graph pattern representation for the violation of each well-formedness constraint. Opaque blue rectangles and dashed arrows mark positive constraints, while red rectangles and arrows represent negative application conditions (NACs). The result of the query (also referred as the \emph{match set}) is marked with transparent blue rectangles. Additional constraints (e.g.\ arithmetic comparisons) are shown in the figure in text.
+In the following, we represent the graph pattern representation for the violation of each well-formedness constraint. For defining the patterns and transformations, we used a graphical syntax similar to GROOVE~\cite{rensink2004groove} with a couple of additions:
+
+\begin{itemize}
+  \item The invalid model elements returned by the query are shown in \textbf{bold} font.
+  \item Filter conditions are shown in \textit{italic} font.
+  \item Negative application conditions are shown with in a \textcolor{negcolor}{red} rectangle with the \textcolor{negcolor}{\textsf{NEG}} caption.
+  \item The insertions are with a \textcolor{newcolor}{\guillemotleft{}new\guillemotright{}} caption, while deletions are marked with a \textcolor{delcolor}{\guillemotleft{}del\guillemotright{}} caption. Attribute updates are also show in \textcolor{newcolor}{green}.
+\end{itemize}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
