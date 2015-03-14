@@ -81,7 +81,7 @@ The metamodel of the railway domain used in the Train Benchmark is depicted in \
 
 In the validation and re-validation phases of the benchmark, the queries return the elements violating the well-formedness constraint defined by the test case. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return a set of the invalid instance model elements' identifiers.
  
-Two simple queries involving maximum 2 objects (\textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4--8 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SignalNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
+Two simple queries involving maximum 2 objects (\textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4--8 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SemaphoreNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
  
 In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
@@ -118,7 +118,7 @@ In the following, we represent the graph pattern representation for the violatio
 
 \subsubsection{PosLength}
 
-\paragraph{Description.} The \textsf{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:trainbenchmark-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
+\paragraph{Description.} The \textsf{PosLength} well-formedness constraint requires that a segment must have positive length. Therefore, the query (\figref{fig:pattern-poslength}) checks for segments with a length less than or equal to zero. The SPARQL representation of the query is shown in \lstref{lst:poslength-sparql}.
 
 \paragraph{Goal.} The query checks whether an object has an attribute. If it does, the value is checked. Checking attributes is a real world use case, even if a very simple one. Note that simple string checking is also measured in the Berlin SPARQL Benchmark~\cite{BSBM} and it concludes that for most tools the string comparison algorithm dominates the query time.
 
@@ -134,9 +134,9 @@ In the following, we represent the graph pattern representation for the violatio
 
 \begin{figure}[htb]
 		\centering
-		\includegraphics[scale=0.4]{figures/trainbenchmark-poslength}
+		\includegraphics[scale=0.4]{figures/pattern-poslength}
 		\caption{The \textsf{PosLength} pattern.}
-		\label{fig:trainbenchmark-poslength}
+		\label{fig:pattern-poslength}
 \end{figure}
 
 \paragraph{Relational algebraic form.} The \textsf{PosLength} query can be formalized in relational algebra as:
@@ -146,7 +146,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{RouteSensor}
 
-\paragraph{Description.} The \textsf{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{fig:trainbenchmark-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{lst:routesensor-sparql-nac}.
+\paragraph{Description.} The \textsf{RouteSensor} well-formedness constraint requires that all sensors that are associated with a switch that belongs to a route must also be associated directly with the same route. Therefore, the query (\figref{fig:pattern-routesensor}) looks for sensors that are connected to a switch, but the sensor and the switch are not connected to the same route. The SPARQL representation of the query is shown in \lstref{lst:routesensor-sparql-nac}.
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join and the antijoin operations is tested.
 
@@ -174,9 +174,9 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 		\centering
-		\includegraphics[scale=0.4]{figures/trainbenchmark-routesensor}
+		\includegraphics[scale=0.4]{figures/pattern-routesensor}
 		\caption{The \textsf{RouteSensor} pattern.}
-		\label{fig:trainbenchmark-routesensor}
+		\label{fig:pattern-routesensor}
 \end{figure}
 
 \paragraph{Relational algebraic form.}  The \textsf{RouteSensor} query can be formalized in relational algebra as:
@@ -186,9 +186,9 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{SignalNeighbor}
+\subsubsection{SemaphoreNeighbor}
 
-\paragraph{Description.} The \textsf{SignalNeighbor} well-formedness constraint requires that the routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{fig:trainbenchmark-signalneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:signalneighbor-sparql}.
+\paragraph{Description.} The \textsf{SemaphoreNeighbor} well-formedness constraint requires that the routes that are connected through sensors and track elements have to belong to the same signal. Therefore, the query (\figref{fig:pattern-semaphoreneighbor}) checks for routes which have an exit signal and a sensor connected to another sensor (which is in a definition of another route) by two track elements, but there is no other route that connects the same signal and the other sensor. The SPARQL representation of the query is shown in \lstref{lst:semaphoreneighbor-sparql}.
 
 \paragraph{Goal.} This pattern checks for the absence of circles, so the efficiency of the join operation is tested. One-way navigable references are also present in the constraint, so the efficient evaluation of these are also tested. Subsumption inference is required, as the two track elements can be switches or segments.
 
@@ -196,20 +196,20 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 \centering
 \begin{minipage}{0.6\textwidth}
   { \alignListing
-    \sourceSPARQL{figures/queries/SignalNeighbor.sparql}}
-  \caption{The \textsf{SignalNeighbor} query in SPARQL.}
-  \label{lst:signalneighbor-sparql}
+    \sourceSPARQL{figures/queries/SemaphoreNeighbor.sparql}}
+  \caption{The \textsf{SemaphoreNeighbor} query in SPARQL.}
+  \label{lst:semaphoreneighbor-sparql}
 \end{minipage}
 \end{figure}
 
 \begin{figure}[htb]
 		\centering
-		\includegraphics[scale=0.4]{figures/trainbenchmark-signalneighbor}
-		\caption{The \textsf{SignalNeighbor} pattern.}
-		\label{fig:trainbenchmark-signalneighbor}
+		\includegraphics[scale=0.4]{figures/pattern-semaphoreneighbor}
+		\caption{The \textsf{SemaphoreNeighbor} pattern.}
+		\label{fig:pattern-semaphoreneighbor}
 \end{figure}
 
-\paragraph{Relational algebraic form.} The \textsf{SignalNeighbor} query can be formalized in relational algebra as:
+\paragraph{Relational algebraic form.} The \textsf{SemaphoreNeighbor} query can be formalized in relational algebra as:
 
 \begin{align*}
 & \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{routeDefinition_2.Route}} \big( \\
@@ -222,9 +222,9 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{SwitchSensor}
 
-\paragraph{Description.} The \textsf{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:trainbenchmark-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
+\paragraph{Description.} The \textsf{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:pattern-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
 
-\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textsf{RouteSensor} and the \textsf{SignalNeighbor} queries.
+\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textsf{RouteSensor} and the \textsf{SemaphoreNeighbor} queries.
 
 \begin{figure}[htb]
 \centering
@@ -239,9 +239,9 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[scale=0.4]{figures/trainbenchmark-switchsensor}
+	\includegraphics[scale=0.4]{figures/pattern-switchsensor}
 	\caption{The \textsf{SwitchSensor} pattern.}
-	\label{fig:trainbenchmark-switchsensor}
+	\label{fig:pattern-switchsensor}
 \end{figure}
 
 \paragraph{Relational algebraic form.} The \textsf{SwitchSensor} query can be formalized in relational algebra as:
@@ -303,7 +303,7 @@ The Train Benchmark defines model transformations for each query. The transforma
 	\multicolumn{1}{ |l| }{\bf PosLength}      & Update & Increase & Update & Decrease \\ \hline
 	\multicolumn{1}{ |l| }{\bf SwitchSensor}   & Delete & Increase & Add    & Decrease \\ \hline
 	\multicolumn{1}{ |l| }{\bf RouteSensor}    & Delete & Increase & Delete & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf SignalNeighbor} & Update & Increase & Update & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SemaphoreNeighbor} & Update & Increase & Update & Decrease \\ \hline
 	\end{tabular}
 	\caption{Modification type for the queries.}
 	\label{tbl:modify_type}
@@ -313,33 +313,33 @@ The Train Benchmark defines model transformations for each query. The transforma
         \centering
         \begin{subfigure}[b]{0.4\textwidth}
         		\centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-poslength}
+                \includegraphics[scale=0.4]{figures/transformation-user-poslength}
                 \caption{\textsf{PosLength}}
-                \label{fig:trainbenchmark-transformation-user-poslength}
+                \label{fig:transformation-user-poslength}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.6\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-routesensor}
+                \includegraphics[scale=0.4]{figures/transformation-user-routesensor}
                 \caption{\textsf{RouteSensor}}
-                \label{fig:trainbenchmark-transformation-user-routesensor}
+                \label{fig:transformation-user-routesensor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.4\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-signalneighbor}
-                \caption{\textsf{SignalNeighbor}}
-                \label{fig:trainbenchmark-transformation-user-signalneighbor}
+                \includegraphics[scale=0.4]{figures/transformation-user-semaphoreneighbor}
+                \caption{\textsf{SemaphoreNeighbor}}
+                \label{fig:transformation-user-semaphoreneighbor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.6\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-user-switchsensor}
+                \includegraphics[scale=0.4]{figures/transformation-user-switchsensor}
                 \caption{\textsf{SwitchSensor}}
-                \label{fig:trainbenchmark-transformation-user-switchsensor}
+                \label{fig:transformation-user-switchsensor}
         \end{subfigure}
         \caption{Transformations in the User scenario.}
-        \label{fig:trainbenchmark-transformations-repair}
+        \label{fig:transformations-repair}
 \end{figure}
 
 
@@ -348,13 +348,13 @@ The modifications in more detail:
   \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e.\ they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:trainbenchmark-transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
+    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
     
-    \item \emph{RouteSensor:} The \emph{routeDefinition} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:trainbenchmark-transformation-user-routesensor}).
+    \item \emph{RouteSensor:} The \emph{routeDefinition} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-user-routesensor}).
     
-    \item \emph{SignalNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:trainbenchmark-transformation-user-signalneighbor}). (According to the metamodel, a \emph{route} may only have 0 or 1 \emph{entry} edges).
+    \item \emph{SemaphoreNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:transformation-user-semaphoreneighbor}). (According to the metamodel, a \emph{route} may only have 0 or 1 \emph{entry} edges).
 
-    \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting all their edges to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such an edge, so no edges are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:trainbenchmark-transformation-user-switchsensor}).
+    \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting all their edges to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such an edge, so no edges are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:transformation-user-switchsensor}).
         
 \end{itemize}
   
@@ -363,47 +363,47 @@ The modifications in more detail:
         \centering
         \begin{subfigure}[b]{\textwidth}
         		\centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-poslength}
+                \includegraphics[scale=0.4]{figures/transformation-repair-poslength}
                 \caption{\textsf{PosLength}}
-                \label{fig:trainbenchmark-transformation-repair-poslength}
+                \label{fig:transformation-repair-poslength}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-routesensor}
+                \includegraphics[scale=0.4]{figures/transformation-repair-routesensor}
                 \caption{\textsf{RouteSensor}}
-                \label{fig:trainbenchmark-transformation-repair-routesensor}
+                \label{fig:transformation-repair-routesensor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-signalneighbor}
-                \caption{\textsf{SignalNeighbor}}
-                \label{fig:trainbenchmark-transformation-repair-signalneighbor}
+                \includegraphics[scale=0.4]{figures/transformation-repair-semaphoreneighbor}
+                \caption{\textsf{SemaphoreNeighbor}}
+                \label{fig:transformation-repair-semaphoreneighbor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/trainbenchmark-transformation-repair-switchsensor}
+                \includegraphics[scale=0.4]{figures/transformation-repair-switchsensor}
                 \caption{\textsf{SwitchSensor}}
-                \label{fig:trainbenchmark-transformation-repair-switchsensor}
+                \label{fig:transformation-repair-switchsensor}
         \end{subfigure}
         \caption{Transformations in the Repair scenario.}
-        \label{fig:trainbenchmark-transformations-repair}
+        \label{fig:transformations-repair}
 \end{figure}
   
   \item \emph{Repair scenario:} in this case elements to be edited are selected from the result of the previous query. The transformations provide quick fix-like repair operations.
   \begin{itemize}
     
-    \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:trainbenchmark-transformation-repair-poslength}).
+    \item \emph{PosLength:} Random elements are selected from the set of invalid \emph{segments} and their values are updated to $- \mathit{oldValue} + 1$ (\figref{fig:transformation-repair-poslength}).
     
-    \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:trainbenchmark-transformation-repair-routesensor}).
+    \item \emph{RouteSensor:} Randomly selected invalid \emph{sensors} are disconnected from the \emph{switch}, which means that the constraint will no longer apply (\figref{fig:transformation-repair-routesensor}).
     
-    \item  \emph{SignalNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not hold for the actual route (\figref{fig:trainbenchmark-transformation-repair-signalneighbor}).
+    \item  \emph{SemaphoreNeighbor:} Disconnect \emph{exit} references of randomly selected invalid \emph{routes}, resulting in a structure where the constraint must not hold for the actual route (\figref{fig:transformation-repair-semaphoreneighbor}).
         
     \item \emph{SwitchSensor:} Random elements are selected from the set of invalid \emph{switches} and are connected to newly created \emph{sensors}.
     
-    In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:trainbenchmark-transformation-repair-switchsensor}).
+    In EMF this means the creation of a new Sensor which is added to the switch and also to the root container object. In ontology the triples asserting the connection between the new Sensor and the Switch, as well as its type are inserted into the knowledge base (\figref{fig:transformation-repair-switchsensor}).
     
   \end{itemize}
 \end{itemize}
