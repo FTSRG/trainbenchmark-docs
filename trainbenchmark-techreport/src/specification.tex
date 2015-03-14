@@ -65,14 +65,24 @@ use cases:
 \subsection{Metamodel}
 \label{sec:domain}
 
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[width=1\columnwidth]{figures/TrainMM.pdf}
-\caption{The railway metamodel used in the Train Benchmark.}
-\label{fig:metamodel}
-\end{center}
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{\textwidth}
+		\centering
+		\includegraphics[scale=0.6]{figures/railway-containments}
+		\caption{Containment hierarchy and references}
+		\label{fig:railway-containments}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{\textwidth}
+		\centering
+		\includegraphics[scale=0.6]{figures/railway-inheritance}
+		\caption{Supertype relations}
+		\label{fig:railway-inheritance}
+	\end{subfigure}
+	\caption{The metamodel of the Train Benchmark.}
+	\label{fig:metamodel}
 \end{figure}
-
 
 The metamodel of the railway domain used in the Train Benchmark is depicted in \figref{fig:metamodel}. A train \textsf{route} can be defined by a set of \textsf{sensors}. Sensors are associated with \textsf{track elements}: track \textsf{segment}s (with a specific length) or \textsf{switch}es. A route may have associated \textsf{switch positions} which describe the required state of a switch belonging to the route. Different route definitions can specify different states for a specific switch.
  
