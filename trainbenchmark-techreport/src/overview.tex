@@ -13,8 +13,8 @@ queries over relational databases~\cite{tpc-c} or graph stores
 \cite{BSBM, SP2Bench}, modeling tool workloads are significantly
 different. Specifically, modeling tools use much more complex queries than
 typical transactional systems, and the real world performance is more affected by
-response time (i.e.\ execution time for a specific operation such as validation
-or transformation) than throughput (i.e.\ the amount of parallel transactions).
+response time (\ie execution time for a specific operation such as validation
+or transformation) than throughput (\ie the amount of parallel transactions).
 
 
 \section{Overview}
@@ -22,7 +22,7 @@ To address this challenge, the Train Benchmark~\cite{SCP2014,TBwebsite} is a mac
 benchmark that aims to measure batch and incremental query evaluation
 performance, in a scenario that is specifically modeled after \emph{model
 validation} in (domain-specific) modeling tools: at first, the entire model is
-validated, then after each model manipulation (e.g.\ the deletion of a
+validated, then after each model manipulation (\eg the deletion of a
 reference) is followed by an immediate re-validation. The benchmark measures
 execution times for four phases: (1) \emph{read} (2) \emph{check} (3) \emph{edit} (4) \emph{re-check}.
 
@@ -40,7 +40,7 @@ originates from the \mbox{MOGENTES} EU FP7~\cite{Mogentes} project, where both t
 well-formedness rules were defined by railway domain experts. This domain
 enables the definition of both simple and more complex model queries while it is
 simple enough to incorporate solutions from other technological spaces
-(e.g.\ ontologies, relational databases and RDF). This allows the comparison of
+(\eg ontologies, relational databases and RDF). This allows the comparison of
 the performance aspects of wider range of query tools from a constraint
 validation viewpoint.
 
@@ -84,7 +84,7 @@ interface that enables the integration of additional metamodels, instance
 models, query implementations and even new benchmark scenarios (which may be
 different from the original four-phase concept). The default implementation
 contains a benchmark suite for queries implemented in Java, Eclipse OCL and
-\eiq{}.
+\eiq.
 
 Measurements are recorded automatically in a machine-processable format (CSV)
 that is automatically processed by R~\cite{TB:R} scripts. An extended version of the Train

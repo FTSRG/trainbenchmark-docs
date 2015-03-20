@@ -32,7 +32,7 @@ is statistically significant ($p < 0.001$). Note that any such statistical resul
 is conditional to the uniform sampling of the selected queries and models.
 
 
-A limitation of the approach is that two strongly correlated variables (e.g.\ 
+A limitation of the approach is that two strongly correlated variables (\eg 
 \code{countEdges} and \code{countTriples}) may show up as equally good
 predictors, but in reality they can not be used as two independent signals for
 predicting performance (as most triples in our models are edges). The simple
@@ -42,7 +42,7 @@ techniques such as mRMR~\cite{mRMR-1453511} that can take into account which
 metrics convey independent information. Afterwards, predicting the best choice
 of technology based on the metric values is a problem of multivariate regression
 / classification, for which we plan to employ advanced machine learning
-techniques (e.g.\ ID3~\cite{ID3-quinlan-1986} decision trees or
+techniques (\eg ID3~\cite{ID3-quinlan-1986} decision trees or
 MARS~\cite{MARS-MR1091842} regression model) in future work.
 
 \begin{figure*}[tp]
@@ -60,13 +60,13 @@ MARS~\cite{MARS-MR1091842} regression model) in future work.
 	    \caption{Java Check time}\end{subfigure} \\
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-memory.pdf}
-	    \caption{\eiq{} Memory}\end{subfigure} &
+	    \caption{\eiq Memory}\end{subfigure} &
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-read.pdf}
-	    \caption{\eiq{} Read time}\end{subfigure} &
+	    \caption{\eiq Read time}\end{subfigure} &
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-iq-check.pdf}
-	    \caption{\eiq{} Check time}\end{subfigure} \\
+	    \caption{\eiq Check time}\end{subfigure} \\
 	    \begin{subfigure}[t]{0.31\textwidth}\centering
 	    \includegraphics[width=0.95\textwidth]{figures/spider-sesame-memory.pdf}
 	    \caption{Sesame Memory}\end{subfigure} &
@@ -93,7 +93,7 @@ However, check times show a more diverse picture. The check times for the Java i
 
 Interestingly, the best Sesame check time predictor turned out to be the number of pattern variables, and there is no significant correlation with any direct model metrics. 
 
-Check times in \eiq{} are very strongly correlated to the number of matches -- which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \eiq{} read time. It can also be highlighted that \eiq{} seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
+Check times in \eiq are very strongly correlated to the number of matches -- which is to be expected of an incremental tool whose check phase consists of just enumerating the cached match set. As the incremental indexes are constructed during the load time, the model-on-query metrics become correlated with \eiq read time. It can also be highlighted that \eiq seems not to be sensitive towards the ``difficulty'' of the query (in any phase) or the model size (during the check phase) due to the very small correlations with corresponding metrics.
 \paragraph{Metrics}
 Overall, it can be said that model-only metrics are useful in predicting the performance of model persistence operations. However, query-based and combined metrics (such as our proposed \emph{abs-} and \emph{relDifficulty}) are necessary to provide a more thorough picture.
 Note that since only statistically significant correlations are included, a low magnitude correlation does not necessarily mean a measurement error. It is possible that there is a true link between the two variables, but the $\tau$ value is lowered by other metrics that strongly influence the performance indicator. 

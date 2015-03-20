@@ -8,10 +8,10 @@ For the implementation details, source codes and raw results, see the benchmark 
 
 The benchmark machine contains two dual-core Intel Xeon (3.00~GHz) CPU, 12~GBs of RAM and an SAS disk formatted to ext4 for storing the models. In order to alleviate disturbance of a running measurement and minimize noise in the results, a bare metal 64-bit Ubuntu 12.10 OS was installed with unnecessary services (like \texttt{cron}) turned off. Oracle JVM version 1.7.0\_51 is used as the Java environment and Eclipse Kepler Modeling 64-bit for Linux to satisfy specific tool dependencies.
 
-The performance measurements of a tool was independent from the others, i.e.\ for every tool only its codebase was loaded, and every measurement of a scenario was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
+The performance measurements of a tool was independent from the others, \ie for every tool only its codebase was loaded, and every measurement of a scenario was started in a different JVM. Before the execution, the OS file cache was cleared, and swapping was disabled to avoid this kind of thrashing. Each test case (including all phases) must be run within a specified time limit (15 minutes), otherwise its process was killed.
 
 % TODO re-introduce memory measurements
-% Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified. Note that we are aware that this is a limited approach to memory usage measurements as it only takes ``retained'' heap consumption into account, and does not characterize the transient memory usage characteristics (i.e. allocations while the query evaluation is running). This shortcoming is planned to be addressed in future work.
+% Before acquiring memory usage (free heap space) from the JVM, GC calls were triggered five times to sweep unfreed objects from the RAM. For a JVM, 6~GB heap limit was specified. Note that we are aware that this is a limited approach to memory usage measurements as it only takes ``retained'' heap consumption into account, and does not characterize the transient memory usage characteristics (\ie allocations while the query evaluation is running). This shortcoming is planned to be addressed in future work.
 %, and to compensate 64-bit pointers, OOPS (ordinary object pointers) compression was also turned on with the following options: (\code{-XX:MaxPermSize=256M -XX:+UseCompressedOops -Xmx25G}).
 
 In the benchmark all cases were run 10 times, and the results were dumped into files, which were aggregated using the R statistical framework. The correlation results and performance plots are written into an HTML report.
@@ -36,7 +36,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	Java & 7.0 & EMF & Java & \ding{109} & \ding{108} & C++ \\ \hline
 	Eclipse OCL & 3.3.0 & EMF & OCL & \ding{109} & \ding{108} & Java \\ \hline
 	%OCL Impact Analyzer & 3.1.0 & EMF & OCL & \ding{108} & \ding{108} & Java \\ \hline
-	\eiq{} & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
+	\eiq & 0.7.2 & EMF & IQPL & \ding{108} & \ding{108} & Java \\ \hline
 	Drools & 5.4.0 & EMF & DRL & \ding{108} & \ding{108} & Java \\ \hline
 	Sesame & 2.7.9 & RDF & SPARQL & \ding{109} & \ding{108} & Java \\ \hline
 	4store & 1.1.5 & RDF & SPARQL & \ding{109} & \ding{109} & C \\ \hline
@@ -46,7 +46,7 @@ The measured tools generally work on graph-based models (like EMF~\cite{EMF} or 
 	\label{tbl:tools}
 \end{table}
 
-Note on \textbf{incrementality}: \emph{incremental} means that the tool not only employs caching techniques, but provides a dedicated incremental query evaluation algorithm that processes \emph{changes} in the model and propagates these changes to query evaluation results in an incremental way (i.e. avoiding complete recalculations). Both \textsc{EMF-IncQuery} and JBoss Drools are based on the Rete algorithm; OCL also has an incremental extension called the \emph{OCL Impact Analyzer} which is planned to be included in the measurements in the final version of the tech report.
+Note on \textbf{incrementality}: \emph{incremental} means that the tool not only employs caching techniques, but provides a dedicated incremental query evaluation algorithm that processes \emph{changes} in the model and propagates these changes to query evaluation results in an incremental way (\ie avoiding complete recalculations). Both \eiq and JBoss Drools are based on the Rete algorithm; OCL also has an incremental extension called the \emph{OCL Impact Analyzer} which is planned to be included in the measurements in the final version of the tech report.
 
 In contrast, \emph{non-incremental} tools are using \emph{search-based} algorithms that evaluate each query with a model traversal, which may be optimized using heuristics and/or caching mechanisms. The essential difference to incremental tools is that they do not process changes in the model, but only take the current state of the model as the input.
 
@@ -64,8 +64,8 @@ The OCL~\cite{OCL} language is commonly used for querying EMF model instances in
 %\subsection{OCL Impact Analyzer}
 %The Eclipse OCL project also supports incremental evaluation by including an Impact Analyzer (IA)~\cite{ocl-ia2} that calculates the constraints to be reevaluated based on a model change. During EMF modifications it looks for possible context objects that could change the match set, and re-evaluation can be executed only for those objects. As it is intended only for incremental use, basic Eclipse OCL is used for calculating the first result set (batch mode).
 
-\subsubsection{\eiq{}}
-\eiq{}~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
+\subsubsection{\eiq}
+\eiq~\cite{models10} is an Eclipse Modeling project that provides incremental query evaluation using Rete~\cite{rete} nets. Queries can be written in its graph pattern based query language (IncQuery Pattern Language, IQPL~\cite{iqpl}), which is evaluated over EMF models.
 
 \subsubsection{Drools}
 Incremental query evaluation is also supported by the \concept{Drools}~\cite{Drools} rule engine developed by Red Hat. It is based on a variant of Rete~\cite{rete} (object-oriented Rete). Queries can be formalized using its own rule description language. Queries can be constructed by naming the ''when'' part of rules and acquiring their matches. While Drools is not an EMF tool per se, the Drools implementation of the \tb{} works on EMF models.
@@ -80,7 +80,7 @@ Sesame gives an API specification for many tools, and also provides its own impl
 4store~\cite{harris20094store} is an open source, distributed triplestore implemented in C. The main goal of 4store is to provide a high performance storage and query engine for semantic web applications. 
 
 \subsubsection{\iqd}
-\iqd{}~\cite{Izso:2013:IIG:2487766.2487772} is a distributed incremental graph query engine developed in the Budapest University of Technology and Economics. The goal of \iqd{} is to provide a scalable query engine by using a cluster of servers instead of a single workstation.
+\iqd~\cite{Izso:2013:IIG:2487766.2487772} is a distributed incremental graph query engine developed in the Budapest University of Technology and Economics. The goal of \iqd is to provide a scalable query engine by using a cluster of servers instead of a single workstation.
 
 
 \subsection{Graph-based Tools}
@@ -106,7 +106,7 @@ The measurement results of the benchmark are displayed below. These diagrams sho
 % ``constant'' difference: constant factor (order of magnitude) difference
 % incomplete series: timeout
 
-The charts are presented with logarithmic scales on both axes. This means that the general ``linear'' appearance of all measurement series correspond to a low-order polynomial big-O characteristic where the slope of the plot determines the dominant order (exponent). Moreover, a constant difference on these plots corresponds to a constant order-of-magnitude (i.e. constant multiplier) difference. As the execution runs with a timeout, incomplete measurement series indicate that the time limit has been reached during execution.
+The charts are presented with logarithmic scales on both axes. This means that the general ``linear'' appearance of all measurement series correspond to a low-order polynomial big-O characteristic where the slope of the plot determines the dominant order (exponent). Moreover, a constant difference on these plots corresponds to a constant order-of-magnitude (\ie constant multiplier) difference. As the execution runs with a timeout, incomplete measurement series indicate that the time limit has been reached during execution.
  
 % phases
 % batch validation = R+C0
@@ -132,7 +132,7 @@ Each plot shows execution times corresponding to a combination of one of the que
 \begin{itemize}
   \item \emph{Execution time vs. instance model size.} Each plot can be directly interpreted as an evaluation of performance against increasing model size, where different tool characteristics can be compared in a single plot.
   \item \emph{Characteristics vs. increasing query complexity.} As the queries are of different complexity, comparing the plots within the same transformation scenario group but against different queries is useful to judge tool characteristics against increasing query complexity (or query result size, shown as ``Results'' on the Y axis).
-  \item \emph{Characteristics vs. increasing transformation complexity.} As the transformation scenarios are characteristically different (e.g. with respect to the amount of objects modified by the transformation sequence -- as shown on the X axis as ``Modifications''), comparing the plots with the same query but against different scenarions is useful to judge tool characteristics against various transformation complexities.
+  \item \emph{Characteristics vs. increasing transformation complexity.} As the transformation scenarios are characteristically different (\eg with respect to the amount of objects modified by the transformation sequence -- as shown on the X axis as ``Modifications''), comparing the plots with the same query but against different scenarions is useful to judge tool characteristics against various transformation complexities.
 \end{itemize}
 
 

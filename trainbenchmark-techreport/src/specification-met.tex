@@ -27,7 +27,7 @@ The metrics discussed in the following, characterize instance models, queries or
 
 \subsubsection{Metrics for Instance Model Only}
 Clearly, properties of the instance model may have a direct effect on query
-performance, e.g.\ querying larger models may consume  more resources.
+performance, \eg querying larger models may consume  more resources.
 
 % do NOT press Esc+Q !!! (or re-wrap comment!)
 A first model metric is model size, which can be defined either as the
@@ -45,7 +45,7 @@ out-degrees and in-degrees (the number of edges incident on an object),
 particularly the maximum and average degrees (\code{maxInDegree},
 \code{maxOutDegree}, \code{avgInDegree} and \code{avgOutDegree}).
  
-The metrics discussed above have been defined e.g.\ in~\cite{COLD2012-analysis-DBLP:conf/semweb/StarkaSM12}, along with other
+The metrics discussed above have been defined \eg in~\cite{COLD2012-analysis-DBLP:conf/semweb/StarkaSM12}, along with other
 metrics such as the relative frequencies of the edge label sequences of directed
 paths of length 2 or 3.
  
@@ -56,7 +56,7 @@ in several query formalisms. Due to the
 close analogies between graph patterns and SPARQL queries, we can consider these
 metrics applying to graph pattern-like queries in general. This allows us to
 formulate and calculate metrics expressed on the graph patterns interpreted by
-\eiq{}, and characterize the complexity of the equivalent SPARQL query with
+\eiq, and characterize the complexity of the equivalent SPARQL query with
 the same metric value.
 
 As superficial metrics for graph pattern complexity, we propose the number of
@@ -78,8 +78,7 @@ The most trivial such metric is the cardinality of the query results (metric
 takes longer to evaluate on the same model, while a single query is typically
 more expensive to evaluate on models where it has more matches. The metric
 \code{selectivity} is proposed by~\cite{SPLODGE}, is the ratio of the
-number of results to the number of model elements (i.e.\ 
-$countMatches/countTriples$).
+number of results to the number of model elements (\ie $\mathtt{countMatches}/\mathtt{countTriples}$).
 
 
 \subsubsection{New Metrics for Assessing Query Evaluation Difficulty}
@@ -90,14 +89,14 @@ the query, for which it is possible to enumerate all tuples of variables
 satisfying it; thus edge constraints and pattern composition are enumerable,
 while NACs and attribute checks in general are not. At any given state of
 evaluation, a hypothetical search-based query engine has either already
-identified a single occurrence of an enumerable constraint $c$ (e.g.\ a single
+identified a single occurrence of an enumerable constraint $c$ (\eg a single
 instance of an edge type for the corresponding edge constraint), or not; there
 are therefore $\abs{c}+1$ possible cases for $c$, where $\abs{c}$ is the number
 of different ways that $c$ can be satisfied in the model. This gives
 $\prod_{c}{1+\abs{c}}$ as the overestimate of the search space of the query
 evaluator. To make this astronomical figure manageable, we propose the absolute
 difficulty metric (\code{absDifficulty}) as the logarithm of the search space
-size, i.e.\ $ln\prod_{c}{(1+\abs{c})} = \sum_{c}{ln(1+\abs{c})}$.
+size, \ie $ln\prod_{c}{(1+\abs{c})} = \sum_{c}{ln(1+\abs{c})}$.
  
 The result size is a lower bound of query evaluation cost, since query
 evaluation takes at least as much time or memory as the number of results. It is
@@ -131,15 +130,15 @@ The metamodel used for merics evaluation is depicted in \figref{fig:metamodel-me
 \subsection{Instance Models for the Modified Metamodel}
 \label{sec:benchmark-models}
 
-Models are characterized by their size and structure. Here size refers to the cardinalities of node and edge types. The fact that increasing model size tends to increase the cost of queries is intuitively self evident (and also empirically confirmed e.g.\ by our previous experiments~\cite{icgt08-bhrv,models10}). Handling large models in real life is a great chellenge, but model structure (that determines which nodes are connected to each other by which edges) must also be taken into account, which here means edge distribution of nodes. Different edge distributions also present in real-world networks: the internet or protein-protein interaction networks show \emph{scale-free} characteristics~\cite{barabasi_network_2004}, while in other areas self-healing algorithms for \emph{binomial computer networks} are studied~\cite{binomial-self-healing}. Average degree can impact performance greatly, which is a typical property of different model kinds. For example, software models have usually nodes with \emph{low degree}, while social models are usually \emph{dense graphs}. 
+Models are characterized by their size and structure. Here size refers to the cardinalities of node and edge types. The fact that increasing model size tends to increase the cost of queries is intuitively self evident (and also empirically confirmed \eg by our previous experiments~\cite{icgt08-bhrv,models10}). Handling large models in real life is a great chellenge, but model structure (that determines which nodes are connected to each other by which edges) must also be taken into account, which here means edge distribution of nodes. Different edge distributions also present in real-world networks: the internet or protein-protein interaction networks show \emph{scale-free} characteristics~\cite{barabasi_network_2004}, while in other areas self-healing algorithms for \emph{binomial computer networks} are studied~\cite{binomial-self-healing}. Average degree can impact performance greatly, which is a typical property of different model kinds. For example, software models have usually nodes with \emph{low degree}, while social models are usually \emph{dense graphs}. 
 
 We have conducted the experiments on synthetic models, generated automatically
 with our model builder, belonging to three \concept{model families}  (without
 comparing them directly to real world ones, leaving it as a future work). All
 generated models within a family have the same approximate size; though there is
 some random variation due to the generation process (see later), with low
-standard deviation (e.g.\ measured as 0.3\% in family $A$).  Family $A$ models are relatively dense graphs
-(\texttildelow 26 edges/nodes, i.e.\ metric \code{avgOutDegree}) with 1.8 million
+standard deviation (\eg measured as 0.3\% in family $A$).  Family $A$ models are relatively dense graphs
+(\texttildelow 26 edges/nodes, \ie metric \code{avgOutDegree}) with 1.8 million
 total model elements (metric \code{numTriples}); family $B$ models are equally
 dense, but are scaled back to only 113 thousand elements; finally family $C$
 models have almost 1.3 million model elements that form a relatively sparse
@@ -162,13 +161,13 @@ the expected cardinality $e$ of the edge type. %\begin{description}
   target nodes, and draw an edge between them with a given probability $p$. This makes the
   expected cardinality of edges $e = p \times \abs{S} \times \abs{T}$, thus $p$
   is chosen as $\frac{e}{\abs{S} \times \abs{T}}$. The degrees of nodes will be
-  binomially distributed, e.g.\ out-degrees with parameters $\abs{T}$ and $p$.
+  binomially distributed, \eg out-degrees with parameters $\abs{T}$ and $p$.
   
   \emph{Hypergeometric case.} While the previous solution ended up with a
   random number of edges (with expected value $e$), this slightly different
   approach will generate exactly $e$ edges, by taking each pair of source and
   target nodes, and randomly selecting $e$ from them into the graph. The degrees
-  will be hypergeometrically distributed, e.g.\ out-degrees with parameters
+  will be hypergeometrically distributed, \eg out-degrees with parameters
   $\abs{S} \times \abs{T}$, $\abs{T}$ and $e$.
     
   \emph{Regular case.} In software engineering models, one often finds for a

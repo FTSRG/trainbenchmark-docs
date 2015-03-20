@@ -55,7 +55,7 @@ use cases:
   Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
   
   \item \concept{User model editing scenario} (\textsf{User}):
-  The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (e.g.\ a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
+  The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (\eg a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
   
   Such scenario occurs when someone uses a typical UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect design errors quickly and early in the development process to let engineers refine models and cut down debugging and error correction costs.
   
@@ -242,7 +242,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \paragraph{Description.} The \textsf{SwitchSensor} well-formedness constraint requires that every switch must have at least one sensor connected to it. Therefore, the query (\figref{fig:pattern-switchsensor}) checks for switches that have no sensors associated with them. The SPARQL representation of the query is shown in \lstref{lst:switchsensor-sparql}.
 
-\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, e.g.\ it is used in the \textsf{RouteSensor} and the \textsf{SemaphoreNeighbor} queries.
+\paragraph{Goal.} This query checks whether an object is connected to a relation. This pattern is common in more complex queries, \eg it is used in the \textsf{RouteSensor} and the \textsf{SemaphoreNeighbor} queries.
 
 \begin{figure}[htb]
 \centering
@@ -363,10 +363,10 @@ The Train Benchmark defines model transformations for each query. The transforma
 
 The modifications in more detail:
 \begin{itemize}
-  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, i.e.\ they may be valid or invalid. 
+  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, \ie they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (e.g.\ RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
+    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (\eg RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
     
     \item \emph{RouteSensor:} The \emph{definedBy} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-user-routesensor}).
     
@@ -442,4 +442,4 @@ To break symmetry, the exact number of elements and cardinalities are randomized
 \end{center}
 \end{figure}
 
-To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: e.g.\ 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% are \emph{Segment}s, thus 80.4\% are \emph{TrackElement}s. The average number of the given relation for an instance is displayed for associations: e.g.\ there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
+To show some characteristics of the generated instance models, the distribution of the object types and the average number of edges for each object are presented in \autoref{fig:metamodel}. In the case of classes the percentage of instances is shown: \eg 3.4\% of the model elements are instance of the class \emph{Switch}, 77.0\% are \emph{Segment}s, thus 80.4\% are \emph{TrackElement}s. The average number of the given relation for an instance is displayed for associations: \eg there are 9.5 \emph{switchPosition} relations in average for every instance of the \emph{Route} class.
