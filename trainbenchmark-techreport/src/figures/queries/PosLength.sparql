@@ -1,6 +1,8 @@
-SELECT DISTINCT ?xSegment WHERE {
-  ?xSegment rdf:type base:Segment .
-  ?xSegment base:length ?xLength .
+SELECT ?segment ?length
+WHERE
+{
+	?segment rdf:type base:Segment .
+	?segment base:length ?length .
 
-  FILTER (?xLength <= 0)
+	FILTER (?length <= 0)
 }

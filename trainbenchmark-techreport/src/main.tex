@@ -37,7 +37,6 @@
 \usepackage{pifont}
 \usepackage{tabu}
 \usepackage{multirow}
-\usepackage{mathastext}
 \usepackage{float}
 \usepackage{pgffor}
 
@@ -95,7 +94,8 @@
 
 \newcommand{\cc}[1]{\multicolumn{1}{c}{#1}}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
-\newcommand{\code}[1]{{\texttt{#1}}}
+%\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\code}[1]{$\mathtt{#1}$}
 \newcommand{\codefoot}[1]{{\texttt{#1}}}
 \newcommand{\abs}[1]{|{#1}|}
 

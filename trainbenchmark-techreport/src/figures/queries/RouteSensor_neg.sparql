@@ -1,13 +1,6 @@
-SELECT DISTINCT ?xSensor WHERE {
-  ?xRoute rdf:type base:Route .
-  ?xSwitchPosition rdf:type base:SwitchPosition .
-  ?xSwitch rdf:type base:Switch .
-  ?xSensor rdf:type base:Sensor .
-  ?xRoute base:switchPosition ?xSwitchPosition .
-  ?xSwitchPosition base:switch ?xSwitch .
-  xSwitch base:sensor ?xSensor .
-
-  FILTER NOT EXISTS {
-    ?xRoute base:routeDefinition ?xSensor .
-  } .
-}
+OPTIONAL {
+  ?xRoute ?xRouteDefinition ?xSensor .
+  FILTER (sameTerm(base:routeDefinition, 
+                   ?xRouteDefinition))
+} .
+FILTER (!bound(?xRouteDefinition))

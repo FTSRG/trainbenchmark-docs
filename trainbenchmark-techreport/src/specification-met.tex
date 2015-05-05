@@ -95,16 +95,16 @@ are therefore $\abs{c}+1$ possible cases for $c$, where $\abs{c}$ is the number
 of different ways that $c$ can be satisfied in the model. This gives
 $\prod_{c}{1+\abs{c}}$ as the overestimate of the search space of the query
 evaluator. To make this astronomical figure manageable, we propose the absolute
-difficulty metric (\code{absDifficulty}) as the logarithm of the search space
-size, \ie $ln\prod_{c}{(1+\abs{c})} = \sum_{c}{ln(1+\abs{c})}$.
+difficulty metric ($\mathtt{absDifficulty}$) as the logarithm of the search space
+size, \ie $\ln\prod_{c}{(1+\abs{c})} = \sum_{c}{\ln(1+\abs{c})}$.
  
 The result size is a lower bound of query evaluation cost, since query
 evaluation takes at least as much time or memory as the number of results. It is
 therefore expected that queries with a high number of matches also score high on
 the absolute difficulty metric. To compensate for this, the relative difficulty
-metric (\code{relDifficulty}) is defined as
-$ln\frac{\prod_{c}{(1+\abs{c})}}{1+countMatches} = \sum_{c}{ln(1+\abs{c})} -
-ln(1+countMatches)$, expressing the logarithm of the ``challenge'' the query
+metric ($\mathtt{relDifficulty}$) is defined as
+$\ln\frac{\prod_{c}{(1+\abs{c})}}{1+\mathtt{countMatches}} = \sum_{c}{\ln(1+\abs{c})} -
+\ln(1+\mathtt{countMatches})$, expressing the logarithm of the ``challenge'' the query
 poses -- this is how much worse a query engine can do than the lower bound. 
 If the relative metric is a low figure, than the cost of query evaluation will not
 be much worse than the optimum, regardless of the query evaluation strategy. It

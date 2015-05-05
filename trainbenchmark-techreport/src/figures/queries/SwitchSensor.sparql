@@ -1,0 +1,11 @@
+SELECT DISTINCT ?sw
+WHERE
+{
+	?sw rdf:type base:Switch .
+
+	OPTIONAL { 
+		?sensor rdf:type base:Sensor .
+		?sw base:sensor ?sensor .
+	} .
+	FILTER (!bound(?sensor))
+}

@@ -1,24 +1,18 @@
-SELECT DISTINCT ?xRoute1 WHERE {
-  ?xRoute1 rdf:type base:Route .
-  ?xSen1 rdf:type base:Sensor .
-  ?xRoute1 base:routeDefinition ?xSen1 .
-  ?xTE1 rdf:type base:TrackElement .
-  ?xTE1 base:sensor ?xSen1 .
-  ?xTE2 rdf:type base:TrackElement .
-  ?xTE1 base:connectsTo ?xTE2 .
-  ?xSen2 rdf:type base:Sensor .
-  ?xTE2 base:sensor ?xSen2 .
-  ?xSig rdf:type base:Signal .
-  ?xRoute1 base:exit ?xSig .
-  
-  ?xRoute3 rdf:type base:Route .
-  ?xRoute3 base:routeDefinition ?xSen2 .
-  FILTER ( ?xRoute3 != ?xRoute1 )
-  
-  OPTIONAL { 
-           ?xRoute2 rdf:type base:Route .
-           ?xRoute2 base:routeDefinition ?xSen2 .
-           ?xRoute2 base:entry ?xSig .
-           } .
-  FILTER (!bound(?xRoute2))
+SELECT DISTINCT ?semaphore ?route1 ?route2 ?sensor1 ?sensor2 ?te1 ?te2
+WHERE
+{
+	?route1 base:exit ?semaphore .
+	?route1 base:definedBy ?sensor1 .
+	?te1 base:sensor ?sensor1 .
+	?te1 base:connectsTo ?te2 .
+	?te2 base:sensor ?sensor2 .
+	?route2 base:definedBy ?sensor2 .
+
+	FILTER ( ?route1 != ?route2 ) .
+
+	OPTIONAL {
+		?route2 ?entry ?semaphore .
+		FILTER (sameTerm(base:entry, ?entry))
+	} .
+	FILTER (!bound(?entry))
 }
