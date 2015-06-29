@@ -49,16 +49,16 @@ use cases:
   \item \concept{Batch validation scenario} (\textsf{Batch}):
   In this scenario the model is \emph{read} in one batch from storage, than a model validation is carried out by executing the query in the check phase. Such use case is performed when a model editor is opened and initial validations are issued by the designer. 
   
+  \item \concept{Fault injection scenario} (\textsf{Inject}):
+  The fault injection scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (\eg a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
+  
+  Such scenario occurs when someone uses a typical UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect design errors quickly and early in the development process to let engineers refine models and cut down debugging and error correction costs.
+  
   \item \concept{Automated model repair scenario} (\textsf{Repair}):
   The automated model repair scenario extends the batch validation scenario by differential model modification and re-checking phases. In the edit phase, the model is repaired, based on the erroneous objects identified during the batch validation. This is carried out by the tool itself performing mass edits automatically. Finally, the whole model is re-checked, and remaining or newly introduced errors are reported. 
   
   Efficient execution of such a use case is necessary during refactoring, incremental code generation, or when a model is transformed from a source language to a target language by a model transformation program, using model synchronisation.
-  
-  \item \concept{User model editing scenario} (\textsf{User}):
-  The user model editing scenario extends the batch validation scenario by differential model modification and re-checking phases. After the batch validation a small model manipulation step is performed (\eg a reference is deleted), which is immediately followed by re-validation to get instantaneous feedback.  In this scenario such small edit and re-check phases are executed in sequence.
-  
-  Such scenario occurs when someone uses a typical UML editor (for designing software solutions), or a domain-specific editor where elements or relations are added one-by-one. These editors should detect design errors quickly and early in the development process to let engineers refine models and cut down debugging and error correction costs.
-  
+
 \end{itemize}
 
 
@@ -101,10 +101,10 @@ For formulating the queries in relational algebra we define the following relati
 
 \begin{itemize}
   \item $ \mathit{Route}\left(\mathit{id}\right) $
-  \item $ \mathit{Sensor}\left(\mathit{id}, \mathit{Segment\_length}\right) $
-  \item $ \mathit{Semaphore}\left(\mathit{id}\right) $
-  \item $ \mathit{Switch}\left(\mathit{id}\right) $
-  \item $ \mathit{SwitchPosition}\left(\mathit{id}\right) $
+  \item $ \mathit{Sensor}\left(\mathit{id}, \mathit{length}\right) $
+  \item $ \mathit{Semaphore}\left(\mathit{id}, \mathit{signal}\right) $
+  \item $ \mathit{Switch}\left(\mathit{id}, \mathit{currentPosition}\right) $
+  \item $ \mathit{SwitchPosition}\left(\mathit{id}, \mathit{position}\right) $
   \item $ \mathit{TrackElement}\left(\mathit{id}\right) $
 \end{itemize}
 
@@ -159,11 +159,6 @@ In the following, we represent the graph pattern representation for the violatio
 \paragraph{Relational algebraic form.} The \textsf{ConnectedSegments} query can be formalized in relational algebra as:
 
 \begin{align*}
-%& \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{definedBy_2.Route}} \big( \\
-%& \quad \mathit{entry} \naturaljoin \mathit{definedBy_1} \naturaljoin \mathit{sensor_1} \naturaljoin \\
-%& \quad \mathit{connectsTo} \naturaljoin \mathit{sensor_2} \naturaljoin \mathit{definedBy_2} \antijoin \\
-%& \quad \left( \mathit{exit} \naturaljoin \mathit{definedBy_3} \right) \\
-%& \big) \big)
 & \pi_{\mathit{id}} \sigma_{\mathit{Sensor}_1.\mathit{id} = \mathit{Sensor}_2.\mathit{id}} \big( \mathit{Sensor}_1 \\
 & \quad \naturaljoin_{\mathit{Sensor}_1.\mathit{id} = \mathit{connectsTo}_1.\mathit{TrackElement}_1} \mathit{connectsTo}_1 \\
 & \quad \naturaljoin_{\mathit{connectsTo}_1.\mathit{TrackElement_2} = \mathit{connectsTo}_2.\mathit{TrackElement}_1} \mathit{connectsTo}_2 \\
@@ -338,7 +333,15 @@ $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 \paragraph{Relational algebraic form.} The \textsf{SwitchSet} query can be formalized in relational algebra as:
 
-$$ \mathit{todo} $$
+\begin{align*}
+& \pi_{\mathit{id}} \sigma_{\mathit{Semaphore}.\mathit{signal} = \mathrm{"GO"} \wedge \mathit{Switch}.\mathit{currentPosition} \neq \mathit{SwitchPosition}.\mathit{position}} \big( \mathit{Route} \\
+& \quad \naturaljoin_{\mathit{Route}.\mathit{entry} = \mathit{Semaphore}.\mathit{id}} \mathit{Semaphore} \\
+& \quad \naturaljoin_{\mathit{Route}.\mathit{id} = \mathit{follows}.\mathit{Route}} \mathit{follows} \\
+& \quad \naturaljoin_{\mathit{follows}.\mathit{SwitchPosition} = \mathit{SwitchPosition}.\mathit{id}} \mathit{SwitchPosition} \\
+& \quad \naturaljoin_{\mathit{SwitchPosition}.\mathit{id} = \mathit{switch}.\mathit{SwitchPosition}} \mathit{switch} \\
+& \quad \naturaljoin_{\mathit{switch}.\mathit{Switch} = \mathit{Switch}.\mathit{id}} \mathit{Switch} \\
+& \big)
+\end{align*}
 
 \subsection{Transformations}
 \label{sec:transformatios}
@@ -352,7 +355,7 @@ The Train Benchmark defines model transformations for each query. The transforma
 	\scriptsize
 	\begin{tabular}{r|r|r|r|r|r|r|r|r|r|}
 	\cline{2-9}
-	& \multicolumn{4}{ c| }{\bf User (modify = 10)} & \multicolumn{4}{ c| }{\bf Repair (modify = Res1 × 10\%)} \\ \hline
+	& \multicolumn{4}{ c| }{\bf Inject (modify = 10)} & \multicolumn{4}{ c| }{\bf Repair (modify = Res1 × 10\%)} \\ \hline
 	\multicolumn{1}{ |r| }{\bf\#Objects} & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 & \bf \#Sensors & \bf Result1 & \bf Modify RS & \bf Result2 \\ \hline
 	\multicolumn{1}{ |r| }{6032}         & 928 & 19 & 10 & 29 & 967 & 94 & 9 & 85 \\ \hline
 	\multicolumn{1}{ |r| }{11710}        & 1804 & 41 & 10 & 51 & 1936 & 193 & 19 & 174 \\ \hline
@@ -372,7 +375,7 @@ The Train Benchmark defines model transformations for each query. The transforma
 \autoref{tbl:modify_RouteSensor}. shows the instance model characteristics and the effect of the modify phase in the \textsf{RouteSensor} case. The first column counts the number of instance model elements. The second and the fifth column show the number of Sensors in the model. The two scenarios process different instance models and modify them differently:
 
 \begin{itemize}
-	\item In the \emph{User scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the \textsf{RouteSensor} case), so it can be understood and resolved by a user using the editor.
+	\item In the \emph{Inject scenario} (where a developer is assumed to sit in front of an editor) the initial number of constraint violating elements are low (0.3\% of model elements for the \textsf{RouteSensor} case), so it can be understood and resolved by a user using the editor.
 	
 	During the modification the user always performs 10 random edits (fixed low constant) which \emph{increase} the number of erroneous elements. These edit operations modify only some elements of the model and do not add or remove modules containing multiple instance model elements.
 
@@ -389,14 +392,14 @@ The Train Benchmark defines model transformations for each query. The transforma
 	\centering
 	\begin{tabular}{l|l|l|l|l|l|}
 	\cline{2-5}
-	& \multicolumn{2}{ c| }{\bf User} & \multicolumn{2}{ c| }{\bf Repair} \\ \cline{2-5}
+	& \multicolumn{2}{ c| }{\bf Inject} & \multicolumn{2}{ c| }{\bf Repair} \\ \cline{2-5}
 	& \bf Modification type & \bf RSS change & \bf Modification type & \bf RSS change \\ \hline
-	\multicolumn{1}{ |l| }{\bf ConnectedSegments} & ...    & ...      & ...    & ...      \\ \hline
-	\multicolumn{1}{ |l| }{\bf PosLength}         & Update & Increase & Update & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf RouteSensor}       & Delete & Increase & Delete & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf SemaphoreNeighbor} & Update & Increase & Update & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf SwitchSensor}      & Delete & Increase & Add    & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf SwitchSet}         & ...    & ...      & ...    & ...      \\ \hline
+	\multicolumn{1}{ |l| }{\bf ConnectedSegments} & Insert and delete & Increase & Insert and delete & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf PosLength}         & Update            & Increase & Update            & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf RouteSensor}       & Delete            & Increase & Delete            & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SemaphoreNeighbor} & Update            & Increase & Update            & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SwitchSensor}      & Delete            & Increase & Add               & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SwitchSet}         & Update            & Increate & Update            & Decrease \\ \hline
 	\end{tabular}
 	\caption{Modification type for the queries.}
 	\label{tbl:modify_type}
@@ -406,62 +409,62 @@ The Train Benchmark defines model transformations for each query. The transforma
         \centering
         \begin{subfigure}[b]{0.7\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/transformation-user-connectedsegments}
+                \includegraphics[scale=0.4]{figures/transformation-inject-connectedsegments}
                 \caption{\textsf{ConnectedSegments}}
-                \label{fig:transformation-user-connectedsegments}
+                \label{fig:transformation-inject-connectedsegments}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.4\textwidth}
         		\centering
-                \includegraphics[scale=0.4]{figures/transformation-user-poslength}
+                \includegraphics[scale=0.4]{figures/transformation-inject-poslength}
                 \caption{\textsf{PosLength}}
-                \label{fig:transformation-user-poslength}
+                \label{fig:transformation-inject-poslength}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.6\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/transformation-user-routesensor}
+                \includegraphics[scale=0.4]{figures/transformation-inject-routesensor}
                 \caption{\textsf{RouteSensor}}
-                \label{fig:transformation-user-routesensor}
+                \label{fig:transformation-inject-routesensor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.4\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/transformation-user-semaphoreneighbor}
+                \includegraphics[scale=0.4]{figures/transformation-inject-semaphoreneighbor}
                 \caption{\textsf{SemaphoreNeighbor}}
-                \label{fig:transformation-user-semaphoreneighbor}
+                \label{fig:transformation-inject-semaphoreneighbor}
         \end{subfigure}%
         ~
         \begin{subfigure}[b]{0.6\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/transformation-user-switchsensor}
+                \includegraphics[scale=0.4]{figures/transformation-inject-switchsensor}
                 \caption{\textsf{SwitchSensor}}
-                \label{fig:transformation-user-switchsensor}
+                \label{fig:transformation-inject-switchsensor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{0.6\textwidth}
                 \centering
-                \includegraphics[scale=0.4]{figures/transformation-user-switchset}
+                \includegraphics[scale=0.4]{figures/transformation-inject-switchset}
                 \caption{\textsf{SwitchSet}}
-                \label{fig:transformation-user-switchset}
+                \label{fig:transformation-inject-switchset}
         \end{subfigure}
-        \caption{Transformations in the User scenario.}
+        \caption{Transformations in the \textsf{Inject} scenario.}
         \label{fig:transformations-repair}
 \end{figure}
 
 
 The modifications in more detail:
 \begin{itemize}
-  \item \emph{User scenario:} in this case elements to be edited are selected from the whole instance model, \ie they may be valid or invalid. 
+  \item \emph{Inject scenario:} in this case elements to be edited are selected from the whole instance model, \ie they may be valid or invalid. 
   \begin{itemize}
     
-    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-user-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (\eg RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
+    \item \emph{PosLength:} Randomly selected \emph{segments'} \emph{length} attribute is updated to 0, which means that an error is injected (\figref{fig:transformation-inject-poslength}).\footnote{In EMF this means that an \texttt{int} attribute is set (updated), while in other representations (\eg RDF databases) first the assertion about the old value is removed and the assertion stating the new value of the length is inserted.}
     
-    \item \emph{RouteSensor:} The \emph{definedBy} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-user-routesensor}).
+    \item \emph{RouteSensor:} The \emph{definedBy} edges between the randomly selected \emph{routes} and their \emph{first} connected \emph{sensor} are removed (at most one edge for each route, see~\figref{fig:transformation-inject-routesensor}).
     
-    \item \emph{SemaphoreNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:transformation-user-semaphoreneighbor}). (According to the metamodel, a \emph{route} may only have 0 or 1 \emph{entry} edges).
+    \item \emph{SemaphoreNeighbor:} Errors are introduced by disconnecting the \emph{entry} edge of the selected \emph{routes} (\figref{fig:transformation-inject-semaphoreneighbor}). (According to the metamodel, a \emph{route} may only have 0 or 1 \emph{entry} edges).
 
-    \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting all their edges to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such an edge, so no edges are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:transformation-user-switchsensor}).
+    \item \emph{SwitchSensor:} Errors are injected by randomly selecting \emph{switches} and deleting all their edges to \emph{sensors}. If the chosen \emph{switch} was invalid, it did not have such an edge, so no edges are deleted and the \emph{switch} stays invalid. If the chosen \emph{switch} was valid, it will become invalid (\figref{fig:transformation-inject-switchsensor}).
         
 \end{itemize}
   
@@ -509,7 +512,7 @@ The modifications in more detail:
                 \caption{\textsf{SwitchSet}}
                 \label{fig:transformation-repair-switchset}
         \end{subfigure}
-        \caption{Transformations in the Repair scenario.}
+        \caption{Transformations in the \textsf{Repair} scenario.}
         \label{fig:transformations-repair}
 \end{figure}
   

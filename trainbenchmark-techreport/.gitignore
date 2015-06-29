@@ -5,3 +5,4 @@
 *.blg
 src/main.pdf
 *.log
+*.~*
