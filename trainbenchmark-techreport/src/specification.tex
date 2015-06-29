@@ -117,7 +117,7 @@ The edges\footnote{also called relationships or references in various implementa
   \item $ \mathit{definedBy}\left(\mathit{Route}, \mathit{Sensor}\right) $
   \item $ \mathit{switch}\left(\mathit{SwitchPosition}, \mathit{Switch}\right) $
   \item $ \mathit{sensor}\left(\mathit{Switch}, \mathit{Sensor}\right) $
-  \item $ \mathit{connectsTo}\left(\mathit{TrackElement}, \mathit{TrackElement}\right) $
+  \item $ \mathit{connectsTo}\left(\mathit{TrackElement}_1, \mathit{TrackElement}_2\right) $
 \end{itemize}
 
 \subsubsection{Graph Patterns}
@@ -131,6 +131,49 @@ In the following, we represent the graph pattern representation for the violatio
   \item The insertions are with a \textcolor{newcolor}{\guillemotleft{}new\guillemotright{}} caption, while deletions are marked with a \textcolor{delcolor}{\guillemotleft{}del\guillemotright{}} caption. Attribute updates are also show in \textcolor{newcolor}{green}.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{ConnectedSegments}
+
+\paragraph{Description.} The \textsf{ConnectedSegments} well-formedness constraint requires that each sensor must have at most five segments attached to it. Therefore, the query (\figref{fig:pattern-connectedsegments}) checks for sensors that have at least six segments attached to them. The SPARQL representation of the query is shown in \lstref{lst:connectedsegments-sparql}.
+
+\paragraph{Goal.} The query checks for ,,chains'' similar to a transitive closure.
+
+\begin{figure}[htb]
+\centering
+\begin{minipage}{0.9\textwidth}
+  { \alignListing
+    \sourceSPARQL{figures/queries/ConnectedSegments.sparql}}
+  \caption{\textsf{ConnectedSegments} query in SPARQL.}
+  \label{lst:connectedsegments-sparql}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[htb]
+		\centering
+		\includegraphics[scale=0.4]{figures/pattern-connectedsegments}
+		\caption{The \textsf{ConnectedSegments} pattern.}
+		\label{fig:pattern-connectedsegments}
+\end{figure}
+
+\paragraph{Relational algebraic form.} The \textsf{ConnectedSegments} query can be formalized in relational algebra as:
+
+\begin{align*}
+%& \pi_{\mathit{entry.Route}} \big( \sigma_{\mathit{entry.Route} \neq \mathit{definedBy_2.Route}} \big( \\
+%& \quad \mathit{entry} \naturaljoin \mathit{definedBy_1} \naturaljoin \mathit{sensor_1} \naturaljoin \\
+%& \quad \mathit{connectsTo} \naturaljoin \mathit{sensor_2} \naturaljoin \mathit{definedBy_2} \antijoin \\
+%& \quad \left( \mathit{exit} \naturaljoin \mathit{definedBy_3} \right) \\
+%& \big) \big)
+& \pi_{\mathit{id}} \sigma_{\mathit{Sensor}_1.\mathit{id} = \mathit{Sensor}_2.\mathit{id}} \big( \mathit{Sensor}_1 \\
+& \quad \naturaljoin_{\mathit{Sensor}_1.\mathit{id} = \mathit{connectsTo}_1.\mathit{TrackElement}_1} \mathit{connectsTo}_1 \\
+& \quad \naturaljoin_{\mathit{connectsTo}_1.\mathit{TrackElement_2} = \mathit{connectsTo}_2.\mathit{TrackElement}_1} \mathit{connectsTo}_2 \\
+& \quad \naturaljoin_{\mathit{connectsTo}_2.\mathit{TrackElement_2} = \mathit{connectsTo}_3.\mathit{TrackElement}_1} \mathit{connectsTo}_3 \\
+& \quad \naturaljoin_{\mathit{connectsTo}_3.\mathit{TrackElement_2} = \mathit{connectsTo}_4.\mathit{TrackElement}_1} \mathit{connectsTo}_4 \\
+& \quad \naturaljoin_{\mathit{connectsTo}_4.\mathit{TrackElement_2} = \mathit{connectsTo}_5.\mathit{TrackElement}_1} \mathit{connectsTo}_5 \\
+& \quad \naturaljoin_{\mathit{connectsTo}_5.\mathit{TrackElement_2} = \mathit{Sensor}_2.\mathit{id}} \mathit{Sensor}_2 \\
+& \quad \\
+& \big)
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -142,7 +185,7 @@ In the following, we represent the graph pattern representation for the violatio
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/PosLength.sparql}}
   \caption{\textsf{PosLength} query in SPARQL.}
@@ -159,7 +202,9 @@ In the following, we represent the graph pattern representation for the violatio
 
 \paragraph{Relational algebraic form.} The \textsf{PosLength} query can be formalized in relational algebra as:
 
-$$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Sensor} \right) \right) $$
+\[
+\pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Sensor} \right) \right)
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{RouteSensor}
@@ -170,7 +215,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/RouteSensor_neg.sparql}}
   \caption{The \textsf{RouteSensor} query in SPARQL 1.1.}
@@ -182,7 +227,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/RouteSensor.sparql}}
   \caption{The NAC of the \textsf{RouteSensor} pattern in SPARQL 1.0.}
@@ -212,7 +257,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/SemaphoreNeighbor.sparql}}
   \caption{The \textsf{SemaphoreNeighbor} query in SPARQL.}
@@ -246,7 +291,7 @@ $$ \pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Senso
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/SwitchSensor_neg.sparql}}
   \caption{The \textsf{SwitchSensor} query in SPARQL.}
@@ -275,7 +320,7 @@ $$ \mathit{Switch} \antijoin \mathit{Sensor} $$
 
 \begin{figure}[htb]
 \centering
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.9\textwidth}
   { \alignListing
     \sourceSPARQL{figures/queries/SwitchSet.sparql}}
   \caption{The \textsf{SwitchSet} query in SPARQL.}
@@ -346,10 +391,12 @@ The Train Benchmark defines model transformations for each query. The transforma
 	\cline{2-5}
 	& \multicolumn{2}{ c| }{\bf User} & \multicolumn{2}{ c| }{\bf Repair} \\ \cline{2-5}
 	& \bf Modification type & \bf RSS change & \bf Modification type & \bf RSS change \\ \hline
-	\multicolumn{1}{ |l| }{\bf PosLength}      & Update & Increase & Update & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf SwitchSensor}   & Delete & Increase & Add    & Decrease \\ \hline
-	\multicolumn{1}{ |l| }{\bf RouteSensor}    & Delete & Increase & Delete & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf ConnectedSegments} & ...    & ...      & ...    & ...      \\ \hline
+	\multicolumn{1}{ |l| }{\bf PosLength}         & Update & Increase & Update & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf RouteSensor}       & Delete & Increase & Delete & Decrease \\ \hline
 	\multicolumn{1}{ |l| }{\bf SemaphoreNeighbor} & Update & Increase & Update & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SwitchSensor}      & Delete & Increase & Add    & Decrease \\ \hline
+	\multicolumn{1}{ |l| }{\bf SwitchSet}         & ...    & ...      & ...    & ...      \\ \hline
 	\end{tabular}
 	\caption{Modification type for the queries.}
 	\label{tbl:modify_type}
@@ -357,6 +404,13 @@ The Train Benchmark defines model transformations for each query. The transforma
 
 \begin{figure}
         \centering
+        \begin{subfigure}[b]{0.7\textwidth}
+                \centering
+                \includegraphics[scale=0.4]{figures/transformation-user-connectedsegments}
+                \caption{\textsf{ConnectedSegments}}
+                \label{fig:transformation-user-connectedsegments}
+        \end{subfigure}
+        ~
         \begin{subfigure}[b]{0.4\textwidth}
         		\centering
                 \includegraphics[scale=0.4]{figures/transformation-user-poslength}
@@ -416,35 +470,42 @@ The modifications in more detail:
         \centering
         \begin{subfigure}[b]{\textwidth}
         		\centering
-                \includegraphics[scale=0.3]{figures/transformation-repair-poslength}
+                \includegraphics[scale=0.2]{figures/transformation-repair-connectedsegments}
+                \caption{\textsf{ConnectedSegments}}
+                \label{fig:transformation-repair-connectedsegments}
+        \end{subfigure}
+        ~
+        \begin{subfigure}[b]{\textwidth}
+        		\centering
+                \includegraphics[scale=0.2]{figures/transformation-repair-poslength}
                 \caption{\textsf{PosLength}}
                 \label{fig:transformation-repair-poslength}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.3]{figures/transformation-repair-routesensor}
+                \includegraphics[scale=0.2]{figures/transformation-repair-routesensor}
                 \caption{\textsf{RouteSensor}}
                 \label{fig:transformation-repair-routesensor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.3]{figures/transformation-repair-semaphoreneighbor}
+                \includegraphics[scale=0.2]{figures/transformation-repair-semaphoreneighbor}
                 \caption{\textsf{SemaphoreNeighbor}}
                 \label{fig:transformation-repair-semaphoreneighbor}
         \end{subfigure}
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.3]{figures/transformation-repair-switchsensor}
+                \includegraphics[scale=0.2]{figures/transformation-repair-switchsensor}
                 \caption{\textsf{SwitchSensor}}
                 \label{fig:transformation-repair-switchsensor}
         \end{subfigure}        
         ~
         \begin{subfigure}[b]{\textwidth}
                 \centering
-                \includegraphics[scale=0.3]{figures/transformation-repair-switchset}
+                \includegraphics[scale=0.2]{figures/transformation-repair-switchset}
                 \caption{\textsf{SwitchSet}}
                 \label{fig:transformation-repair-switchset}
         \end{subfigure}
