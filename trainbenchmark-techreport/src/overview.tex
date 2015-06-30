@@ -1,95 +1,33 @@
 \chapter{Overview}
 
-Scalability issues in model-driven engineering arise due to the increasing
-complexity of modeling workloads. This complexity comes from two main factors:
-(i) \emph{instance model sizes} are exhibiting a tremendous growth as the
-complexity of systems-under-design is increasing, (ii) increasing \emph{feature
-sophistication} in toolchains, such as complex model validation or
-transformations.
+Scalability issues in model-driven engineering arise due to the increasing complexity of modeling workloads. This complexity comes from two main factors: (i) \emph{instance model sizes} are exhibiting a tremendous growth as the complexity of systems-under-design is increasing, (ii) increasing \emph{feature sophistication} in toolchains, such as complex model validation or transformations.
 
-One of the the most computationally expensive tasks in modeling applications are
-\emph{model queries}. While there are a number of existing benchmarks for
-queries over relational databases~\cite{tpc-c} or graph stores
-\cite{BSBM, SP2Bench}, modeling tool workloads are significantly
-different. Specifically, modeling tools use much more complex queries than
-typical transactional systems, and the real world performance is more affected by
-response time (\ie execution time for a specific operation such as validation
-or transformation) than throughput (\ie the amount of parallel transactions).
-
+One of the the most computationally expensive tasks in modeling applications are \emph{model queries}. While there are a number of existing benchmarks for queries over relational databases~\cite{tpc-c} or graph stores \cite{BSBM, SP2Bench}, modeling tool workloads are significantly different. Specifically, modeling tools use much more complex queries than typical transactional systems, and the real world performance is more affected by response time (\ie execution time for a specific operation such as validation
+or transformation) than throughput (\ie the amount of parallel transactions). 
 
 \section{Overview}
-To address this challenge, the Train Benchmark~\cite{SCP2014,TBwebsite} is a macro
-benchmark that aims to measure batch and incremental query evaluation
-performance, in a scenario that is specifically modeled after \emph{model
-validation} in (domain-specific) modeling tools: at first, the entire model is
-validated, then after each model manipulation (\eg the deletion of a
-reference) is followed by an immediate re-validation. The benchmark measures
-execution times for four phases: (1) \emph{read} (2) \emph{check} (3) \emph{edit} (4) \emph{re-check}.
+To address this challenge, the Train Benchmark~\cite{SCP2014,TBwebsite} is a macro benchmark that aims to measure batch and incremental query evaluation performance, in a scenario that is specifically modeled after \emph{model validation} in (domain-specific) modeling tools: at first, the entire model is validated, then after each model manipulation (\eg the deletion of a reference) is followed by an immediate re-validation. The benchmark measures execution times for four phases: (1) \emph{read} (2) \emph{check} (3) \emph{edit} (4) \emph{re-check}.
 
-The Train Benchmark computes two derived results based on the recorded data:
-(1) \emph{batch validation time} (the sum of the \emph{read} and \emph{check} phases)
-represents the time that the user must wait to start to use the tool; (2)
-\emph{incremental validation time} consists of the \emph{edit} and
-\emph{re-check} phases performed 100 times, representing the time that the
-user spent waiting for the tool validation.
-
+The Train Benchmark computes two derived results based on the recorded data: (1) \emph{batch validation time} (the sum of the \emph{read} and \emph{check} phases) represents the time that the user must wait to start to use the tool; (2) \emph{incremental validation time} consists of the \emph{edit} and \emph{re-check} phases performed 100 times, representing the time that the user spent waiting for the tool validation.
 
 \section{Instance Models}
-The Train Benchmark uses a domain-specific model of a railway system that
-originates from the \mbox{MOGENTES} EU FP7~\cite{Mogentes} project, where both the metamodel and the
-well-formedness rules were defined by railway domain experts. This domain
-enables the definition of both simple and more complex model queries while it is
-simple enough to incorporate solutions from other technological spaces
-(\eg ontologies, relational databases and RDF). This allows the comparison of
-the performance aspects of wider range of query tools from a constraint
-validation viewpoint.
 
-The instance models are systematically generated based on the metamodel and the
-defined complex model queries: small instance model fragments are generated
-based on the queries, then they are placed, randomized and connected to each
-other. The methodology takes care of controlling the number of matches of all
-defined model queries. To break symmetry, the exact number of elements and
-cardinalities are randomized.
+The Train Benchmark uses a domain-specific model of a railway system that originates from the \mbox{MOGENTES} EU FP7~\cite{Mogentes} project, where both the metamodel and the well-formedness rules were defined by railway domain experts. This domain enables the definition of both simple and more complex model queries while it is  simple enough to incorporate solutions from other technological spaces (\eg ontologies, relational databases and RDF). This allows the comparison of  the performance aspects of wider range of query tools from a constraint validation viewpoint.
+
+The instance models are systematically generated based on the metamodel and the defined complex model queries: small instance model fragments are generated based on the queries, then they are placed, randomized and connected to each other. The methodology takes care of controlling the number of matches of all defined model queries. To break symmetry, the exact number of elements and cardinalities are randomized.
  
-This brings artificially generated models \emph{closer to real world instances}
-and \emph{prevents query tools from efficiently storing} or caching of instance
-models. During the generation of the railway system model, errors are injected
-at random positions. These errors can be found in the check phase of the
-benchmark, which are reported and can be corrected during the edit phase. The
-initial number of constraint violating elements are low (<1\% of total
-elements).
+This brings artificially generated models \emph{closer to real world instances} and \emph{prevents query tools from efficiently storing} or caching of instance models. During the generation of the railway system model, errors are injected at random positions. These errors can be found in the check phase of the benchmark, which are reported and can be corrected during the edit phase. The initial number of constraint violating elements are low (<1\% of total elements).
  
 \section{Queries and Transformations}
-Queries are defined informally in plain text (in a tool independent way) and
-also formalized using the standard OCL language as a reference implementation
-(available on the benchmark website~\cite{TBwebsite}). The queries range from
-simple attribute value checks to complex navigation operations consisting of
-several (4+) joins.
 
-The functionally equivalent variants of these queries are formalized using the
-query language of different tools applying tool based optimizations. As a
-result, all query implementations must return (the same set of) invalid instance
-model elements.
+Queries are defined informally in plain text (in a tool independent way) and also formalized using the standard OCL language as a reference implementation (available on the benchmark website~\cite{TBwebsite}). The queries range from simple attribute value checks to complex navigation operations consisting of several (4+) joins.
+
+The functionally equivalent variants of these queries are formalized using the query language of different tools applying tool based optimizations. As a result, all query implementations must return (the same set of) invalid instance model elements.
  
-In the \emph{edit} phase, the model is modified to change the result set to be
-returned by the query in the \emph{recheck} phase. For simulating manual
-modifications, the benchmark always performs 100 random edits (fixed low
-constant) which increases the number of erroneous elements. An edit operation
-only modifies a single model elements at once -- more complex model manipulation is
-modelled as series of edits.
+In the \emph{edit} phase, the model is modified to change the result set to be returned by the query in the \emph{recheck} phase. For simulating manual modifications, the benchmark always performs 100 random edits (fixed low constant) which increases the number of erroneous elements. An edit operation only modifies a single model elements at once -- more complex model manipulation is modelled as series of edits.
 
 \section{Evaluation of Measurements}
-The Train Benchmark defines a Java-based framework and application programming
-interface that enables the integration of additional metamodels, instance
-models, query implementations and even new benchmark scenarios (which may be
-different from the original four-phase concept). The default implementation
-contains a benchmark suite for queries implemented in Java, Eclipse OCL and
-\eiq.
 
-Measurements are recorded automatically in a machine-processable format (CSV)
-that is automatically processed by R~\cite{TB:R} scripts. An extended version of the Train
-Benchmark~\cite{ASE2013} features several (instance model, query-specific and
-combined) \emph{metrics} that can be used to characterize the ``difficulty'' of
-benchmark cases numerically, and -- since they can be evaluated automatically
-for other domain/model/query combinations -- allow to compare the benchmark
-cases with other real-world workloads.
+The Train Benchmark defines a Java-based framework and application programming interface that enables the integration of additional metamodels, instance models, query implementations and even new benchmark scenarios (which may be different from the original four-phase concept). The default implementation contains a benchmark suite for queries implemented in Java, Eclipse OCL and \eiq.
+
+Measurements are recorded automatically in a machine-processable format (CSV) that is automatically processed by R~\cite{TB:R} scripts. An extended version of the Train  Benchmark~\cite{ASE2013} features several (instance model, query-specific and combined) \emph{metrics} that can be used to characterize the ``difficulty'' of benchmark cases numerically, and -- since they can be evaluated automatically for other domain/model/query combinations -- allow to compare the benchmark cases with other real-world workloads.

@@ -38,12 +38,8 @@ To measure performance for re-validating a model after modifications, four bench
 \subsection{Use Case Scenarios of the Benchmark}
 \label{sec:scenarios}
 
-Paper~\cite{icgt08-bhrv} analyzes performance of algorithms used for graph
-pattern query evaluation and identifies two use cases where efficient
-\emph{incremental model validation} is required. The batch part of our benchmark
-consists of the execution of the read and first check phases. Inspired by paper
-\cite{icgt08-bhrv}, three \concept{scenarios} were defined to measure different
-use cases:
+Paper~\cite{icgt08-bhrv} analyzes performance of algorithms used for graph pattern query evaluation and identifies two use cases where efficient \emph{incremental model validation} is required. The batch part of our benchmark consists of the execution of the read and first check phases. Inspired by paper \cite{icgt08-bhrv}, three \concept{scenarios} were defined to measure different use cases:
+
 \begin{itemize}
   
   \item \concept{Batch validation scenario} (\textsf{Batch}):
@@ -91,7 +87,7 @@ The metamodel of the railway domain used in the Train Benchmark is depicted in \
 
 In the validation and re-validation phases of the benchmark, the queries return the elements violating the well-formedness constraint defined by the test case. These constraints are first defined informally in plain text and then formalized using a query language suited for the benchmarked tool. As a result, the query must return a set of the invalid instance model elements' identifiers.
  
-Two simple queries involving maximum 2 objects (\textsf{PosLength} and \textsf{SwitchSensor}) and two complex queries involving 4--8 objects and multiple join operations (\textsf{RouteSensor} and \textsf{SemaphoreNeighbor}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
+Two simple queries involving maximum 2 objects (\textsf{PosLength} and \textsf{SwitchSensor}) and four complex queries involving 4--8 objects and multiple join operations (\textsf{ConnectedSegments}, \textsf{RouteSensor}, \textsf{SemaphoreNeighbor} and \textsf{SwitchSet}) were defined. Simple queries are able to quickly distinguish efficient tools from inefficient ones, while complex queries are used to differentiate faster model query technologies.
  
 In the following, we present the queries defined in the \tb{}. We describe the semantics and the goal of each query. We also show the associated graph pattern and relational algebra query.
 
