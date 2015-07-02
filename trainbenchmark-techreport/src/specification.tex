@@ -97,8 +97,9 @@ For formulating the queries in relational algebra we define the following relati
 
 \begin{itemize}
   \item $ \mathit{Route}\left(\mathit{id}\right) $
-  \item $ \mathit{Sensor}\left(\mathit{id}, \mathit{length}\right) $
+  \item $ \mathit{Segment}\left(\mathit{id}, \mathit{length}\right) $
   \item $ \mathit{Semaphore}\left(\mathit{id}, \mathit{signal}\right) $
+  \item $ \mathit{Sensor}\left(\mathit{id}\right) $
   \item $ \mathit{Switch}\left(\mathit{id}, \mathit{currentPosition}\right) $
   \item $ \mathit{SwitchPosition}\left(\mathit{id}, \mathit{position}\right) $
   \item $ \mathit{TrackElement}\left(\mathit{id}\right) $
@@ -194,7 +195,7 @@ In the following, we represent the graph pattern representation for the violatio
 \paragraph{Relational algebraic form.} The \textsf{PosLength} query can be formalized in relational algebra as:
 
 \[
-\pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Sensor} \right) \right)
+\pi_{\mathit{id}} \left( \sigma_{\mathit{length} \leq 0} \left( \mathit{Segment} \right) \right)
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
