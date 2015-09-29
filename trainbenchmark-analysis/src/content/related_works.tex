@@ -1,0 +1,67 @@
+\chapter{Related Works}
+
+The precise characterization of different graph topologies often appears in the literature of graph theory. Similarly, numerous publications can be referred that investigate the performance of various NoSQL databases. However, a precise performance analysis of NoSQL systems that exhibits a connection between the model's structure and the performance of query evaluations, is considered as a new approach.
+
+In this section, we represent some examples that have a specific connection with graph analysis or performance comparison of NoSQL databases.
+
+\section{Graph Analysis}
+%todo say something about the topologies since they weren't introduced yet
+\subsection{Studies of Barabási and Albert}
+
+Barabási and Albert study the topologies of different real-life networks, and also inspect the natures of various well-known artificial graph models in ~\cite{statistical_mechanics}. For example, they generate Erdős-Rényi random graphs, scale-free networks, and small-world graphs of Watts-Strogatz models. As a main result, they discover that a number of real-life networks follow a power-law degree distribution, and thus, considered as scale-free models. Furthermore, they experience that there are significant differences between the networks, regarding specific graph metrics, both in the real-life and artificial models as well. They show a considerable spread in the \textit{clustering coefficient} and the \textit{average path length} per different networks.
+
+\subsection{Network Robustness and Metric Correlations}\label{sec:algebraic_connectivity}
+
+Similarly,~\cite{algebraic1} and~\cite{algebraic2} investigate the random graph of Erdős-Rényi, the small-world graph of Watts-Strogatz and the scale-free graph of Barabási-Albert, however, the publishers also inspect the connectivity and robustness of the networks. In their case, a network is said to be robust if its performance is not sensitive to the changes in topology. In~\cite{algebraic1} the algebraic connectivity metric is studied in relation to graph’s robustness to node and link failures, however, they showed that the algebraic connectivity is not trivially correlated to the robustness of the network. The authors in~\cite{algebraic2} also drew the conclusion that there is no unique graph metric to satisfy both connectivity and robustness objectives while keeping a reasonable complexity, since each metric captures some attributes of the graph.
+
+\subsection{Chinese Network Analysis}
+A real-life Chinese railway network is studied in~\cite{chinese}, and the authors exhibit that the network shows small-world characteristics and also follows power-law distributions. Besides topologies, they also investigate correlations between strength, degree, and clustering coefficients. However, the publishers do not regard graph queries and do not intend to find connections between metrics and performance, the correlations are exclusively found among the graph metrics.
+
+\subsection{Conclusions}
+
+As the examples represent, there is a particular well-know subset of graph topologies that are widely analyzed. The random graph of Erdős-Rényi, the small-world model of Watts-Strogatz, and finally, a scale-free graph of Barabási-Albert. Moreover, numerous real-life networks show scale-free characteristics. We also investigate these networks topology, by reason of that they follow unlike degree distributions and they also show a variety in graph metrics. As far as metrics are concerned, we also give the assumption that the clustering coefficients and average path length metrics can characterize the model precisely, and thus, they can be considered as main indicators in the estimation of the query performance. Furthermore, we extend the set of observable metrics with the betwenness centrality as well.
+
+Interesting and very important question is whether a unique metric is able to characterize a network's topology, and thus, more interestingly, whether it is suited to predict the performance of graph queries. As it was empirically determined in\ref{sec:algebraic_connectivity}, each metric captures some attributes of the graph, and only one is not adequate for the goal to characterize the network precisely. Besides the empirical results, we conjecture the same that only more than one, different metrics are suited to become appropriate performance estimators.
+
+
+\section{Benchmarks of NoSQL Databases}
+
+A wealth of literature is available related to the performance comparison of different NoSQL databases over RDF data. Instead of introducing a part of these papers, we focus on the foundations of the measurements, the benchmark frameworks. In the following, each section represents a benchmark particularly connecting to RDF data models. Finally, Section \ref{sec:benchmark_conclusions} compares the frameworks, and by drawing conclusions based on the benchmarks, it also contains the main concepts on which we will rely in our search.
+
+\subsection{Yahoo!~Cloud Serving Benchmark}
+
+The \textit{Yahoo!~Cloud Serving Benchmark} was elaborated in order to compare performance of the new generation
+of cloud data serving systems~\cite{ycsb}. The framework proposes different workloads by assigning
+different distributions to them that determine the operation to perform --- get or put --- and the record from the data model to be read or written. In other words, the particular distributions specify the exact numbers of read or update queries in a workload, and also affect the choosing of records on which the workload operates. In order to demonstrate, Figure 1 %todo insert pic from 5
+represents the available distributions and number of choices per records.
+
+\subsection{Berlin SPARQL Benchmark}
+
+The Berlin SPARQL Benchmark (from now on BSBM) is settled in an e-commerce use case in which a set of products
+is offered by different vendors and consumers have posted reviews about these products on various review sites~\cite{berlin}. Taken scalability into consideration, BSBM proposes an arbitrary increased model size. Similarly to YCSB, BSBM concentrates on read and update operations as well, as it defines three different use cases and a suite of benchmark queries in each of them~\cite{berlin_specification}. The queries were elaborated to simulate realistic, real-life workloads.
+
+In contrast to YCSM, BSBM defines particular performance metrics that relate mainly to the query execution times from different perspectives. For example, the most important metrics are the following:
+\begin{itemize}
+	\item{Queries per Second}: It equals to the number of queries that executed properly by the system within a second.
+	\item{Query Mixes per Hour}: Denotes the number of \textit{mixed} queries with different parameters that evaluated within an hour.
+	\item{Overall Runtime}: The overall time that a certain amount of query mixes required.
+\end{itemize}
+
+
+\subsection{DBpedia SPARQL Benchmark}
+DBpedia SPARQL Benchmark proposes datasets of various sizes derived from the DBpedia~\cite{dbpedia_data} knowledge base, and perform measurements on real queries that were issued against existing RDF data~\cite{dbpedia}. Similarly to BSBM, DBpedia also defines metrics to provide a more precise performance analysis. These are the same as in the case of BSBM: \textit{Query Mixes per Hour}, and \textit{Queries per Second}. Furthermore, DBpedia investigates the characterization of the models as well and calculates the average in- and outdegree, the number of nodes and distinct IRIs, however, it uses these measurements to judge and maintain the generated model to be similar to the original data set. As a consequence, DBpedia does not explore model and performance correlations neither.
+
+\subsection{SP$^2$Bench}
+The SPARQL Performance Benchmark (SP$^2$Bench) is designed to test the most common SPARQL constructs,
+operator constellations, and a broad range of RDF data access patterns~\cite{sp2bench}. Instead of defining a sequence of use case motivated queries, the framework proposes various queries that cover specific RDF data management approaches.
+
+SP$^2$Bench is based on the \textit{Digital Bibliography and Library Project} (commonly known as \textit{dblp}) which provides an open bibliographic information on major computer science publications~\cite{dblp}. The benchmark queries are not explicitly evaluated over the \textit{dblp} dataset, since SP$^2$Bench uses arbitrarily large, artificially generated models for the measurements, however, these models are constructed to follow real-life characteristics that were found in the original \textit{dblp} dataset, such as a power-law distribution.
+
+Similarly to BSBM, SP$^2$Bench also measures additional performance related metrics besides execution time, such as disk storage cost, memory consumption, data loading time, success rates, and every one them captures different aspects of evaluations.
+
+
+\subsection{Conclusions} \label{sec:benchmark_conclusions}
+
+One common attribute of the previously introduced benchmark frameworks is that they lack precise analysis of searching connection between model characteristic and evaluation performance. In these frameworks, it is not supported to assess a tool's performance on different topologies, still using the same domain. Generally, the frameworks propose the generation of variously large models, thus investigating scalability, however, they do not focus on modifying the internal structures of the models, and generate different topologies, even in the same size.
+ 
+%todo more? metrics? prob dist? use case?
