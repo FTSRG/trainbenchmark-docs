@@ -19,7 +19,7 @@
 \newcommand{\vikkonzulensB}{Dr. István Ráth} % Második konzulens neve; hagyd üresen, ha egy konzulensed van.
 \newcommand{\vikcim}{Performance Analysis of Graph Queries} % Cím
 \newcommand{\viktanszek}{\bmemit} % Tanszék
-\newcommand{\vikdoktipus}{\msc} % Dokumentum típusa (diplomaterv, szakdolgozat, TDK-dolgozat, stb.)
+\newcommand{\vikdoktipus}{} % Dokumentum típusa (diplomaterv, szakdolgozat, TDK-dolgozat, stb.)
 
 \input{include/tdk-variables.tex}
 \newcommand{\szerzoMeta}{\vikszerzoVezeteknev{} \vikszerzoKeresztnev} % egy szerző esetén
@@ -36,8 +36,7 @@
 
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-%\include{include/guideline}
-%\include{include/project}
+
 
 \pagenumbering{gobble}
 \dolgozatnyelve
@@ -69,14 +68,20 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \pagenumbering{arabic}
 
-
+	%\include{content/dummy}
 	\include{content/introduction}
 	\include{content/background}
 	\include{content/related_works}
+	\include{content/conceptual_contributions}
+	\include{content/contributions}
+	\include{content/generation}
+	\include{content/analysis}
+	\include{content/evaluation}
+	\include{content/summary}
 
 
 \pagenumbering{roman}
-\setcounter{page}{\value{romanPage}}
+%\setcounter{page}{\value{romanPage}}
 
 
 % Acknowledgements

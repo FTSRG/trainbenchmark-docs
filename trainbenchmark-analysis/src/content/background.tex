@@ -102,7 +102,7 @@ In terms of the implemented tools in the benchmark framework, it is already expl
 \subsection{The Framework's Architecture}
 
 It is important to emphasize that our goal in this paper is not entirely related to the main motivation and aim that belong to the Train Benchmark framework. We are not concerned with model validations (or transformations\footnote{Some instance model transformations are also occurred in the workflow of Train Benchmark after each validation. The goal is to investigate how the implemented tools perform after certain model modifications so that they execute the same validations and transformations again, iteratively. Since currently this area is out of our scope, we do not describe it in details.}) %todo right here in a footnote? seriously? 
-, instead, we pay more attention to the first query evaluations and the precise characterization of the model. The latter option is entirely missing from the framework, since we cannot calculate metrics connected to the instance models. However, the embedded model validation components  --- and the integrated tools themselves --- are reusable for our purpose.
+, instead, we pay more attention to the first query evaluations and the precise characterization of the model. The latter option is entirely missing from the framework, since we cannot calculate metrics connected to the instance models. However, the embedded model validation components --- and the integrated tools themselves --- are reusable for our purpose.
 
 Figure 4 depicts the main components are found in the benchmark framework. Based on this, it is clarified which components can be reused, and which needs to be extended or reimplemented completely for our purpose. The first considerable alteration is the \textsf{Generator} unit, which is responsible for the graph-based model generation on an abstract layer, meaning that the component operates independently on the existing formats. Which components are responsible for parsing the model to the specific format, those are the \textsf{FormatGenerator} units. Only the RDF-based component needs to be extended. The generation related modifications are described later in details.
 
@@ -218,7 +218,7 @@ The \textit{standard deviation} of the random variable $X$ is $\sigma = \sqrt{\s
 \begin{align}
 	cov(X,Y) = E\big[(X - \mu_X)(Y - \mu_Y)\big]
 \end{align}
-where if $cov(X,Y) > 0$, then $Y$ tends to increase as $X$ increases, and if $cov(X,Y) < 0$, then  $Y$ tends to decrease as $X$ increases~\cite{covariance}. A few examples are depicted in Figure 1 %todo covariance pictures from 198%
+where if $cov(X,Y) > 0$, then $Y$ tends to increase as $X$ increases, and if $cov(X,Y) < 0$, then $Y$ tends to decrease as $X$ increases~\cite{covariance}. A few examples are depicted in Figure 1 %todo covariance pictures from 198%
 in different scenarios where --- in the terms of Figure (a) and (b) --- a covariance is observable between $X$ and $Y$, however in Figure (c) and (d), the covariance equals to zero.
 
 \subsubsection{Correlation}
@@ -250,7 +250,7 @@ During the model generation later, we will construct different graph topologies,
 The spread in the node degrees is characterized by a distribution
 function $P(k)$, which gives the probability that a randomly selected node's degree equals to $k$.
 
-\subsection{Network Topologies}
+\subsection{Network Topologies} \label{sec:topologies}
 
 
 

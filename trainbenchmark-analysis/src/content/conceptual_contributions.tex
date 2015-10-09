@@ -1,0 +1,7 @@
+\chapter{Conceptual Contributions}
+
+Random:
+	The usage of a random graph in the framework is explained by the fact that its characteristic differs significantly from the other topologies, as it shows a Poisson degree distribution, and its descriptive metrics are smaller, especially the clustering coefficient, and betweenness metric. , indicating that for every pair of stations becomes adjacent by $p$ probability. 
+	
+WS:
+	The main reason we rely on this network is that the Watts-Strogatz model represents a bridge between a lattice graph~\cite{lattice} and an Erdős-Rényi model. If the probability value $p$\footnote{During the generation algorithm, every edge in the ring lattice is rewired with $p$ probability.} is 0, then actually a ring lattice graph is generated, otherwise, the higher is the $p$, the more uniformity is observed between the Watts-Strogatz model and the random graph\footnote{It is easy to show, since if $p$ is equal to 1, then every edge in the ring lattice is rewired, therefore, the binomial case of the random graph is c}.

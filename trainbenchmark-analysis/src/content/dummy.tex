@@ -1,0 +1,325 @@
+\newpage
+\begin{enumerate}
+	\item \textbf{Introduction}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Problem}
+		\item \textbf{Concepts}
+			\item \textbf{Contributions}
+			\item \textbf{Structure of the Report}
+		\end{enumerate}
+		\item \textbf{Background}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{NoSQL}
+			\item \textbf{RDF}
+			\item \textbf{Statistics}
+			\begin{enumerate}[label*=\arabic*.]
+				\item \textit{Population and Sample}
+				\item \textit{Distributions}
+				\item \textit{Correlation}
+				\item \textit{Regression}
+			\end{enumerate}
+			\item \textbf{Graph Theory}
+			\begin{enumerate}[label*=\arabic*.]
+				\item \textit{Metrics}
+				\item \textit{Random-Graph}
+				\item \textit{Scale-Free}
+				\item \textit{Watts-Strogatz}
+				\item \textit{Hierarchical}
+			\end{enumerate}
+		\end{enumerate}
+	
+	
+	\item \textbf{Related Works}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Graph Analysis}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{Studies of Barabási and Albert}
+			\item \textit{Network Robustness and Metric Correlations}
+			\item \textit{Chinese Network Analysis}
+			\item \textit{Conclusion}
+		\end{enumerate}
+		\item \textbf{NoSQL Benchmarks} or RDF / SPARQL Benchmarks
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{YCSB}: maybe its not necessary
+			\item \textit{Berlin}
+			\item \textit{DBpedia}
+			\item \textit{SP2}
+			\item \textit{Conclusion}
+		\end{enumerate}
+	\end{enumerate}
+	
+	
+	
+	\item \textbf{Train Benchmark Framework}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Main Concepts}
+		\item \textbf{Workflow}
+		\item \textbf{The Domain}
+		\item \textbf{Supported Formats}
+		\item \textbf{Performance Comparison and Uniformity}
+		\item \textbf{Tools}
+		\item \textbf{Framework's Architecture}
+	\end{enumerate}
+
+	
+	\item \textbf{Contributions}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Disadvantages of the Train Benchmark Domain} (necessary?)
+		\item \textbf{A Real-life Model}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{Overview of a real-life Data: Train Schedules}
+			\item \textit{Mapping to a Model}
+			\item \textit{Model Analysis}
+		\end{enumerate}
+		\item \textbf{Extending the Framework with Analysis}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{Metrics Calculation}
+			\item \textit{The New Architecture of the Framework}
+			\item \textit{Workflow}
+			\item \textit{Regression Analysis}
+		\end{enumerate}
+		\item \textbf{Model Generation}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{Concepts}
+			\item \textit{Overall of the Generation Steps}
+			\item \textit{Step 1: Topologies} (maybe omit "Step 1" from the title, it's strange)
+			\begin{enumerate}[label*=\arabic*.]
+				\item Random Graph
+				\item Watts-Strogatz Model
+				\item Scale-free Networks of Barabási-Albert
+				\item Hierarchical Network
+			\end{enumerate}
+			\item \textit{Step 2: Schedule Connections}
+			\item \textit{Possible Model Configurations}
+			\item \textit{Uniform Model Generation}
+		\end{enumerate}
+		\item \textbf{The Workloads for Graph Queries Analysis}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textit{Main Goal}
+			\item \textit{Sample Choosing}
+			\begin{enumerate}[label*=\arabic*.]
+				\item A Sample Based on Topologies
+				\item A Sample Based on Metrics
+			\end{enumerate}
+			
+			\item \textit{Model Configuration}
+			\item \textit{Evaluated Queries}
+			\item \textit{Test the Performance Estimation}
+			\item \textit{Investigated Tools}
+		\end{enumerate}
+	\end{enumerate}
+	
+	
+	\item \textbf{Evaluation}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Benchmarking Environment}
+		\item \textbf{How to Read the Charts}
+		\item \textbf{Multiple Regression Analysis}
+		\item \textbf{MARS Analysis}
+		\item \textbf{Performance Estimation}
+		\item \textbf{Conclusions}
+	\end{enumerate}
+	\item \textbf{Summary}
+	\begin{enumerate}[label*=\arabic*.]
+		\item \textbf{Future Work}
+	\end{enumerate}
+	\item \textbf{Acknowledges}
+\end{enumerate}
+
+
+
+
+
+
+\newpage
+\begin{enumerate}
+	\item \textbf{Introduction}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{Problem}\\
+			In model oriented systems (not MDSD), performance is a key role.
+			Databases, NoSQL systems -> increasing data -> importance of optimization.\\
+			
+			performance depends on workloads -> a bit different model + query implicate a high deviation in performance\\
+			Real-time response. Important to estimate response time to optimize.
+			
+			There is no benchmark framework for NoSQL / RDF that investigates workload and performance relationship precisely, they only concentrate on performance. Only one static model can be found in these frameworks.
+			
+
+			\item \textbf{Concepts}\\
+			A framework that systematically assess and analyze performance.
+			Why is it good: utilizations in query optimizers.
+	
+			+ \textbf{\textbf{Fig}}: show the typical workflow of our goal: \\
+			The challenge is to find regression models. \\
+			Analyze models by descriptive metrics -> find connections.
+			
+			\item \textbf{Contributions}\\
+			A brief overview of the work -> graph topologies with different distributions based on a real model-> metrics -> analyze performance, estimation\\
+			Regression analysis.
+			
+			Arbitrary size, topology, density, and cardinality on the generated models.
+			
+			Test the framework's usability, test the performance estimation: arbitrary workload -> try to match a regression model. Can it be used in optimizations?
+			\item \textbf{Structure of the Paper}
+		\end{enumerate}
+	\item \textbf{Background}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{NoSQL} - briefly
+			\item \textbf{RDF} - short, maybe 1 \textbf{\textbf{Fig}} of an example
+			\item \textbf{Statistics}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Population and Sample} - or sample only
+					\item \textit{Distributions}\\ implicate the definition of random variable.
+							Uniform; (normal?); poisson; pareto - power-law
+					\item \textit{Correlation}\\implicate covariance definition. \\
+						Pearson definition + formula\\
+						+1 \textbf{\textbf{Fig}} of different samples and their correlations.
+					\item \textit{Regression}\\linear, multiple briefly, give equation
+					+ 1 \textbf{\textbf{Fig}}
+				\end{enumerate}
+			\item \textbf{Graph Theory}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Metrics}\\Degree Distribution;clustering coefficient+\textbf{Fig}, average path length, betwenness centrality
+					\item \textit{Random-Graph}\\generation algorithm, \textbf{Fig}, typical metric values, distribution
+					\item \textit{Scale-Free}\\generation algorithm, \textbf{Fig}, typical metric values, distribution
+					\item \textit{Watts-Strogatz}\\generation algorithm, \textbf{Fig}, typical metric values, distribution
+					\item \textit{Hierarchical}\\generation algorithm, \textbf{Fig}, typical metric values, distribution
+				\end{enumerate}
+		\end{enumerate}
+		
+		
+	\item \textbf{Related Works}\\Introduce the field of graph analysis and sparql benchmarks. Goal is to merge them in our search.
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{Graph Analysis}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Studies of Barabási and Albert}\\
+						Scale-free can be found in real-life networks.
+					\item \textit{Network Robustness and Metric Correlations}\\
+						Failure of one metric to estimate robustness. They tried to find metric - connectivity, robustness connection. They use the same models.
+					\item \textit{Chinese Network Analysis}\\
+						Well, it's not so interesting. They search correlations in the model, but show small-word and scale-free characteristics in their model.
+					\item \textit{Conclusion}\\We can see the models and metrics that worth to use, and appear in real networks\\
+						The failure of one metric by searching performance/robustness correlations -> need to involve more metrics to find relationships -> use regression.
+				\end{enumerate}
+			\item \textbf{NoSQL Benchmarks} or RDF / SPARQL Benchmarks
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{YCSB}: use different distributions in the workloads
+					\item \textit{Berlin}: real life use cases, some performance metrics
+					\item \textit{DBpedia}: same performance metrics like in berlin + real-model
+					\item \textit{SP2}: systematic queries -> try to cover every important problem in sparql
+					\item \textit{Conclusion}\\summarize the benchmarks + Table\\
+					Some of them measure metrics, but they only cover the performance like evaluated queries per second\\
+					They use one static model in different sizes. (YCSB tells nothing about its model.)
+					Draw conclusions for our framework -> we concentrate on the model's structure, and generate various topologies instead of using one static model. And we explore model - performance relationships.
+				\end{enumerate}
+		\end{enumerate}
+		
+		
+		
+	\item \textbf{Train Benchmark Framework}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{Main Concepts} \\ maybe a \textbf{Fig} of a model validation
+			\item \textbf{Workflow}\\+ \textbf{Fig} about the phases and the roles of models, queries, and constraints -> how the queries can be attached to model validations
+			\item \textbf{The Domain} \\\textbf{Fig} of the metamodel
+			\item \textbf{Supported Formats}
+			\item \textbf{Performance Comparison and Uniformity}
+			\item \textbf{Tools} - table, briefly
+			\item \textbf{Framework's Architecture} \\+\textbf{Fig}, roles of the components
+		\end{enumerate}
+		
+		
+	\item \textbf{Contributions}
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{Disadvantages of the Train Benchmark Domain} (necessary?)\\ 
+			\textbf{Fig} of the cardinalities of the railway domain -> important to recall the railway metamodel again
+			\item \textbf{A Real-life Model}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Overview of a real-life Data: Train Schedules}\\ records, main attributes, cardinalities
+					\item \textit{Mapping to a Model}\\ +\textbf{Fig} metamodel or ER diagram of the domain (EMF metamodel is already done).
+					This section is about the abstraction and not the model generation.
+					\item \textit{Model Analysis} \\
+					Original data characteristics\\
+					+ \textbf{Fig} showing the degree distributions of schedules.
+				\end{enumerate}
+			\item \textbf{Extending the Framework with Analysis}
+			\begin{enumerate}[label*=\arabic*.]
+				\item \textit{Metrics Calculation}: model and query metrics
+				\item \textit{The New Architecture of the Framework} \\
+						summon the same figure from section 4.7, but extend it: Analyzer, QueryBuilder, Generator Class. More emphasis on analysis components, than generation -> that will be described below.
+				\item \textit{Workflow}\\
+						+ \textbf{Fig} about the phases.\\
+						Reuse model metrics, dynamic queries.
+				\item \textit{Regression Analysis}\\ 
+					How we analyze the measurements? multiple regression by R + MARS
+			\end{enumerate}
+			\item \textbf{Model Generation}\\ 
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Concepts}\\
+						Idea: dynamic internal structures. Emphasize model structure. Study model metric - performance connection. Allude the other benchmark frameworks again.
+					\item \textit{Overall of the Generation Steps}\\
+						7 steps + \textbf{Fig}
+					\item \textit{Step 1: Topologies} (maybe omit "Step 1" from the title, it's strange)
+						Do not define these topologies, they are already done in 2.4. But tell specific details, extensions about their algorithms. \\
+						Important: why are we using these? because of their metrics
+						\begin{enumerate}[label*=\arabic*.]
+							\item Random Graph: G(n,p) model
+							\item Watts-Strogatz Model: extended: $N$ value is not a constant
+							\item Scale-free Networks of Barabási-Albert: extended: $m$ is not a constant neither\\
+								Maybe refer to the heterogeneous model.
+							\item Hierarchical Network\\
+								challenge -> finish the algorithm to get $N$ nodes
+								(a \textbf{Fig} would be great about a small model)
+						\end{enumerate}
+					\item \textit{Step 2: Schedule Connections} \\
+						Generate power-law distr. from uniform + Formula
+						Use BFS algorithm.
+					\item \textit{Possible Model Configurations}\\
+						User can change the model size, topology among stations, cardinality, and density.
+						Maybe + Table about the model sizes and triples.
+					\item \textit{Uniform Model Generation}\\
+						We can generate models with the same average degrees, in the same size -> so edges are equal.
+						Add the hierarchical network's formula for estimating edges, since it is the key to achieve uniformity.
+						+ \textbf{Fig} about this metric.
+				\end{enumerate}
+			\item \textbf{The Workloads for Graph Queries Analysis}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{Main Goal}\\
+						Investigate graph queries performance -> how the model structures and their metrics affect the performance. And also study, how useful is the benchmark, how can its regressions be used for optimizations.
+					\item \textit{Sample Choosing}
+							\begin{enumerate}[label*=\arabic*.]
+								\item A Sample Based on Topologies\\ 5 model from every topology -> bad metric deviations\\ +\textbf{Fig}
+								\item A Sample Based on Metrics\\
+									use 1-1 Hier, 1 scale, and 3 WS model -> better metric deviations for our goal \\+\textbf{Fig}
+							\end{enumerate}
+					
+					\item \textit{Model Configuration}\\
+							change stations proportions, from 1.8 to 80% 
+					\item \textit{Evaluated Queries}\\
+							Transitive Closure query\\
+								+ sparql definition
+							Navigations query\\
+							(Attributes query? maybe)
+					\item \textit{Test the Performance Estimation}\\
+						test with arbitrary models
+					\item \textit{Investigated Tools} - which one supports transitive closure?
+				\end{enumerate}
+		\end{enumerate}
+		
+		
+	\item \textbf{Evaluation}
+			\begin{enumerate}[label*=\arabic*.]
+				\item \textbf{Benchmarking Environment}
+				\item \textbf{How to Read the Charts}
+				\item \textbf{Multiple Regression Analysis}
+				\item \textbf{MARS Analysis}
+				\item \textbf{Performance Estimation}
+				\item \textbf{Conclusions}
+			\end{enumerate}
+	\item \textbf{Summary} - a 5 pages list of my achievements
+		\begin{enumerate}[label*=\arabic*.]
+			\item \textbf{Future Work}
+		\end{enumerate}
+	\item \textbf{Acknowledgements}
+\end{enumerate}
+
+
