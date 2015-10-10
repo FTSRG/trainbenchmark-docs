@@ -87,6 +87,20 @@ cardinalities
 	random schedule factor -> important?
 
 
+\section{Extending the Framework with Analysis}
+\subsection{Metrics Calculation}
+\subsubsection{Model-related Metrics}
+\subsubsection{Query-based Metrics}
+\subsection{The New Architecture of the Framework}
+components and shit
++ dynamic query builders
+\subsection{Workflow}
+phases and shit
+
+\subsection{Regression Analysis}
+
+\subsubsection{MARS}
+
 
 \section{Model Generation} 
 
@@ -127,11 +141,11 @@ The commonly known generation algorithm is used with some extensions. Generally,
 
 In the original generation algorithm, every new vertex becomes to be connected to a constant number of disjunct nodes. Similarly to the notion in the Watts-Strogatz model generation (\ref{sec:watts_generation}), this constant value is converted to a random variable by a particular probability.
 
-\subsubsection{Hierarchical Network}
+\subsubsection{Hierarchical Network}\label{sec:hierarcical_contribution}
 
 The first difference between our constructed hierarchical graph and the original concept is that the former structure can be configured arbitrarily, since it is feasible to create $K_n$ complete subgraphs with optional $n$, instead of $K_5$. %todo use this notation in background too
 
-The second most essential difference is the termination of the generation algorithm. As a general rule, the goal in Train Benchmark is that to generate arbitrary size of models by creating a precise number of nodes. Since the generation of hierarchical network is recursive instead of being incremental --- as in the case of the three other topologies --- it is inevitable to determine a termination from the recursion. The termination point is evident, as soon as the number of created nodes reaches the limit, the algorithm has to be stopped. However, it cannot be predicted in which phase exactly the algorithm stops. As a consequence, the possible failures have to be managed.
+The second most essential difference is the termination of the generation algorithm. As a general rule, the goal in Train Benchmark is that to generate arbitrary size of models by creating a precise number of nodes. Since the generation of hierarchical network is recursive instead of being incremental --- as in the case of the three other topologies --- it is inevitable to determine a termination from the recursion. The termination point is evident, as soon as the number of created nodes reaches the limit, the algorithm has to be stopped. However, it cannot be predicted in which phase the algorithm stops exactly. As a consequence, the possible failures have to be managed.
 
 \begin{figure}[!ht]
 	\centering
@@ -144,7 +158,7 @@ The possible problematic cases are demonstrated in Figure \ref{fig:hierarchical_
 
 In the solution in \textsf{Case A}, the generator stops the clone procedure and connects the diagonals to the center. Regarding \textsf{B}, the termination happens during the generation of a cluster. As a solution, the last cluster becomes partial, and similarly, every diagonal is attached to the center. \textsf{Case C} represents that scenario when the last cluster only consists of one node. To prevent isolation, the last vertex is considered as a diagonal, and be connected to the center.
 
-\subsection{Schedule Connections}
+\subsection{Schedule Connections}\label{sec:schedule_connections}
 
 An important part of the generation is that to connect the stations to schedules. As it was detected in Section \ref{sec:model_analysis}, the degree distribution of the schedule and station connections follows a power-law distribution. %todo add exponent value
 
@@ -157,35 +171,74 @@ where $n$ is the exponent or scale-factor, $y$ is a uniformly distributed variat
 Another problem is choosing the appropriate stations. Actually, the value of $X$ is the length of the destinations path belonging to a schedule. As a result, for every schedule, the generator executes a \textit{breadth-first search} starts from a uniformly random station, and stops the algorithm as soon as it finds an $X$ length path. Finally, this path of stations is linked to the schedule.
 
 
-\subsection{Model Configuration}
+\subsection{Possible Model Configuration}
 
 In an artificially generated model, the cardinality, size, topology, and density is optionally configurable. 
 
 Regarding cardinality, different proportions can be adjusted between the vertex types, as \textsf{Station}, \textsf{Schedule}, \textsf{Train}, and \textsf{Association}. The default adjustment is proportional to the observed cardinality in the case of the original data.
 
-The size of the model --- so the number of nodes --- is calculated as $|V| = s \cdot 2^i$, where $s$ is the step size constant, $5000$ by default, and $i$ is a positive integer given by the user. Based on $i$, the
+The size of the model --- so the number of nodes --- is calculated as $|V| = s \cdot 2^i$, where $s$ is the step size constant, $5000$ by default, and $i$ is a positive integer, given by the user.
+
+As it was already emphasized, various graph topologies can be generated among the \textsf{Station} nodes, thus, the internal structure of the models and their degree distributions are also alterable. Moreover %todo finish
+
 \subsection{Uniform Model Generation}
-uniform edge number -> very important to emphasize
-derives from the hier generation algorithm -> problem edge number
-give an estimation formula
-align the others
 
-\section{Extending the Framework with Analysis}
-\subsection{Metrics Calculation}
-\subsubsection{Model-related Metrics}
-\subsubsection{Query-based Metrics}
-\subsection{The New Architecture of the Framework}
-components and shit
-+ dynamic query builders
-\subsection{Workflow}
-phases and shit
+In the generation unit in Train Benchmark, it became possible to construct \textit{uniform} models with various topologies. Under the concept of uniformity, it is meant that the different models may consist of some particular \textit{static} subgraphs that are found in each one, furthermore, the models include the same number of nodes and edges, regarding the \textit{dynamic} parts, thus, the topologies as well.
 
-\subsection{Regression Analysis}
+%todo add a figure
 
-\subsubsection{MARS}
+\subsubsection{Static Subgraphs}
+Regarding the static parts, the ensemble of \textsf{Train} and \textsf{Association} types of vertices can be classified to this category. Obviously, if the cardinality configurations --- the proportion of the elements --- in the models are the same, than these types of nodes and their relationships are equal, since they are generated by the same algorithm.
+
+In terms of the \textsf{Schedule} nodes, achieving a completely uniform subgraph between the schedules and stations is not feasible. At first, note that those stations that are linked to the schedules, are chosen via a breadth-first search algorithm, which implicates different paths of destinations for the schedules in each model depending on the topology among stations. As a result, a precise, uniform internal structure between the schedules and stations cannot be generated, however the average degree of a \textsf{Schedule} node --- thus, the amount of corresponding destinations --- is precisely configurable, since the degree distribution of schedules is determined forward by a power-law generator (introduced in Section \ref{sec:schedule_connections}), yet, this configuration entails a problem.
+
+The problem is the maximum size of paths among stations, reached by the BFS algorithm. Even though the Scale-free, random, and Watts-Strogatz models can be considered as arbitrary connected graphs, which leads to the assumption that a path exists among any two nodes with an optional length. However, this statement cannot be claimed in the case of hierarchical networks. There always exists a path between two arbitrary nodes in a hierarchical graph via the \textit{center node}\footnote{It is actually the first created node in algorithm, and in the further steps every diagonal is linked to this vertex.}. However, the maximum depth in this path without revisiting the center node again, is bounded. It is easy to confirm, since the sub hierarchies are not connected explicitly to each other, expect the center node. As a consequence, the maximum length between two nodes --- considering the best scenario --- consists of $\frac{|V|}{2^i}$ nodes, where $i$ is the current iteration value of the recursive algorithm. Considering an average case, the maximum length is $\frac{|V|}{2 \cdot 2^i}$. According to this number, the maximum bound of the power-law generation function is adjusted.
+
+Note that, by achieving uniformity among the models, as using a consistent degree distribution in schedules based on the hierarchical graph, the generated models loose some of their real-life characteristics that was observed it the original data.
+
+\subsubsection{Number of Nodes}
+
+The question of nodes equality per graphs is related to the \textit{dynamic} parts of the graph, thus, to the topologies among the stations.
+
+The only one problem about generating a graph with a certain number of nodes is the recursive algorithm of the hierarchical graph. Nevertheless, we already showed in Section \ref{sec:hierarcical_contribution} that the recursion is terminated appropriately, and the resulting problems are managed.
+
+As far as the other structures are concerned, the ensemble of random graph and the Watts-Strogatz model is constructed by initializing $|V| = N$ number of vertices at first, and subsequently, the algorithms determine which one of them become adjacent. In the scale-free model generator, the nodes are created incrementally until $|V| = N$. As a deduction, a precise number of nodes in these topologies to be uniformed can be achieved easily.
+
+\subsubsection{Number of Edges}
+
+The only one challenge of obtaining an equal number of edges among the models is related to \textit{dynamic} parts of the graphs, the topologies. As it was already emphasized, the random graph, Watts-Strogatz model, and scale-free network can be configured optionally, which conducts the fact that arbitrary number of edges can be generated, even the same amount for every topology. Actually, in these types of networks, the amount of nodes and edges are handled respectively.
+
+Unfortunately, the creation of nodes and edges in the hierarchical graph occurs together. Since generating of a certain number of nodes, $|V|$is already handled, the key is to find a relationship between $|E|$ and $|V|$.
+
+The literature relating to hierarchical graphs does not study the exact number of edges or its correlation to the amount of nodes, hence, we propose a solution to estimate $|E|$ in the recursive algorithm for every iteration.
+
+At first, let define the necessary variables hereunder:
+\begin{itemize}
+	\item{$i$}: Represents the current iteration in the original hierarchical algorithm.
+	\item{$c$}: Indicates the number of clones in every iteration.
+	\item{$n$}: The cluster size is denoted by $n$, which cluster is a $K_n$ complete graph.
+	\item{$F_i$}: It indicates the constructed graph after the $i$ iteration.
+	\item{$|E_{F_i}|$}: The number of edges of the $F_i$.
+\end{itemize}
+
+In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally speaking, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the diagonals from each $F_0$ to the center node. It entails that 
+\begin{align}\label{eq:f1_version1}
+	|E_{F_1}| = (c+1) \cdot K_n + c \cdot (n - 1)	
+\end{align}
+since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ cloned clusters to the center.
+
+Note that $K_n$ can be substituted with $F_0$, furthermore, the algorithm connects $c^i$ clusters to the center, which implicates $c^i \cdot (n-1)$ diagonals, and edges as well. Thus, modifying Equation \ref{eq:f1_version1}, we obtain:
+\begin{align}\label{eq:f1_version2}
+	|E_{F_1}| = (c+1) \cdot F_0 + c^1 \cdot (n - 1)	
+\end{align}
+Generally, derived from Equation \ref{eq:f1_version2} the formula for every iteration is the following:
+\begin{align}
+	|E_{F_i}| = (c+1) \cdot F_{i-1} + c^i \cdot (n - 1)	
+\end{align}
+
 
 \section{The Workloads for Graph Queries Analysis}
-dsd
+
 \subsection{Main Goal}
 investigate stations
 \subsection{Sample Choosing}
