@@ -2,7 +2,7 @@
 
 In the following sections, we present the main contributions related to the Train Benchmark framework.
 
-\section{Disadvantages of the Train Benchmark Domain}
+\section{Disadvantages of the Train Benchmark Domain}\label{sec:railway}
 
 The original domain of the Train Benchmark framework (introduced in \ref{section:metamodel} is not applicable for our goals to analyze graph queries, and study model - performance relationships. The main problems connecting to the domain are summarized in the following list:
 \begin{enumerate}
@@ -87,15 +87,79 @@ cardinalities
 	random schedule factor -> important?
 
 
-\section{Extending the Framework with Analysis}
+
+
+
+\section{Extending Train Benchmark with Analysis}
+
+Our goal is to extend the Train Benchmark framework so that to be suited to analyze graph queries performance with a comprehensive model and query characterization, and to explore performance and workload correlations via different descriptive metrics. The extensions are presented in the following sections.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/functionality.pdf}
+	\caption{The Overall Functionality of Train Benchmark}
+	\label{fig:functionality}
+\end{figure}
+
+\subsection{Workflows}
+
+A workflow in Train Benchmark is divided into different phases that are considered as the atomic execution units. An arbitrary chain can be created among the phases, which --- during benchmarking --- are executed consecutively. The following sections introduce an overview of the original, and the extended workflow of Train Benchmark.
+
+\subsubsection{Original Workflow}
+A typical workflow of the original framework is illustrated in Figure \ref{fig:old_train_workflow}. As it can be observed, the first phase is responsible for loading the model and the query specification to memory. This leads to the fact, that the definition of a query is immutable during the measurements. The second phase is \textsf{Check} that symbolizes the validation, thus the query evaluation. Optionally, a validation can be followed by a graph transformation phase which modifies a subset of the elements. Finally, by simulating incremental validation, another \textsf{Check} phase follows, and the ensemble of transformations and re-validations is executed iteratively.
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/trainbenchmark-sequence.pdf}
+	\caption{The Original Workflow of Train Benchmark}
+	\label{fig:old_train_workflow}
+\end{figure}
+
+\subsubsection{Extended Workflow}
+
+The extended workflow of Train Benchmark is depicted in Figure \ref{fig:new_train_workflow}. At first, it is important to emphasize that the transformation and validation phases are omitted. 
+
+After loading the model, the framework calculates the model related metrics. Due to the fact that our research does not consider model transformations, therefore, a particular model's metrics can be calculated only once in the beginning of the workflow, and more importantly, different runs of the benchmark can utilize the previously calculated metrics that belong to the same model. The solution is achieved by using a cache for the calculated metrics, and reusing its content if possible.
+
+The functionalities in the \textsf{Initialize} and \textsf{Build Query} phases are strongly correlated. As it was already referred, one run of the benchmark only evaluated one static query, and thus, the dynamic replacement of its definition was not feasible in run time. The absence of this feature is solved in the these two phases, since they entail the creation of dynamic queries. The first one provides a default query definition that can be parameterized, and the second phase assembles a complete query for the evaluation, as it injects parameters, or alters the entire syntax. The latter operation implicates that entirely different queries can be executed in a sequence.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/workflow.pdf}
+	\caption{The Extended Workflow of Train Benchmark}
+	\label{fig:new_train_workflow}
+\end{figure}
+
+The query analysis occurs before the evaluations, and according to the fact that the query definitions are mutable in run time, the query based metrics have to be calculated in every iteration. Lastly, the queries are executed in the last phase, and optionally, the building, calculating, and evaluating phases can be repeated.
+
 \subsection{Metrics Calculation}
-\subsubsection{Model-related Metrics}
-\subsubsection{Query-based Metrics}
-\subsection{The New Architecture of the Framework}
-components and shit
-+ dynamic query builders
-\subsection{Workflow}
-phases and shit
+The new framework proposes two types of metrics. The first is the set of model descriptive metrics, and the second relates to the query syntaxes. 
+
+\subsubsection{Model Metrics}
+
+\subsubsection{Query Metrics}
+
+\subsection{The Architecture}
+
+As this section introduces, our research partly deviates from the field that Train Benchmark investigates, however, most of the components from the framework are adequate for our goal, and can be utilized. Figure \ref{fig:architecture} depicts the main components from the extended version of Train Benchmark, additionally, it denotes that which component is ignored --- meaning that our work does not rely on it --- or entirely reused, and which one is extended with further features or newly created.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/architecture.pdf}
+	\caption{The extended architecture of Train Benchmark }
+	\label{fig:architecture}
+\end{figure}
+
+In the subsequent parts, the main components and their roles are introduced, and each extension in the architecture accomplished via our work is emphasized.
+
+\subsubsection{Generators}
+Originally, the measurements in the Train Benchmark framework were based on a \textsf{Railway} domain. The domain's disadvantages is already investigated in Section \ref{sec:railway}, and these observations entail the introduction of a new domain, the \textsf{Schedules} model.
+
+Naturally, the \textsf{Schedule Generator} components and the related \textsf{Topologies}
+\subsubsection{}
+\subsubsection{}
+
 
 \subsection{Regression Analysis}
 
@@ -150,7 +214,7 @@ The second most essential difference is the termination of the generation algori
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/hierarchical.pdf}
-	\caption{Termination problems in hierarchical graph generation}
+	\caption{Possible termination problems in the hierarchical graph generation}
 	\label{fig:hierarchical_problems}
 \end{figure}
 
@@ -221,22 +285,30 @@ At first, let define the necessary variables hereunder:
 	\item{$|E_{F_i}|$}: The number of edges of the $F_i$.
 \end{itemize}
 
-In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally speaking, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the diagonals from each $F_0$ to the center node. It entails that 
+In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally defining, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the diagonals from each $F_0$ to the center node. It entails that 
 \begin{align}\label{eq:f1_version1}
 	|E_{F_1}| = (c+1) \cdot K_n + c \cdot (n - 1)	
 \end{align}
 since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ cloned clusters to the center.
 
-Note that $K_n$ can be substituted with $F_0$, furthermore, the algorithm connects $c^i$ clusters to the center, which implicates $c^i \cdot (n-1)$ diagonals, and edges as well. Thus, modifying Equation \ref{eq:f1_version1}, we obtain:
+Note that $K_n$ can be substituted with $F_0$, furthermore, in the $i$ iteration, the algorithm connects $c^i$ clusters to the center, which implicates $c^i \cdot (n-1)$ diagonals, and edges as well. Thus, modifying Equation \ref{eq:f1_version1}, we obtain:
 \begin{align}\label{eq:f1_version2}
 	|E_{F_1}| = (c+1) \cdot F_0 + c^1 \cdot (n - 1)	
 \end{align}
 Generally, derived from Equation \ref{eq:f1_version2} the formula for every iteration is the following:
-\begin{align}
+\begin{align}\label{eq:fi_formula}
 	|E_{F_i}| = (c+1) \cdot F_{i-1} + c^i \cdot (n - 1)	
 \end{align}
 
-
+We are not finished yet, since Equation \ref{eq:fi_formula} is equal to the number of a completely finished hierarchical network's edges, however, the generator in Train Benchmark creates partial hierarchical networks with a particular large set of nodes, therefore, it terminates the recursive algorithm before it is finished. As a conclusion, if our expected hierarchical graph we intend to generate is $H$, then
+\begin{align}
+	|E_H| = |E_{F_i}| \cdot \frac{|V_H|}{|V_{F_i}|}
+\end{align}
+where $\frac{|V_H|}{|V_{F_i}|} \leq 1$, and the iterator $i$ is calculated from the expected maximum number of nodes found in $H$, as follows
+\begin{align}
+	|H| = (c+1)^i * n  \longrightarrow  i = \frac{\lg\frac{|H|}{n}}{\lg(c+1)}
+\end{align}
+and then use the ceiling of $i$ in the generator.
 \section{The Workloads for Graph Queries Analysis}
 
 \subsection{Main Goal}
