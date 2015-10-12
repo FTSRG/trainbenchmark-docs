@@ -103,7 +103,7 @@ Our goal is to extend the Train Benchmark framework so that to be suited to anal
 
 \subsection{Workflows}
 
-A workflow in Train Benchmark is divided into different phases that are considered as the atomic execution units. An arbitrary chain can be created among the phases, which --- during benchmarking --- are executed consecutively. The following sections introduce an overview of the original, and the extended workflow of Train Benchmark.
+A workflow in Train Benchmark is divided into different phases that are considered as the atomic execution units. An arbitrary chain can be created among the phases, which---during benchmarking---are executed consecutively. The following sections introduce an overview of the original, and the extended workflow of Train Benchmark.
 
 \subsubsection{Original Workflow}
 A typical workflow of the original framework is illustrated in Figure \ref{fig:old_train_workflow}. As it can be observed, the first phase is responsible for loading the model and the query specification to memory. This leads to the fact, that the definition of a query is immutable during the measurements. The second phase is \textsf{Check} that symbolizes the validation, thus the query evaluation. Optionally, a validation can be followed by a graph transformation phase which modifies a subset of the elements. Finally, by simulating incremental validation, another \textsf{Check} phase follows, and the ensemble of transformations and re-validations is executed iteratively.
@@ -116,7 +116,7 @@ A typical workflow of the original framework is illustrated in Figure \ref{fig:o
 	\label{fig:old_train_workflow}
 \end{figure}
 
-\subsubsection{Extended Workflow}
+\subsubsection{Extended Workflow}\label{sec:extended_workflow}
 
 The extended workflow of Train Benchmark is depicted in Figure \ref{fig:new_train_workflow}. At first, it is important to emphasize that the transformation and validation phases are omitted. 
 
@@ -137,12 +137,36 @@ The query analysis occurs before the evaluations, and according to the fact that
 The new framework proposes two types of metrics. The first is the set of model descriptive metrics, and the second relates to the query syntaxes. 
 
 \subsubsection{Model Metrics}
+The model-based metrics are connected to graph metrics, and their naming convention also follows the commonly used metric names from graph theory. Since we are concentrating on RDF based tools in our research, we also define the corresponding interpretations of these metrics in RDF data where it is required. The metrics are listed below.
+%todo rdf and graph metrics
+\begin{enumerate}
+	\item{\textbf{Nodes}}: The number of nodes in the graph, or the number of subjects in RDF.
+	\item{\textbf{Edges}}: It is equal to the number of edges in the graph. Regarding RDF, this metric is considered as the number of predicates\footnote{With the consideration of \textit{rdf:type} predicates, the number of edges metric represents the number of triples.} in the data.
+	\item{\textbf{Maximum Degree}}: The maximum number of predicates per subjects.
+	\item{\textbf{Average Degree}}: It is calculated by considering every possible node's degree.
+	\item{\textbf{Average Degree Distribution}}: It denotes the probability that a randomly selected node’s degree equals to the average degree.
+	\item{\textbf{Higher Degree Distribution}}: The cumulative distribution of those nodes that have higher degrees than the average.
+	\item{\textbf{Average Clustering Coefficient}}: This metric implies the calculation of clustering coefficient per every node.
+	\item{\textbf{Average Shortest Path}}: This metric's calculation requires the most cost, hence, the framework only searches shortest paths between 100 randomly chosen pairs, and---considering the 100 paths---the metric equals to the average length.
+	\item{\textbf{Maximum Betweenness Centrality}}: The value of this metric is determined by the 100 shortest paths. We count the occurrences of every intermediate node in the shortest paths, which is actually the betweenness centrality of the vertices, and map the values to the $[0,1]$ interval by dividing them with the amount of visited nodes in the shortest paths. Since this metrics is individual per nodes, we use the maximum value for the analysis.
+\end{enumerate}
+
+Besides these metrics, we also determine the degree distributions and cardinalities of the models, although these metrics are not included in the analysis to find metric and performance relationships.
 
 \subsubsection{Query Metrics}
 
+The query metrics relate to the query definitions, and they are considered as descriptive metrics of the query syntaxes, hence, they are not connected to the size of result set---gained by the query evaluation---or to the performance of the particular query.
+
+Regarding RDF, the \textit{SPARQL} query metrics are determined by the \textit{Apache Jena ARQ}~\cite{jena} package. \textit{ARQ} proposes a way for parsing a SPARQL query into an algebra expression or an object, and analyzes its syntax. Relying on this solution, we introduced the following query metrics in Train Benchmark:
+\begin{enumerate}
+	\item{\textbf{Navigations}}: Represents the number of navigations or triples in the query.
+	\item{\textbf{Filters}}: It denotes the number of selection conditions.
+	\item{\textbf{Variables:}} The metric is equal to amount of distinct variables.
+	\item{\textbf{Constants:}} It is determined by the number of occurrences of constants.
+\end{enumerate}
 \subsection{The Architecture}
 
-As this section introduces, our research partly deviates from the field that Train Benchmark investigates, however, most of the components from the framework are adequate for our goal, and can be utilized. Figure \ref{fig:architecture} depicts the main components from the extended version of Train Benchmark, additionally, it denotes that which component is ignored --- meaning that our work does not rely on it --- or entirely reused, and which one is extended with further features or newly created.
+As it was already emphasized, our research partly deviates from the field that the Train Benchmark originally investigated, however, most of the components from the framework are adequate for our goal, and can be utilized. Figure \ref{fig:architecture} depicts the main components from the extended version of Train Benchmark, additionally, it denotes that which component is ignored---meaning that our work does not rely on it---or entirely reused, and which one is extended with further features or newly created.
 
 \begin{figure}[!ht]
 	\centering
@@ -151,15 +175,34 @@ As this section introduces, our research partly deviates from the field that Tra
 	\label{fig:architecture}
 \end{figure}
 
-In the subsequent parts, the main components and their roles are introduced, and each extension in the architecture accomplished via our work is emphasized.
+In the subsequent parts, the main components and the related extensions are introduced.
 
 \subsubsection{Generators}
-Originally, the measurements in the Train Benchmark framework were based on a \textsf{Railway} domain. The domain's disadvantages is already investigated in Section \ref{sec:railway}, and these observations entail the introduction of a new domain, the \textsf{Schedules} model.
+Originally, the measurements in the Train Benchmark framework were based on a artificially generated \textsf{Railway} model. The limitations of this model are already explored in Section \ref{sec:railway}, and these observations entail the introduction of the \textsf{Schedules} model.
 
-Naturally, the \textsf{Schedule Generator} components and the related \textsf{Topologies}
-\subsubsection{}
-\subsubsection{}
+Naturally, the \textsf{Schedule Generator} component and the related \textsf{Topologies} are entirely new features in the framework. Although the abstract \textsf{Generator} had to be extended to support different domains in the framework.
 
+\subsubsection{Scenarios and Phases}
+
+A \textsf{Scenario} represents a current workflow of phases. Our new scenario for analysis---so the extended workflow of Train Benchmark---and the corresponding phases are described in Section \ref{sec:extended_workflow}. Actually, another newly created scenario belongs to the framework as well which does not include query evaluations, it only calculates the degree distributions and cardinalities of the models.
+
+\subsubsection{Benchmark Engine}
+The \textsf{Engine} is responsible for evaluating a scenario and its phases consecutively.
+
+\subsubsection{Analyzer Components}
+
+The ensemble of \textsf{Model} and \textsf{Query Analyzer} units became the new foundations of the framework. The \textsf{Model Describer} component includes the calculations of cardinality and degree distributions per models. Due to the fact that these metrics do not appear in the performance analysis, the component is separated.
+
+The concrete calculations of metrics occur in the format related units such as the \textsf{RDF Model Analyzer}.
+
+\subsubsection{Driver}
+The instances of the \textsf{Driver} interface manage the connection establishments between the databases---that we intend to benchmark---and the framework. Furthermore, the loading of the models is also accomplished by the drivers.
+
+\subsubsection{Checker and Query Builder}
+
+The query evaluations are achieved by the \textsf{Checker} component. Despite the fact that this unit originally accomplished model validations, yet, the component remained the same.
+
+Our new component, the \textsf{Query Builder} is responsible for creating and altering the query definitions in runtime.
 
 \subsection{Regression Analysis}
 
