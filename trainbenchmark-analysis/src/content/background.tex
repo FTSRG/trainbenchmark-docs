@@ -13,7 +13,7 @@ University of Technology and Economics. The implementation is written in Java pr
 
 The first step is the model generation and the definition of the well-formedness constraints. The Train Benchmark framework uses artificially generated graph-based models with the same domain, it and describes different constraints on them. Since the main goal is to assess model validations, a perfectly valid model generation is not advisable, thus, some fault injections are required during the generation phase, when a subset of the elements (typically 2-5\%) violates the well-formedness constraints. 
 
-The second step is loading the model to the database systems. Subsequently, the generated model is already accessible from the database's repository, and stored in their own format. The next phase is the model validation itself, when a validation --- defined in the particular database's query language --- is evaluated and its result set includes those erroneous elements from the model that violate the well-formedness constraints. Thus, a model validation occurs and the required time of the query evaluation is measured as well. The validation time will play the most important indicator in the performance comparison among different databases.
+The second step is loading the model to the database systems. Subsequently, the generated model is already accessible from the database's repository, and stored in their own format. The next phase is the model validation itself, when a validation---defined in the particular database's query language---is evaluated and its result set includes those erroneous elements from the model that violate the well-formedness constraints. Thus, a model validation occurs and the required time of the query evaluation is measured as well. The validation time will play the most important indicator in the performance comparison among different databases.
  %todo insert validation pic
 To summarize, the Train Benchmark framework uses artificially generated graph-based models to investigate the model validation times and thus, the performance of different database systems. In the following, we introduce the domain of the model and its typical characteristics, furthermore, we also define the scope of the framework, as represent the used databases.
 
@@ -25,7 +25,7 @@ At first, let define the basic related concepts.
 
 \paragraph{Metamodel and Instance Model}
 
-A metamodel is considered as an abstract model of another model, where the prior --- the metamodel --- defines the available elements and their cardinalities, additionally, it order rules, constraints on the elements which are used in the latter. Then, a concrete instance of a metamodel is called instance model which can use those elements that are defined in the metamodel, and it must also obey the specified rules and constraints, otherwise, it is considered as an invalid model which violates the constraints in the metamodel.
+A metamodel is considered as an abstract model of another model, where the prior---the metamodel---defines the available elements and their cardinalities, additionally, it order rules, constraints on the elements which are used in the latter. Then, a concrete instance of a metamodel is called instance model which can use those elements that are defined in the metamodel, and it must also obey the specified rules and constraints, otherwise, it is considered as an invalid model which violates the constraints in the metamodel.
 
 The domain, or the metamodel\footnote{We use the concepts of domains and metamodels as synonyms in this paper.} of Train Benchmark is depicted in Figure 2, and it is related to a railway network (here comes the name of the benchmark framework). A train route is defined by a sequence of sensors. Sensors are associated with track elements which are either segments (with a specific length) or
 switches. A route follows certain switch positions which describe the required state of a switch belonging
@@ -102,7 +102,7 @@ In terms of the implemented tools in the benchmark framework, it is already expl
 \subsection{The Framework's Architecture}
 
 It is important to emphasize that our goal in this paper is not entirely related to the main motivation and aim that belong to the Train Benchmark framework. We are not concerned with model validations (or transformations\footnote{Some instance model transformations are also occurred in the workflow of Train Benchmark after each validation. The goal is to investigate how the implemented tools perform after certain model modifications so that they execute the same validations and transformations again, iteratively. Since currently this area is out of our scope, we do not describe it in details.}) %todo right here in a footnote? seriously? 
-, instead, we pay more attention to the first query evaluations and the precise characterization of the model. The latter option is entirely missing from the framework, since we cannot calculate metrics connected to the instance models. However, the embedded model validation components --- and the integrated tools themselves --- are reusable for our purpose.
+, instead, we pay more attention to the first query evaluations and the precise characterization of the model. The latter option is entirely missing from the framework, since we cannot calculate metrics connected to the instance models. However, the embedded model validation components---and the integrated tools themselves---are reusable for our purpose.
 
 Figure 4 depicts the main components are found in the benchmark framework. Based on this, it is clarified which components can be reused, and which needs to be extended or reimplemented completely for our purpose. The first considerable alteration is the \textsf{Generator} unit, which is responsible for the graph-based model generation on an abstract layer, meaning that the component operates independently on the existing formats. Which components are responsible for parsing the model to the specific format, those are the \textsf{FormatGenerator} units. Only the RDF-based component needs to be extended. The generation related modifications are described later in details.
 
@@ -143,7 +143,7 @@ In the following chapters, we will refer to samples, as we build different ones 
 \subsubsection{Random Variables}
 In statistics, a variable is as an attribute belonging to an entity, and its value can vary from one entity to another.
 
-When a variable exhibits variability in measurements --- as some deviation can be observed between the variable's values --- it is considered as a random variable. Assume that $X$ represents a measurement, then the random variable's formula is
+When a variable exhibits variability in measurements---as some deviation can be observed between the variable's values---it is considered as a random variable. Assume that $X$ represents a measurement, then the random variable's formula is
 \begin{align} \label{eq:random_variable}
 	X = \mu + \epsilon
 \end{align} 
@@ -173,7 +173,7 @@ If $X$ is a random variable with a Pareto distribution\footnote{More types of Pa
 \end{align}
 where $\sigma$ is the scale, and $\alpha$ represents the shape parameter($x$ > $\sigma$, $\sigma$ > 0).
 
-A similar approach is the power-law distribution which describes the probability of the random variable $X$ that --- on the contrary of the Pareto distribution --- is not higher, but equals to $x$. This leads to
+A similar approach is the power-law distribution which describes the probability of the random variable $X$ that---on the contrary of the Pareto distribution---is not higher, but equals to $x$. This leads to
 \begin{align}
 	f(x) = c\cdot x^{-\gamma}
 \end{align}
@@ -219,7 +219,7 @@ The \textit{standard deviation} of the random variable $X$ is $\sigma = \sqrt{\s
 	cov(X,Y) = E\big[(X - \mu_X)(Y - \mu_Y)\big]
 \end{align}
 where if $cov(X,Y) > 0$, then $Y$ tends to increase as $X$ increases, and if $cov(X,Y) < 0$, then $Y$ tends to decrease as $X$ increases~\cite{covariance}. A few examples are depicted in Figure 1 %todo covariance pictures from 198%
-in different scenarios where --- in the terms of Figure (a) and (b) --- a covariance is observable between $X$ and $Y$, however in Figure (c) and (d), the covariance equals to zero.
+in different scenarios where---in the terms of Figure (a) and (b)---a covariance is observable between $X$ and $Y$, however in Figure (c) and (d), the covariance equals to zero.
 
 \subsubsection{Correlation}
 Similarly to covariance, a \textit{correlation} describes the strength of the relationship between variables. A type of correlation, the Pearson product-moment correlation coefficient is formulated as

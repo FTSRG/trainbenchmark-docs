@@ -15,7 +15,7 @@ Obviously, problem \ref{item:railway_problem2} is relevant to the generator comp
 
 Problem \ref{item:railway_problem3} requires some explanation. In order to construct graphs with different degree distributions, it is an essential expectation of the domain to contain self-references, thus indicating that any of the vertices can be adjacent. In addition, the presence of a self-reference should be also interpretable conceptually in the domain. %todo kinda bullshit 
 
-Considering the original domain, the type \textsf{Segment} represents the majority of the elements, however --- without breaking the original meaning of the domain --- we cannot make connection between any of the segments.
+Considering the original domain, the type \textsf{Segment} represents the majority of the elements, however---without breaking the original meaning of the domain---we cannot make connection between any of the segments.
 %todo well, rewrite this s**t later
 
 To summarize, a new domain is necessary that is related to a real-life model, and also suited to use for generating different distributions.
@@ -58,7 +58,7 @@ As can be observed, schedules represent the majority of the records, furthermore
 
 The previously introduced data of train schedules must be transformed to a graph on which the measurements can be accomplished. The corresponding domain derived from the data is depicted in Figure 2. %todo add a mesmerizing metamodel, or ER diagram and some footnote:this is actualy represented in blah blah to clarify blah blah
 %todo don't mix the concepts of graph and metamodel, or domain and model, use a consistent expression
-By mapping the domain to a graph leads to four different types of vertices: \textsf{Association}, \textsf{Station}, \textsf{Schedule}, and \textsf{Train}. The station symbolizes the location, and the references --- such as \textsf{association}, \textsf{associative}, \textsf{destinations}, and so on --- follow the same approaches introduced in Section \ref{sec:schedules_overview}, and they are mapped to directed edges in the graph. 
+By mapping the domain to a graph leads to four different types of vertices: \textsf{Association}, \textsf{Station}, \textsf{Schedule}, and \textsf{Train}. The station symbolizes the location, and the references---such as \textsf{association}, \textsf{associative}, \textsf{destinations}, and so on---follow the same approaches introduced in Section \ref{sec:schedules_overview}, and they are mapped to directed edges in the graph. 
 
 One newly introduced edge is the \textsf{neighbor} connection among the stations. The presence of a \textsf{neighbor} edge between two stations implicates the existence of a path from the first station to the second via the same schedule, and these stations follow each other in the schedule's destinations. In other words, the consecutive stations from a schedule's path become adjacent. Figure 3 demonstrates an example which nodes of stations are connected via \textsf{neighbor} edges, assuming that originally those locations belonged to the same schedule. As a conclusion, \textsf{Station1} and \textsf{Station2} are connected since they are adjacent in the destinations of \textsf{Schedule1}, on the contrary, \textsf{Station1} and \textsf{Station3} are not drawn to each other, since they are not consecutive stations among the schedule's destinations, despite the fact that both of them can be found in it. %todo draw a graph
 Important to note that more than one adjacency in different schedules's stations do not implicate more \textsf{network} edges between the nodes.
@@ -70,7 +70,7 @@ there are different attributes belong to the vertices that can be found in the o
 \begin{itemize}
 	\item{\textsf{Schedule Planning}}: It can be \textit{Short-term}, or \textit{Permanent}.
 	\item{\textsf{Status}}: It indicates the train status, and its possible value comes from the following enumeration: \textit{Freight}, \textit{Passenger}, \textit{Ship}, \textit{Bus}, and \textit{Trip}. Since a schedule can be a short-term overlay, thus, a temporary schedule may belong to a substitute bus or ship.
-	\item{\textsf{Days}}: A seven-character binary variable, the first represents Monday, and last one is Sunday. For example, the attribute for a schedule --- that runs on every Monday and Sunday --- is equal to \textit{1000001}.
+	\item{\textsf{Days}}: A seven-character binary variable, the first represents Monday, and last one is Sunday. For example, the attribute for a schedule---that runs on every Monday and Sunday---is equal to \textit{1000001}.
 	%todo stpindicator is missing yet
 	\item{\textsf{Start Date}}: The start date of the schedule.
 	\item{\textsf{End Date}} : The end date of the schedule.
@@ -90,14 +90,14 @@ cardinalities
 
 
 
-\section{Extending Train Benchmark with Analysis}
+\section{Elaborate Analysis in Train Benchmark}
 
 Our goal is to extend the Train Benchmark framework so that to be suited to analyze graph queries performance with a comprehensive model and query characterization, and to explore performance and workload correlations via different descriptive metrics. The extensions are presented in the following sections.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/functionality.pdf}
-	\caption{The Overall Functionality of Train Benchmark}
+	\caption{An overview of Train Benchmark.}
 	\label{fig:functionality}
 \end{figure}
 
@@ -112,7 +112,7 @@ A typical workflow of the original framework is illustrated in Figure \ref{fig:o
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/trainbenchmark-sequence.pdf}
-	\caption{The Original Workflow of Train Benchmark}
+	\caption{The original workflow of Train Benchmark.}
 	\label{fig:old_train_workflow}
 \end{figure}
 
@@ -127,7 +127,7 @@ The functionalities in the \textsf{Initialize} and \textsf{Build Query} phases a
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/workflow.pdf}
-	\caption{The Extended Workflow of Train Benchmark}
+	\caption{The extended workflow of Train Benchmark.}
 	\label{fig:new_train_workflow}
 \end{figure}
 
@@ -171,7 +171,7 @@ As it was already emphasized, our research partly deviates from the field that t
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/architecture.pdf}
-	\caption{The extended architecture of Train Benchmark }
+	\caption{The extended architecture of Train Benchmark.}
 	\label{fig:architecture}
 \end{figure}
 
@@ -222,7 +222,7 @@ The necessary steps are described hereunder:
 	\item The network among the stations is generated. This graph's characteristic can follow various degree distributions, as its structure is shaped via different well-known graph topology algorithms.
 	\item The generator creates schedule vertices and links stations to them, thus, they symbolize the destinations in each schedule's path.
 	\item The generator instantiates the train nodes and attaches them to the schedules so that every schedule has a connection with a train.
-	\item The attributes are initialized and linked to the nodes. The values of the variables are determined by following the same distributions found in the original data. As a consequence, as many --- for example --- short-term schedules are in the generated graph as appeared in the original real-life data as well, by considering the same size.
+	\item The attributes are initialized and linked to the nodes. The values of the variables are determined by following the same distributions found in the original data. As a consequence, as many---for example---short-term schedules are in the generated graph as appeared in the original real-life data as well, by considering the same size.
 	\item A connectivity check is executed on the graph.
 	\item Finally, the model can be persisted to the particular tool's format.
 \end{enumerate}
@@ -242,7 +242,7 @@ From the two known algorithms, Gilbert's $G(n,p)$ model is adapted to the framew
 
 \subsubsection{Watts-Strogatz Model}\label{sec:watts_generation}
 
-The commonly known generation algorithm is used with some extensions. Generally, the $N$ value in the algorithm --- that represents the number of consecutive connected nodes --- is a constant, which indicates a liner relationship between the number of edges and nodes, since every vertex has $N$ degree. However, we extend the algorithm by defining an inclusive lower ($N_1$) and upper ($N_2$) bound for $N$, as $N\in[N_1, N_2]$, and also assign a probability to $N$ that determines the number of consecutive interconnected nodes to be $N_1$ or $N_2$. As a result, this conducts to a generation that can obtain a more flexible, non-linear relationship between the number of edges and nodes.
+The commonly known generation algorithm is used with some extensions. Generally, the $N$ value in the algorithm---that represents the number of consecutive connected nodes---is a constant, which indicates a liner relationship between the number of edges and nodes, since every vertex has $N$ degree. However, we extend the algorithm by defining an inclusive lower ($N_1$) and upper ($N_2$) bound for $N$, as $N\in[N_1, N_2]$, and also assign a probability to $N$ that determines the number of consecutive interconnected nodes to be $N_1$ or $N_2$. As a result, this conducts to a generation that can obtain a more flexible, non-linear relationship between the number of edges and nodes.
 
 \subsubsection{Scale-free Networks of Barabási-Albert}
 
@@ -252,7 +252,7 @@ In the original generation algorithm, every new vertex becomes to be connected t
 
 The first difference between our constructed hierarchical graph and the original concept is that the former structure can be configured arbitrarily, since it is feasible to create $K_n$ complete subgraphs with optional $n$, instead of $K_5$. %todo use this notation in background too
 
-The second most essential difference is the termination of the generation algorithm. As a general rule, the goal in Train Benchmark is that to generate arbitrary size of models by creating a precise number of nodes. Since the generation of hierarchical network is recursive instead of being incremental --- as in the case of the three other topologies --- it is inevitable to determine a termination from the recursion. The termination point is evident, as soon as the number of created nodes reaches the limit, the algorithm has to be stopped. However, it cannot be predicted in which phase the algorithm stops exactly. As a consequence, the possible failures have to be managed.
+The second most essential difference is the termination of the generation algorithm. As a general rule, the goal in Train Benchmark is that to generate arbitrary size of models by creating a precise number of nodes. Since the generation of hierarchical network is recursive instead of being incremental---as in the case of the three other topologies---it is inevitable to determine a termination from the recursion. The termination point is evident, as soon as the number of created nodes reaches the limit, the algorithm has to be stopped. However, it cannot be predicted in which phase the algorithm stops exactly. As a consequence, the possible failures have to be managed.
 
 \begin{figure}[!ht]
 	\centering
@@ -284,7 +284,7 @@ In an artificially generated model, the cardinality, size, topology, and density
 
 Regarding cardinality, different proportions can be adjusted between the vertex types, as \textsf{Station}, \textsf{Schedule}, \textsf{Train}, and \textsf{Association}. The default adjustment is proportional to the observed cardinality in the case of the original data.
 
-The size of the model --- so the number of nodes --- is calculated as $|V| = s \cdot 2^i$, where $s$ is the step size constant, $5000$ by default, and $i$ is a positive integer, given by the user.
+The size of the model---so the number of nodes---is calculated as $|V| = s \cdot 2^i$, where $s$ is the step size constant, $5000$ by default, and $i$ is a positive integer, given by the user.
 
 As it was already emphasized, various graph topologies can be generated among the \textsf{Station} nodes, thus, the internal structure of the models and their degree distributions are also alterable. Moreover %todo finish
 
@@ -295,11 +295,11 @@ In the generation unit in Train Benchmark, it became possible to construct \text
 %todo add a figure
 
 \subsubsection{Static Subgraphs}
-Regarding the static parts, the ensemble of \textsf{Train} and \textsf{Association} types of vertices can be classified to this category. Obviously, if the cardinality configurations --- the proportion of the elements --- in the models are the same, than these types of nodes and their relationships are equal, since they are generated by the same algorithm.
+Regarding the static parts, the ensemble of \textsf{Train} and \textsf{Association} types of vertices can be classified to this category. Obviously, if the cardinality configurations---the proportion of the elements---in the models are the same, than these types of nodes and their relationships are equal, since they are generated by the same algorithm.
 
-In terms of the \textsf{Schedule} nodes, achieving a completely uniform subgraph between the schedules and stations is not feasible. At first, note that those stations that are linked to the schedules, are chosen via a breadth-first search algorithm, which implicates different paths of destinations for the schedules in each model depending on the topology among stations. As a result, a precise, uniform internal structure between the schedules and stations cannot be generated, however the average degree of a \textsf{Schedule} node --- thus, the amount of corresponding destinations --- is precisely configurable, since the degree distribution of schedules is determined forward by a power-law generator (introduced in Section \ref{sec:schedule_connections}), yet, this configuration entails a problem.
+In terms of the \textsf{Schedule} nodes, achieving a completely uniform subgraph between the schedules and stations is not feasible. At first, note that those stations that are linked to the schedules, are chosen via a breadth-first search algorithm, which implicates different paths of destinations for the schedules in each model depending on the topology among stations. As a result, a precise, uniform internal structure between the schedules and stations cannot be generated, however the average degree of a \textsf{Schedule} node---thus, the amount of corresponding destinations---is precisely configurable, since the degree distribution of schedules is determined forward by a power-law generator (introduced in Section \ref{sec:schedule_connections}), yet, this configuration entails a problem.
 
-The problem is the maximum size of paths among stations, reached by the BFS algorithm. Even though the Scale-free, random, and Watts-Strogatz models can be considered as arbitrary connected graphs, which leads to the assumption that a path exists among any two nodes with an optional length. However, this statement cannot be claimed in the case of hierarchical networks. There always exists a path between two arbitrary nodes in a hierarchical graph via the \textit{center node}\footnote{It is actually the first created node in algorithm, and in the further steps every diagonal is linked to this vertex.}. However, the maximum depth in this path without revisiting the center node again, is bounded. It is easy to confirm, since the sub hierarchies are not connected explicitly to each other, expect the center node. As a consequence, the maximum length between two nodes --- considering the best scenario --- consists of $\frac{|V|}{2^i}$ nodes, where $i$ is the current iteration value of the recursive algorithm. Considering an average case, the maximum length is $\frac{|V|}{2 \cdot 2^i}$. According to this number, the maximum bound of the power-law generation function is adjusted.
+The problem is the maximum size of paths among stations, reached by the BFS algorithm. Even though the Scale-free, random, and Watts-Strogatz models can be considered as arbitrary connected graphs, which leads to the assumption that a path exists among any two nodes with an optional length. However, this statement cannot be claimed in the case of hierarchical networks. There always exists a path between two arbitrary nodes in a hierarchical graph via the \textit{center node}\footnote{It is actually the first created node in algorithm, and in the further steps every diagonal is linked to this vertex.}. However, the maximum depth in this path without revisiting the center node again, is bounded. It is easy to confirm, since the sub hierarchies are not connected explicitly to each other, expect the center node. As a consequence, the maximum length between two nodes---considering the best scenario---consists of $\frac{|V|}{2^i}$ nodes, where $i$ is the current iteration value of the recursive algorithm. Considering an average case, the maximum length is $\frac{|V|}{2 \cdot 2^i}$. According to this number, the maximum bound of the power-law generation function is adjusted.
 
 Note that, by achieving uniformity among the models, as using a consistent degree distribution in schedules based on the hierarchical graph, the generated models loose some of their real-life characteristics that was observed it the original data.
 
