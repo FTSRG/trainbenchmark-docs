@@ -106,17 +106,53 @@ In order to find quantitative connections, we use regression analysis to show ho
 
 \subsection{Sample Choosing}
 
-By using regression analysis on a sample, it is inevitable to regard the sample to be unbiased. In our case, a bias in a sample of graph topologies means a fluctuation in the size of the models. Obviously, one topology in the sample with larger amount of nodes can bias the connection between the models and the performance, therefore, our framework must support the generation of \textit{uniform} models with respect to the amount of nodes and edges, even in the case of different topologies as well.
+By using regression analysis on a sample, it is inevitable to regard the sample to be unbiased. In our case, a bias in a sample of graph topologies means a fluctuation in the size of the models. Obviously, one topology in the sample with larger amount of nodes can bias the connection between the models and the performance, therefore, our framework must support the generation of \textit{uniform} models with respect to the amount of nodes and edges, even in the case of different topologies as well.\footnote{From now on, under the concept of uniform models we mean models with approximately equal number of nodes and edges, despite the diversity of their internal structures.}
 
 \subsection{Uniform Model Generation}
+
+In order to guarantee the uniform model generation, we have to configure the topologies to each other.\\
+In terms of the random graph, scale-free, and WS model, their generation algorithms can be adjusted arbitrarily, meaning that an optional number of nodes or edges can be achieved. Actually, in these networks, the amount of nodes and edges are handled respectively.
+%todo more detail about the algorithms?
+
+Unfortunately, the creation of nodes and edges in the hierarchical graph occurs together. Since the final form of the hierarchical topology depends on the number of iteration in the recursive generation algorithm, the number of edges cannot be configured. A solution is that we adjust the other topologies to represent the same size as the hierarchical model with respect to the iteration of recursion. %todo well, this last sentence is a bit strange
+
+\subsubsection{Estimate the Number of Edges in Hierarchical Graphs}
+
+The literature relating to hierarchical graphs does not study the exact number of edges or its correlation to the amount of nodes, hence, we propose a solution to estimate $|E|$ in the recursive algorithm for every iteration.
+
+At first, let define the necessary variables hereunder:
+\begin{itemize}
+	\item{$i$}: Represents the current iteration in the original hierarchical algorithm.
+	\item{$c$}: Indicates the number of clones in every iteration.
+	\item{$n$}: The cluster size is denoted by $n$, which cluster is a $K_n$ complete graph. %todo cluster from nothing?
+	\item{$F_i$}: It indicates the constructed graph after the $i$ iteration.
+	\item{$|E_{F_i}|$}: The number of edges of $F_i$.
+\end{itemize}
+
+In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally defining, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the diagonals from each $F_0$ to the center node. It entails that 
+\begin{align}\label{eq:f1_version1}
+	|E_{F_1}| = (c+1) \cdot K_n + c \cdot (n - 1)	
+\end{align}
+since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ cloned clusters to the center.
+
+Note that $K_n$ can be substituted with $F_0$, 
+
+furthermore, in the $i$ iteration, the algorithm connects $c^i$ clusters to the center which implicates $c^i \cdot (n-1)$ diagonals, and edges as well. Thus, modifying Equation \ref{eq:f1_version1}, we obtain:
+\begin{align}\label{eq:f1_version2}
+	|E_{F_1}| = (c+1) \cdot F_0 + c^1 \cdot (n - 1)	
+\end{align}
+Generally, derived from Equation \ref{eq:f1_version2} the formula for every iteration is the following:
+\begin{align}\label{eq:fi_formula}
+	|E_{F_i}| = (c+1) \cdot F_{i-1} + c^i \cdot (n - 1)	
+\end{align}
 
 
 
 \section{Usage of the Train Benchmark Framework}
 
-For our approach, we use the Train Benchmark framework to generate different topologies, evaluate queries on the models, and finally, analyze the results by creating regression models in order to show how the model metrics can characterize the performance.
+For our approach, we use the Train Benchmark framework to generate different topologies, evaluate queries on the models, and finally, analyze the results by creating regression models to show how the model metrics characterize the performance.
 
-Since our research partly deviates from the field that Train Benchmark investigates, therefore, it is necessary to extend the framework for our purpose. To eliminate the limitations of the framework (described in Section \ref{sec:railway}), we elaborate a new generation component based on a real-life model and enhance the framework with model and performance analysis.
+Since our research partly deviates from the field that the Train Benchmark investigates, it is necessary to extend the framework for our purpose. To eliminate the limitations of the framework (described in Section \ref{sec:railway}), we elaborate a new generation component based on a real-life model and enhance the framework with model and performance analysis.
 
 \section{Final Approach}
 
