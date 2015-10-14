@@ -2,7 +2,7 @@
 
 In the following sections, we present the main contributions related to the Train Benchmark framework.
 
-\section{Disadvantages of the Train Benchmark Domain}\label{sec:railway}
+\section{Limitations of the Train Benchmark Domain}\label{sec:railway}
 
 The original domain of the Train Benchmark framework (introduced in \ref{section:metamodel} is not applicable for our goals to analyze graph queries, and study model - performance relationships. The main problems connecting to the domain are summarized in the following list:
 \begin{enumerate}
@@ -209,7 +209,7 @@ Our new component, the \textsf{Query Builder} is responsible for creating and al
 \subsubsection{MARS}
 
 
-\section{Model Generation} 
+\section{Model Generation}
 
 The following sections represent the concepts of a new model generation that is elaborated in the Train Benchmark framework.
 \subsection{Concepts}
@@ -309,7 +309,7 @@ The question of nodes equality per graphs is related to the \textit{dynamic} par
 
 The only one problem about generating a graph with a certain number of nodes is the recursive algorithm of the hierarchical graph. Nevertheless, we already showed in Section \ref{sec:hierarcical_contribution} that the recursion is terminated appropriately, and the resulting problems are managed.
 
-As far as the other structures are concerned, the ensemble of random graph and the Watts-Strogatz model is constructed by initializing $|V| = N$ number of vertices at first, and subsequently, the algorithms determine which one of them become adjacent. In the scale-free model generator, the nodes are created incrementally until $|V| = N$. As a deduction, a precise number of nodes in these topologies to be uniformed can be achieved easily.
+As far as the other structures are concerned, the ensemble of random graph and the Watts-Strogatz model is constructed by initializing $|V| = N$ number of vertices at first, and subsequently, the algorithms determine which one of them become adjacent. In the scale-free model generator, the nodes are created incrementally until $|V| = N$. As a deduction, a precise number of nodes in these topologies can be obtained.
 
 \subsubsection{Number of Edges}
 
