@@ -125,28 +125,39 @@ At first, let define the necessary variables hereunder:
 	\item{$i$}: Represents the current iteration in the original hierarchical algorithm.
 	\item{$c$}: Indicates the number of clones in every iteration.
 	\item{$n$}: The cluster size is denoted by $n$, which cluster is a $K_n$ complete graph. %todo cluster from nothing?
-	\item{$F_i$}: It indicates the constructed graph after the $i$ iteration.
+	\item{$F_i$}: It indicates the constructed graph after the $i$ iteration. %todo why F? maybe change it to H later
 	\item{$|E_{F_i}|$}: The number of edges of $F_i$.
 \end{itemize}
 
-In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally defining, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the diagonals from each $F_0$ to the center node. It entails that 
+In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally defining, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the peripheral nodes from each $F_0$ to the center node. It entails that 
 \begin{align}\label{eq:f1_version1}
-	|E_{F_1}| = (c+1) \cdot K_n + c \cdot (n - 1)	
+	|E_{F_1}| = (c+1) \cdot |E_{K_n}| + c \cdot (n - 1)	
 \end{align}
-since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ cloned clusters to the center.
+since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ number of replicas to the center.
 
-Note that $K_n$ can be substituted with $F_0$, 
+Note that in the first iteration $K_n$ can be substituted with $F_0$, and the algorithm in the first part of the $i$ iteration creates $c$ number of replicas of the result of the $i-1$ iteration, namely, $F_{i-1}$. In the second part of the $i$ iteration, the algorithm connects the clusters from the cloned replicas to the center node. These connections are made between the peripheral nodes in each replica and the center, which indicates that the algorithm---in the $i$ iteration---connects $n-1$ peripheral nodes from $c$ number of replicas of $F_{i-1}$, and due to $F_{i-1}$ includes $c^{i-1}$ number of clusters, we obtain
 
-furthermore, in the $i$ iteration, the algorithm connects $c^i$ clusters to the center which implicates $c^i \cdot (n-1)$ diagonals, and edges as well. Thus, modifying Equation \ref{eq:f1_version1}, we obtain:
-\begin{align}\label{eq:f1_version2}
-	|E_{F_1}| = (c+1) \cdot F_0 + c^1 \cdot (n - 1)	
-\end{align}
-Generally, derived from Equation \ref{eq:f1_version2} the formula for every iteration is the following:
 \begin{align}\label{eq:fi_formula}
-	|E_{F_i}| = (c+1) \cdot F_{i-1} + c^i \cdot (n - 1)	
+	|E_{F_i}| = (c+1) \cdot |E_{F_{i-1}}| + c \cdot c^{i-1} \cdot (n - 1)	= (c+1) \cdot |E_{F_{i-1}}| + c^i \cdot (n - 1)
 \end{align}
 
+By using Equation \ref{eq:fi_formula}, we are able to calculate the number of edges of a hierarchical graph and configure the other three topologies to the same size.
 
+\subsubsection{Configure Random Graph}
+
+Basically, we concentrate on the $G(n,p)$ model of the random graph. Knowing $|E|$ of a hierarchical graph denoted by $|E_{F_i}|$, we can calculate the $p$ probability value as:
+\begin{align}
+	p = \frac{|E_{F_i}|}{\binom{|V|}{2}}
+\end{align}
+where $|V|$ denotes the number of nodes~\cite{random_p}.
+
+\subsubsection{Configure Watts-Strogatz Model}
+
+In the generation algorithm of the Watts-Strogatz model, initially, $N$ number of consecutive nodes are connected to each other. By rewiring the edges, the amount of $|E|$ is not changed. As a result, in order to achieve a uniform size, $N$ has to be adjusted as $N = \frac{|E_{F_i}|}{|V|}$.
+
+\subsubsection{Configure Scale-Free Model}
+
+This topology is generated incrementally, since in every step, a new node is inserted to the graph with $m$ number of new connections. The variable $m$ has to be configured to achieve the same number of edges as in the hierarchical graph, which leads to $m = \frac{|E_{F_i}|}{|V|}$.
 
 \section{Usage of the Train Benchmark Framework}
 
