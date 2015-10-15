@@ -1,9 +1,5 @@
 \chapter{Related Work}
 
-The precise characterization of different graph topologies often appears in the literature of graph theory. Similarly, numerous publications can be referred that investigate the performance of various NoSQL databases. However, a precise performance analysis of NoSQL systems that exhibits a connection between the model's structure and the performance of query evaluations, is considered as a new approach.
-
-In this section, we represent some examples that have a specific connection with graph analysis or performance comparison of NoSQL databases.
-
 
 \section{Benchmarks of NoSQL Databases}
 
@@ -41,16 +37,41 @@ SP$^2$Bench is based on the \textit{Digital Bibliography and Library Project} (c
 Similarly to BSBM, SP$^2$Bench also measures additional performance related metrics besides execution time, such as disk storage cost, memory consumption, data loading time, success rates, and every one them captures different aspects of evaluations.
 
 
-\subsection{Conclusions} \label{sec:benchmark_conclusions}
-
-One common attribute of the previously introduced benchmark frameworks is that they lack precise analysis of searching connection between model characteristic and evaluation performance. In these frameworks, it is not supported to assess a tool's performance on different topologies, still using the same domain. Generally, the frameworks propose the generation of variously large models, thus investigating scalability, however, they do not focus on modifying the internal structures of the models, and generate different topologies, even in the same size.
- 
-%todo more? metrics? prob dist? use case?
-
-
 \subsection{Train Benchmark Framework}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/functionality.pdf}
+	\caption{An overview of Train Benchmark.}
+	\label{fig:functionality}
+\end{figure}
+
 Short overview: well-formedness constraints + model validations, transformations.\\
 Extended scope: RDF, EMF, SQL, Graphml.
 Domain disadvantages. Emphasize this as common problems.
 
 What is not mentioned: workflow, components, tools, detailed generator
+
+
+The original domain of the Train Benchmark framework (introduced in \ref{section:metamodel} is not applicable for our goals to analyze graph queries, and study model - performance relationships. The main problems connecting to the domain are summarized in the following list:
+\begin{enumerate}
+	\item The original domain is not related to a real-life model, which leads to the fact that the cardinalities of the elements and their relationships do not follow a real model's characteristic, therefore, the measurement results of different tools cannot be claimed to be representative in a real-life use case. \label{item:railway_problem1}
+	\item Besides the origin of the domain, the second problem is that the artificially generated models do not cover a well-known topology or degree distribution that can be observed in actual networks. \label{item:railway_problem2}
+	\item Finally, the generated models of Train Benchmark are not capable to attach arbitrary connections between the elements. \label{item:railway_problem3}
+\end{enumerate}
+
+Obviously, problem \ref{item:railway_problem2} is relevant to the generator component's insufficiency, since a representative distribution can be achieved independently on the domain, however, in order to generate arbitrary distributions, it is essential to guarantee a solution for problem \ref{item:railway_problem3}.
+
+Problem \ref{item:railway_problem3} requires some explanation. In order to construct graphs with different degree distributions, it is an essential expectation of the domain to contain self-references, thus indicating that any of the vertices can be adjacent. In addition, the presence of a self-reference should be also interpretable conceptually in the domain. 
+
+Considering the original domain, the type \textsf{Segment} represents the majority of the elements, however---without breaking the original meaning of the domain---we cannot make connection between any of the segments.
+
+
+To summarize, a new domain is necessary that is related to a real-life model, and also suited to use for generating different distributions.
+
+
+\subsection{Conclusions} \label{sec:benchmark_conclusions}
+
+One common attribute of the previously introduced benchmark frameworks is that they lack precise analysis of searching connection between model characteristic and evaluation performance. In these frameworks, it is not supported to assess a tool's performance on different topologies, still using the same domain. Generally, the frameworks propose the generation of variously large models, thus investigating scalability, however, they do not focus on modifying the internal structures of the models, and generate different topologies, even in the same size.
+
+%todo more? metrics? prob dist? use case?
