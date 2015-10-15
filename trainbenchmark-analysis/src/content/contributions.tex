@@ -141,7 +141,7 @@ Regarding RDF, the \textit{SPARQL} query metrics are determined by the \textit{A
 \end{enumerate}
 \subsection{The Architecture}
 
-As it was already emphasized, our research partly deviates from the field that the Train Benchmark originally investigated, however, most of the components from the framework are adequate for our goal, and can be utilized. Figure \ref{fig:architecture} depicts the main components from the extended version of Train Benchmark, additionally, it denotes that which component is ignored---meaning that our work does not rely on it---or entirely reused, and which one is extended with further features or newly created.
+As we already emphasized, our research partly deviates from the field that the Train Benchmark originally investigates, however, most of the components from the framework are adequate for our goal and can be utilized. Figure \ref{fig:architecture} depicts the main components from the extended version of Train Benchmark, additionally, it denotes that which component is ignored---meaning that our work does not rely on it---or entirely reused, and which one is extended with further features or newly created.
 
 \begin{figure}[!ht]
 	\centering
@@ -151,32 +151,28 @@ As it was already emphasized, our research partly deviates from the field that t
 \end{figure}
 
 In the following parts, we introduce the components and the related extensions.
+\paragraph{Generators}
+Originally, the measurements in the Train Benchmark framework were based on an artificially generated \textsf{Railway} model. The limitations of this model are already explored in Section \ref{sec:train}, and these observations entail the introduction of the \textsf{Schedules} model. \\%todo check reference later
+The \textsf{Schedule Generator} component and the related \textsf{Topologies} are considered as new features in Train Benchmark, and the abstract \textsf{Generator} also had to be extended to support different domains in the framework.
 
-\subsubsection{Generators}
-Originally, the measurements in the Train Benchmark framework were based on a artificially generated \textsf{Railway} model. The limitations of this model are already explored in Section \ref{sec:railway}, and these observations entail the introduction of the \textsf{Schedules} model.
+\paragraph{Scenarios and Phases}
 
-The \textsf{Schedule Generator} component and the related \textsf{Topologies} are entirely new features in the framework. Although the abstract \textsf{Generator} had to be extended to support different domains in the framework.
+A \textsf{Scenario} represents a current workflow of phases. Our new scenario for analysis---so the extended workflow of the Train Benchmark---and the corresponding phases are described in Section \ref{sec:extended_workflow}. Actually, another newly created scenario belongs to the framework as well, which does not include query evaluations, and it only calculates the degree distributions and cardinalities of the models.
 
-\subsubsection{Scenarios and Phases}
-
-A \textsf{Scenario} represents a current workflow of phases. Our new scenario for analysis---so the extended workflow of Train Benchmark---and the corresponding phases are described in Section \ref{sec:extended_workflow}. Actually, another newly created scenario belongs to the framework as well which does not include query evaluations, it only calculates the degree distributions and cardinalities of the models.
-
-\subsubsection{Benchmark Engine}
+\paragraph{Benchmark Engine}
 The \textsf{Engine} is responsible for evaluating a scenario and its phases consecutively.
 
-\subsubsection{Analyzer Components}
+\paragraph{Analyzer Components}
 
-The ensemble of \textsf{Model} and \textsf{Query Analyzer} units became the new foundations of the framework. The \textsf{Model Describer} component includes the calculations of cardinality and degree distributions per models. Due to the fact that these metrics do not appear in the performance analysis, the component is separated.
-
+The ensemble of \textsf{Model} and \textsf{Query Analyzer} units became the new foundations of the framework. The \textsf{Model Describer} component includes the calculations of cardinality and degree distributions per models. Due to the fact that these metrics do not appear in the performance analysis, the component is separated.\\
 The concrete calculations of metrics occur in the format related units such as the \textsf{RDF Model Analyzer}.
 
-\subsubsection{Driver}
-The instances of the \textsf{Driver} interface manage the connection establishments between the databases---that we intend to benchmark---and the framework. Furthermore, the loading of the models is also accomplished by the drivers.
+\paragraph{Driver}
+The instances of the \textsf{Driver} interface manage the connection establishments between the databases and the framework. Furthermore, the loading of the models is also accomplished by the drivers.
 
-\subsubsection{Checker and Query Builder}
+\paragraph{Checker and Query Builder}
 
-The query evaluations are achieved by the \textsf{Checker} component. Despite the fact that this unit originally accomplished model validations, yet, the component remained the same.
-
+The query evaluations are achieved by the \textsf{Checker} component. Despite the fact that this unit originally executed model validations, yet, the component can be used for the evaluations.\\
 Our new component, the \textsf{Query Builder} is responsible for creating and altering the query definitions in runtime.
 
 \subsection{Regression Analysis}
