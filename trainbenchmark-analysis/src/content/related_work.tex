@@ -1,41 +1,32 @@
 \chapter{Related Work}
 
+In the following sections, we introduce four benchmark frameworks that are designed to investigate the performance of RDF databases. In the end of the chapter, we summarize the frameworks and also describe the main concepts in our work that introduces a new approach to the existing benchmark frameworks.
 
-\section{Benchmarks of NoSQL Databases}
+\section{Berlin SPARQL Benchmark}
 
-A wealth of literature is available related to the performance comparison of different NoSQL databases over RDF data. Instead of introducing a part of these papers, we focus on the foundations of the measurements, the benchmark frameworks. In the following, each section represents a benchmark particularly connecting to RDF data models. Finally, Section \ref{sec:benchmark_conclusions} compares the frameworks, and by drawing conclusions based on the benchmarks, it also contains the main concepts on which we will rely in our search.
+The Berlin SPARQL Benchmark (BSBM) is settled in an e-commerce use case in which a set of products is offered by different vendors and consumers who posted reviews about the products~\cite{berlin}. BSBM measures the SPARQL query performance of RDF-based tools via realistic workloads of use case motivated queries. The benchmark defines three different use cases and a suite of benchmark queries---a \textit{mix} of queries---in each of them~\cite{berlin_specification}, simulating the search and navigation pattern of a consumer looking for a product. The queries include read and update operations as well.
 
-\subsection{Yahoo!~Cloud Serving Benchmark}
+BSBM generates artificial models in different sizes, by using normal distributions among the elements. For example, the number of reviews and different properties per products are distributed following a normal distribution.
 
-The \textit{Yahoo!~Cloud Serving Benchmark} was elaborated in order to compare performance of the new generation
-of cloud data serving systems~\cite{ycsb}. The framework proposes different workloads by assigning
-different distributions to them that determine the operation to perform --- get or put --- and the record from the data model to be read or written. In other words, the particular distributions specify the exact numbers of read or update queries in a workload, and also affect the choosing of records on which the workload operates. In order to demonstrate, Figure 1 %todo insert pic from 5
-represents the available distributions and number of choices per records.
-
-\subsection{Berlin SPARQL Benchmark}
-
-The Berlin SPARQL Benchmark (from now on BSBM) is settled in an e-commerce use case in which a set of products
-is offered by different vendors and consumers have posted reviews about these products on various review sites~\cite{berlin}. Taken scalability into consideration, BSBM proposes an arbitrary increased model size. Similarly to YCSB, BSBM concentrates on read and update operations as well, as it defines three different use cases and a suite of benchmark queries in each of them~\cite{berlin_specification}. The queries were elaborated to simulate realistic, real-life workloads.
-
-In contrast to YCSM, BSBM defines particular performance metrics that relate mainly to the query execution times from different perspectives. For example, the most important metrics are the following:
+The benchmark defines particular performance metrics that relate to the query execution times from different perspectives. The most important metrics are the following:
 \begin{itemize}
-	\item{Queries per Second}: It equals to the number of queries that executed properly by the system within a second.
-	\item{Query Mixes per Hour}: Denotes the number of \textit{mixed} queries with different parameters that evaluated within an hour.
-	\item{Overall Runtime}: The overall time that a certain amount of query mixes required.
+	\item{\textit{Queries per Second}}: It is equal to the number of queries executed within a second.
+	\item{\textit{Query Mixes per Hour}}: Denotes the number of mixed queries with different parameters that evaluated within an hour.
+	\item{\textit{Overall Runtime}}: The overall time that a certain amount of query mix require.
 \end{itemize}
 
 
-\subsection{DBpedia SPARQL Benchmark}
-DBpedia SPARQL Benchmark proposes datasets in various sizes derived from the DBpedia~\cite{dbpedia_data} knowledge base, and perform measurements on real queries that were issued against existing RDF data~\cite{dbpedia}. Similarly to BSBM, DBpedia also defines metrics to provide a more precise performance analysis. These are the same as in the case of BSBM: \textit{Query Mixes per Hour}, and \textit{Queries per Second}. Furthermore, DBpedia investigates the characterization of the models as well and calculates the average in- and outdegree, the number of nodes and distinct IRIs, however, it uses these measurements to judge and maintain the generated model to be similar to the original data set. As a consequence, DBpedia does not explore model and performance correlations neither.
+\section{DBpedia SPARQL Benchmark}
+The DBpedia SPARQL Benchmark (DBPSB) proposes a benchmark framework for RDF databases based on the DBpedia~\cite{dbpedia_data} knowledge base, and it measures the performance of real queries that were issued against existing RDF data~\cite{dbpedia}. DBPSB generates models in various sizes trying to obtain a similar characteristic belonging to the original DBpedia dataset.\\
+Similarly to BSBM, DBPSB also defines metrics to investigate the performance from different aspects, such as the \textit{Query Mixes per Hour} and \textit{Queries per Second}. 
 
-\subsection{SP$^2$Bench}
-The SPARQL Performance Benchmark (SP$^2$Bench) is designed to test the most common SPARQL constructs,
-operator constellations, and a broad range of RDF data access patterns~\cite{sp2bench}. Instead of defining a sequence of use case motivated queries, the framework proposes various queries that cover specific RDF data management approaches.
+\section{SP$^2$Bench}
 
-SP$^2$Bench is based on the \textit{Digital Bibliography and Library Project} (commonly known as \textit{dblp}) which provides an open bibliographic information on major computer science publications~\cite{dblp}. The benchmark queries are not explicitly evaluated over the \textit{dblp} dataset, since SP$^2$Bench uses arbitrarily large, artificially generated models for the measurements, however, these models are constructed to follow real-life characteristics that were found in the original \textit{dblp} dataset, such as a power-law distribution.
+The SPARQL Performance Benchmark (SP$^2$Bench)~\cite{sp2bench} is based on the \textit{Digital Bibliography and Library Project} (commonly known as \textit{dblp}) which provides an open bibliographic information on major computer science publications~\cite{dblp}. The benchmark queries are not explicitly evaluated over the \textit{dblp} dataset, since SP$^2$Bench uses arbitrarily large, artificially generated models for the measurements that are created to follow the characteristics of the original \textit{dblp} dataset, such as the power-law distribution.
 
-Similarly to BSBM, SP$^2$Bench also measures additional performance related metrics besides execution time, such as disk storage cost, memory consumption, data loading time, success rates, and every one them captures different aspects of evaluations.
+SP$^2$Bench is designed to test the most common SPARQL constructs, operator constellations and a broad range of RDF data access patterns. Instead of defining a sequence of use case motivated queries, the framework proposes various queries that cover specific RDF data management approaches.
 
+Similarly to BSBM, SP$^2$Bench also measures additional performance related metrics besides the evaluation time, such as the disk storage cost, memory consumption, data loading time and success rates, hence, every metric captures different aspects from the evaluations.
 
 \subsection{Train Benchmark Framework}\label{sec:train}
 
@@ -73,5 +64,14 @@ To summarize, a new domain is necessary that is related to a real-life model, an
 \subsection{Conclusions} \label{sec:benchmark_conclusions}
 
 One common attribute of the previously introduced benchmark frameworks is that they lack precise analysis of searching connection between model characteristic and evaluation performance. In these frameworks, it is not supported to assess a tool's performance on different topologies, still using the same domain. Generally, the frameworks propose the generation of variously large models, thus investigating scalability, however, they do not focus on modifying the internal structures of the models, and generate different topologies, even in the same size.
+
+model -> real
+real life use cases
+systematic queries
+realistic workloads
+model modifications
+static model
+scalability
+metrics
 
 %todo more? metrics? prob dist? use case?

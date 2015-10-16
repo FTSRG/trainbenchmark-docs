@@ -46,15 +46,15 @@ Barabási and Albert inspect the natures of the well-known graph topologies in~\
 		\toprule
 		Metric & Random & Hierarchical & Scale-free & Watts-Strogatz \\ 
 		\midrule 
-		\textbf{Max Degree} & $\bullet$ & $\bullet \bullet \bullet$ & $\bullet \bullet \bullet$ & $\bullet$ \\ \hline
-		\textbf{Clustering Coefficient} & $\bullet$ & $\bullet \bullet \bullet$ & $\bullet$ & $\bullet \bullet $\\ \hline
-		\textbf{Average Shortest Path Length} & $\bullet$ & $\bullet \bullet$ & $\bullet$ & $\bullet \bullet$ \\ \hline
+		\textbf{Max Degree} & $\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$ \\ \hline
+		\textbf{Clustering Coefficient} & $\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$ & $\bullet$$\bullet $\\ \hline
+		\textbf{Avg Shortest Path Length} & $\bullet$ & $\bullet$$\bullet$ & $\bullet$ & $\bullet$$\bullet$ \\ \hline
 		\bottomrule
 	\end{tabular}
 	\caption{Graph topologies and their descriptive metrics}
 	\label{tab:topology_metrics}
 \end{table}
-
+%todo describe bullets in detail
 As Table \ref{tab:topology_metrics} demonstrates, each topology can be characterized by different metric values, which leads to the assumption that if the diversity between the topologies may cause fluctuations in the performance of a particular query evaluation, then these metrics are adequate to characterize the model and performance relationships quantitatively.
 
 %todo use lattice ref in background
@@ -83,10 +83,10 @@ After these minor modifications, the topologies and the related metrics are show
 		\toprule
 		Metric & Random & Hierarchical & Scale-free & WS-0.1 & WS-0.01 & WS-0.001 \\ 
 		\midrule 
-		\textbf{Max Degree} & $\bullet$ & $\bullet \bullet \bullet$ & $\bullet \bullet \bullet$ & $\bullet$ & $\bullet$ & $\bullet$ \\ \hline
-		\textbf{Clustering Coefficient} & $\bullet$ & $\bullet \bullet \bullet$ & $\bullet$ & $\bullet \bullet$ & $\bullet \bullet \bullet$ & $\bullet \bullet \bullet$\\ \hline
-		\textbf{Average Shortest Path Length} & $\bullet$ & $\bullet \bullet$ & $\bullet$ & $\bullet $ & $\bullet \bullet$ & $\bullet \bullet \bullet$\\ \hline
-		\textbf{Betweenness Centrality} & $\bullet$ & $\bullet \bullet \bullet$ & $\bullet \bullet$ & $\bullet$ & $\bullet$ & $\bullet$\\ \hline
+		\textbf{Max Degree} & $\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ \\ \hline
+		\textbf{Clustering Coefficient} & $\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$ & $\bullet$$\bullet$ & $\bullet$$\bullet \bullet$ & $\bullet$$\bullet$$\bullet$\\ \hline
+		\textbf{Avg Shortest Path Length} & $\bullet$ & $\bullet$$\bullet$ & $\bullet$ & $\bullet $ & $\bullet \bullet$ & $\bullet \bullet \bullet$\\ \hline
+		\textbf{Betweenness Centrality} & $\bullet$ & $\bullet$$\bullet$$\bullet$ & $\bullet$$\bullet$ & $\bullet$ & $\bullet$ & $\bullet$\\ \hline
 		\bottomrule
 	\end{tabular}
 	\caption{Graph topologies and their descriptive metrics with extensions}
@@ -164,9 +164,5 @@ This topology is generated incrementally, since in every step, a new node is ins
 For our approach, we use the Train Benchmark framework to generate different topologies, evaluate queries on the models, and finally, analyze the results by creating regression models to show how the model metrics characterize the performance.
 
 Since our research partly deviates from the field that the Train Benchmark investigates, it is necessary to extend the framework for our purpose. To eliminate the limitations of the framework (described in Section \ref{sec:railway}), we elaborate a new generation component based on a real-life model and enhance the framework with model and performance analysis.
-
-\section{Final Approach}
-
-same figure again with extensions
 
 \section{Use Cases}

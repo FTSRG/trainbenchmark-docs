@@ -182,24 +182,22 @@ Our new component, the \textsf{Query Builder} is responsible for creating and al
 
 \section{Model Generation}
 
-The following sections represent the concepts of a new model generation that is elaborated in the Train Benchmark framework.
-\subsection{Concepts}
-The fundamental goal in Train Benchmark is to generate arbitrary, dynamic models with different structures, and various degree distributions. As Section \ref{sec:benchmark_conclusions} emphasizes, all of the well-known RDF benchmarks rely on static models, and they only propose one particular structure in various sizes. Our aim is to approach the performance analysis from a new aspect by focusing on the internal structure of the model, and investigating its effect to the performance.
+The following sections represent the concepts of the new model generation elaborated in the Train Benchmark framework.
 
 \subsection{Overall of the Generation Steps}
-The new generation mechanism in Train Benchmark is based on the \textit{Schedule} model, introduced in Section \ref{sec:mapping_schedule}, and it can be divided into different steps which are depicted in Figure 1. %todo add generation steps figure
+The new generation mechanism in Train Benchmark is based on the \textit{Schedule} model, introduced in Section \ref{sec:mapping_schedule}, and it consists of different steps which are depicted in Figure 1. %todo add generation steps figure
 The necessary steps are described hereunder:
 \begin{enumerate}
-	\item The network among the stations is generated. This graph's characteristic can follow various degree distributions, as its structure is shaped via different well-known graph topology algorithms.
-	\item The generator creates schedule vertices and links stations to them, thus, they symbolize the destinations in each schedule's path.
-	\item The generator instantiates the train nodes and attaches them to the schedules so that every schedule has a connection with a train.
-	\item The attributes are initialized and linked to the nodes. The values of the variables are determined by following the same distributions found in the original data. As a consequence, as many---for example---short-term schedules are in the generated graph as appeared in the original real-life data as well, by considering the same size.
-	\item A connectivity check is executed on the graph.
-	\item Finally, the model can be persisted to the particular tool's format.
+	\item The network among the stations is generated based on a graph topology.
+	\item The generator creates schedule vertices and connects them to the stations, as they symbolize the destinations among the schedules.
+	\item The generator instantiates the train nodes and attaches them to the schedules, as every schedule has a connection with a train.
+	\item The attributes are initialized and linked to the nodes. The concrete values of the variables are determined the same distributions found in the original data.
+	\item A connectivity inspection is executed on the graph.
+	\item Finally, the model can be persisted to the particular format. %todo maybe can delete this, formats and tools are not emphasized
 \end{enumerate}
 
 \subsection{Topologies}
-The most flexible part in the artificially generated models is the network among the stations, as using various well-known graph topologies we can change the internal structures of the network, and thus, obtain different degree distributions. The utilized topologies are the following:
+The most flexible part in the artificially generated models is the network among the stations, as using various well-known graph topologies. As we already emphasized, we generate the following networks:
 \begin{itemize}
 	\item Random Graph
 	\item Watts-Strogatz Model
@@ -238,9 +236,9 @@ In the solution in \textsf{Case A}, the generator stops the clone procedure and 
 
 \subsection{Schedule Connections}\label{sec:schedule_connections}
 
-An important part of the generation is that to connect the stations to schedules. As it was detected in Section \ref{sec:model_analysis}, the degree distribution of the schedule and station connections follows a power-law distribution. %todo add exponent value
+An important part of the generation is to connect the stations to schedules. As it was detected in Section \ref{sec:model_analysis}, the degree distribution of the schedule and station connections follows a power-law distribution. %todo add exponent value
 
-In order to simulate a similar characteristic, we generate a power-law distribution from a uniform distribution~\footnote{It is a more convenient way to use an uniform distribution that is easier to be accomplished due to a built-in random generator.} with the following formula~\cite{power_law_from_uniform}:
+In order to simulate a similar characteristic, we generate a power-law distribution from a uniform distribution\footnote{It is a more convenient way to use a uniform distribution which is easier to be accomplished due to a built-in random generator.} with the following formula~\cite{power_law_from_uniform}:
 \begin{align}
 	X = \Big[\big(x_1^{(n+1)} - x_0^{(n+1)}\big)y + x_0^{(n+1)}\Big]^{(\frac{1}{(n+1)})}
 \end{align} 
@@ -251,7 +249,7 @@ Another problem is choosing the appropriate stations. Actually, the value of $X$
 
 \subsection{Possible Model Configuration}
 
-In an artificially generated model, the cardinality, size, topology, and density is optionally configurable. 
+In the artificially generated models, the cardinality, size, topology, and density is optionally configurable. 
 
 Regarding cardinality, different proportions can be adjusted between the vertex types, as \textsf{Station}, \textsf{Schedule}, \textsf{Train}, and \textsf{Association}. The default adjustment is proportional to the observed cardinality in the case of the original data.
 
