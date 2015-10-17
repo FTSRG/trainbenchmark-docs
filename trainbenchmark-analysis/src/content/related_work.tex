@@ -1,6 +1,6 @@
 \chapter{Related Work}
 
-In the following sections, we introduce four benchmark frameworks that are designed to investigate the performance of RDF databases. In the end of the chapter, we summarize the frameworks and also describe the main concepts in our work that introduces a new approach to the existing benchmark frameworks.
+In the following sections, we introduce four benchmark frameworks that are designed to investigate the performance of RDF databases. In the end of the chapter \ref{sec:benchmark_conclusions}, we summarize the frameworks and compare them to our work which is the introduction of a new approach to the existing benchmark frameworks.
 
 \section{Berlin SPARQL Benchmark}
 
@@ -24,54 +24,70 @@ Similarly to BSBM, DBPSB also defines metrics to investigate the performance fro
 
 The SPARQL Performance Benchmark (SP$^2$Bench)~\cite{sp2bench} is based on the \textit{Digital Bibliography and Library Project} (commonly known as \textit{dblp}) which provides an open bibliographic information on major computer science publications~\cite{dblp}. The benchmark queries are not explicitly evaluated over the \textit{dblp} dataset, since SP$^2$Bench uses arbitrarily large, artificially generated models for the measurements that are created to follow the characteristics of the original \textit{dblp} dataset, such as the power-law distribution.
 
-SP$^2$Bench is designed to test the most common SPARQL constructs, operator constellations and a broad range of RDF data access patterns. Instead of defining a sequence of use case motivated queries, the framework proposes various queries that cover specific RDF data management approaches.
+SP$^2$Bench is designed to test the most common SPARQL constructs, operator constellations and a broad range of RDF data access patterns. Instead of defining a sequence of use case motivated queries, the framework proposes various systematic queries that cover specific RDF data management approaches.
 
 Similarly to BSBM, SP$^2$Bench also measures additional performance related metrics besides the evaluation time, such as the disk storage cost, memory consumption, data loading time and success rates, hence, every metric captures different aspects from the evaluations.
 
-\subsection{Train Benchmark Framework}\label{sec:train}
+\section{Train Benchmark Framework}\label{sec:train}
+
+\subsection{Overview}
+
+The basic idea and elaboration of the Train Benchmark framework was introduced by the Fault Tolerant Systems Research Group in the Budapest University of Technology and Economics~\cite{tb_report}. The benchmark investigates the performance of model validations via different graph queries by measuring the evaluation times of different RDF, SQL and graph databases.
+
+An overview of the Train Benchmark framework is depicted in Figure \ref{fig:overview_train}, illustrating the framework how connects the model validations to the database systems. In the 1. step, the framework generates a graph-based model derived from a particular domain. After defining different constraints (rules) on the domain---such as the presence of an edge between two types of nodes---the benchmark injects erroneous elements into the model (step 2.), which elements are considered as violations of the constraints. During the 3. step, the framework loads the invalid model to the particular database system.\\
+Every constraint has a corresponding validation pattern that is the negation of the constraint and it includes a pattern of elements that violates the certain constraint (4.). Every validation pattern is defined in the own query language of the particular database (5). Step 6. denotes the query evaluation that represents the model validation. The result set of the evaluation contains the invalid elements which violated the constraint. The performance indicator of the databases is the required time of model validation, so the query evaluation time.\\
+Besides the validations, the framework also performs model transformations to alter the amount of invalid elements in the model. Every transformation is followed by another validation.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=150mm, keepaspectratio]{figures/functionality.pdf}
 	\caption{An overview of Train Benchmark.}
-	\label{fig:functionality}
+	\label{fig:overview_train}
 \end{figure}
 
-Short overview: well-formedness constraints + model validations, transformations.\\
-Extended scope: RDF, EMF, SQL, Graphml.
-Domain disadvantages. Emphasize this as common problems.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=150mm, keepaspectratio]{figures/railway-containments.pdf}
+	\caption{The Railway domain of Train Benchmark.}
+	\label{fig:tb_domain}
+\end{figure}
 
-What is not mentioned: workflow, components, tools, detailed generator
+\subsection{Model Generation}
 
+The Train Benchmark framework uses artificially generated graph-based models for the measurements over a \textit{Railway} domain, illustrated in Figure \ref{fig:tb_domain}. In the models, a train route is defined by a sequence of sensors, and the sensors are associated with track elements which are either segments (with a specific length) or switches. A route follows certain switch positions which describe the required state of a switch belonging to the route. Each route has a semaphore on its entry and exit~\cite{train_ttc}.
 
-The original domain of the Train Benchmark framework (introduced in \ref{section:metamodel} is not applicable for our goals to analyze graph queries, and study model - performance relationships. The main problems connecting to the domain are summarized in the following list:
-\begin{enumerate}
-	\item The original domain is not related to a real-life model, which leads to the fact that the cardinalities of the elements and their relationships do not follow a real model's characteristic, therefore, the measurement results of different tools cannot be claimed to be representative in a real-life use case. \label{item:railway_problem1}
-	\item Besides the origin of the domain, the second problem is that the artificially generated models do not cover a well-known topology or degree distribution that can be observed in actual networks. \label{item:railway_problem2}
-	\item Finally, the generated models of Train Benchmark are not capable of attaching arbitrary connections between the elements. \label{item:railway_problem3}
-\end{enumerate}
+The generated models over the Railway domain are not related to a real-life model, which leads to the fact that the cardinalities of the elements and their distributions do not follow a real model's characteristic, therefore, the measurement results of different databases cannot be claimed to be representative in a real-life use case.
 
-Obviously, problem \ref{item:railway_problem2} is relevant to the generator component's insufficiency, since a representative distribution can be achieved independently on the domain, however, in order to generate arbitrary distributions, it is essential to guarantee a solution for problem \ref{item:railway_problem3}.
+\section{Conclusions} \label{sec:benchmark_conclusions}
 
-Problem \ref{item:railway_problem3} requires some explanation. In order to construct graphs with different degree distributions, it is an essential expectation of the domain to contain self-references, thus indicating that any of the vertices can be adjacent. In addition, the presence of a self-reference should be also interpretable conceptually in the domain. 
+The represented benchmark frameworks propose different comprehensive use cases to assess the performance of graph queries typically over RDF data. BSBM and DBpedia use representative queries for the measurements that demonstrate real-life use cases, and the SP$^2$Bench framework concentrates on the creation of various systematic queries that investigate the specific RDF data management approaches. The Train Benchmark framework aims a different aspect of performance comparison by concentrating on model validations via graph queries. As a conclusion, these frameworks guarantee a comprehensive performance evaluation of a workload---the ensemble of model, query and tool---by emphasizing the impact of \textit{queries} to the performance.
 
-Considering the original domain, the type \textsf{Segment} represents the majority of the elements, however---without breaking the original meaning of the domain---we cannot make connection between any of the segments.
+However, in case of an arbitrary workload, the \textit{model} also represents a dominating factor to the performance. BSBM, DBpedia or the SP$^2$Bench framework do not consider model modifications in their workloads, and thus, they do not investigate the impact of various model characteristics to the performance, they only generate the same structural model in different sizes to measure scalability. Even though Train Benchmark considers model transformations, yet, it modifies only a subtle set of the elements during the measurements, and the generated models are still considered as static models. As a conclusion, all of the introduced frameworks concentrate on the generation of one static model without altering its internal structure and analyzing their effect to the performance.
 
+In order to introduce a new approach to the field of graph-based benchmark frameworks, we focus on elaborating a framework that proposes various models with different characteristics and investigates the relationships between the performance and the internal structure of the model.
 
-To summarize, a new domain is necessary that is related to a real-life model, and also suited to use for generating different distributions.
+The main features of the introduced frameworks and our new approach are summarized in Table \ref{tab:framework_features}.
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{l c c c c c}
+		\toprule
+		Feature & BSBM & Dbpedia & SP$^2$Bench & Train Benchmark & Our Approach\\ \hline
+		\midrule
+		Based on a real-life model &  & \textbullet & \textbullet & & \textbullet  \\ \hline
+		Realistic domain-based queries & \textbullet & \textbullet &  &  & \\ \hline
+		Systematic queries  & &  & \textbullet & & \textbullet \\ \hline
+		Model transformations &  &  &  & \textbullet & \\ \hline
+		Dynamic models &  &  &  & & \textbullet \\ \hline
+		Measurement of scalability  & \textbullet & \textbullet & \textbullet & \textbullet & \textbullet\\ \hline
+		Performance metrics  & \textbullet & \textbullet & \textbullet & &  \\ \hline
+		Model metrics &  &  &  & & \textbullet \\ \hline
+		Query metrics &  &  &  & & \textbullet \\ \hline
+		Extended scope besides RDF & &  &  & \textbullet & \\ \hline
+		\bottomrule
+	\end{tabular}
+	\caption{A comparison between the existing benchmark frameworks and our approach.}
+	\label{tab:framework_features}
+\end{table}
 
-
-\subsection{Conclusions} \label{sec:benchmark_conclusions}
-
-One common attribute of the previously introduced benchmark frameworks is that they lack precise analysis of searching connection between model characteristic and evaluation performance. In these frameworks, it is not supported to assess a tool's performance on different topologies, still using the same domain. Generally, the frameworks propose the generation of variously large models, thus investigating scalability, however, they do not focus on modifying the internal structures of the models, and generate different topologies, even in the same size.
-
-model -> real
-real life use cases
-systematic queries
-realistic workloads
-model modifications
-static model
-scalability
-metrics
-
-%todo more? metrics? prob dist? use case?
+Basically, we concentrate on the generation of dynamic models with different internal connectivities based on a real-life data, and we assess the evaluation time of systematic queries that test specific features of the models. In this part of our research, we highly focus on model and performance correlations.
