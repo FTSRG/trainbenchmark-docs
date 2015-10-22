@@ -1,4 +1,4 @@
-DOCUMENT=diploma
+DOCUMENT=kovari-analysis
 
 xelatex: compile_xelatex
 	mv $(DOCUMENT)-xelatex.pdf ../$(DOCUMENT).pdf
