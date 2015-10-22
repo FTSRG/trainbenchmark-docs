@@ -1,16 +1,60 @@
-\chapter{Conceptual Contributions}
+\chapter{Overview of the Approach}
 
-\section{Overview of the Approach}
+\section{Main Concepts}
 
-\subsection{Motivation}
+Our main goal is to provide a benchmark framework for analyzing model and performance relationships in an arbitrary workload, and characterizing  the performance quantitatively with model related metrics.
 
-The well-known, state-of-the-art benchmark frameworks---such as BSBM, DBpedia and SP$^2$Bench---propose different comprehensive use cases to measure the performance of graph queries over RDF data. BSBM and DBpedia use representative queries for the measurements that demonstrate the real-life use cases, and the SP$^2$Bench framework concentrates on the creation of various queries that mostly investigate the specific RDF data management approaches. As a conclusion, these frameworks guarantee a comprehensive performance evaluation of a workload---the ensemble of model, query and tool---by emphasizing the impact of the queries to the performance.
+Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work, the Train Benchmark and the MONDO-SAM framework, and we elaborate \framework, the \textit{MONDO-Metrics-Based Analysis of Performance} framework.
+%todo mondom sam cite
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/frameworks.pdf}
+	\caption{An overview of the frameworks in our approach.}
+	\label{fig:frameworks}
+\end{figure}
 
-However, in the case of an arbitrary workload, the model also represents a dominating factor to the performance, and BSBM, DBpedia or the SP$^2$Bench framework do not consider model modifications in their workloads with the exception of model size.
+\paragraph{MONDO-SAM}
+The MONDO-SAM framework was created under the project MONDO~\cite{mondo} with the motivation to provide a common benchmark framework in Model Driven Engineering (MDE) for benchmark developers. MONDO-SAM can be considered as an abstract layer that proposes an evaluation engine to execute arbitrary workflows independently on the current workload. MONDO-SAM also guarantees the serialization and data visualization of the benchmark results.
 
-In order to introduce a new approach to the field of well-known graph-based benchmark frameworks, we focus on elaborating a framework that proposes various model characteristics and investigates the performance and model relationships of an arbitrary workload.
+\paragraph{Train Benchmark}
+The Train Benchmark framework is based on the evaluation engine provided by MONDO-SAM, and it proposes a benchmark for measuring model validations and transformations, introduced in Section \ref{sec:train}.
 
-\subsection{The Idea of Elaboration}
+\paragraph{\framework}
+As Figure \ref{fig:frameworks} depicts, our new framework---\framework---also relies on the evaluation engine located in MONDO-SAM, furthermore, it uses a part of the components in Train Benchmark that are adequate for our purpose as well.
+
+
+The fundamental goal of \framework~is to find model metrics that are suited to characterize the performance of query evaluations with respect to an arbitrary query and tool. By generating artificial graphs with various characteristics and obtain a fluctuation in their descriptive metrics, we are able to show a quantitative relationship between model metrics and performance.
+%todo picture
+
+Figure 222 illustrates the main concept of our work. The \framework~framework generates different graph topologies which show significant deviations in metrics. These topologies are the following:
+\begin{itemize}
+	\item Random graph
+	\item Small-world model of Watts-Strogatz
+	\item Scale-free Network of Barabási-Albert
+	\item Hierarchical Network
+\end{itemize}
+After calculating the descriptive metrics belonging to the models, the benchmark framework evaluates the queries on each model in the particular databases and assess the evaluation times. It analyzes the results and creates regression models to explore the relationships between the variables.
+
+\subsection{Use Cases}
+
+\framework~proposes a benchmark to explore that a particular tool is how sensitive to the underlying graph topology and the variation of metrics. This knowledge can be utilized among tool developers, since a significant alteration between the graphs implies a comprehensive
+
+main approach with figure
+mondo-sam: benchmark engine, execution of phases, publishing, reporting framework
+mondo-mbpal: domain independent framework for performance analysis based on metrics: model metrics, model generation different charactristics, topologies, regression analysis
+trainbenchmark: use come components
+British railway domain
+
+
+the difficulty of using existing real-life domains. cannot illustrate scalability or particular distribution between metrics -> must generate artificial models like anybody else does.
+
+British model characteristics generator: dbpedia, sp2bench
+from the model based and make deviations in generated models
+different topologies, investigate the metrics impact to the performance, concentrate on this
+
+
+
+
 The main idea of our work and its possible utilization is depicted in Figure 1121212. %todo create overview optimization figure
 In the first step, the framework analyzes the graph-based models and explores their characteristics, secondly, it evaluates the queries on the models and measures the performance---so the evaluation time. In the next step, the evaluation times and the corresponding model characteristics are analyzed together, as the framework searches relationships between them. The goal is to find that how the characteristics of the models impact the performance of the queries.
 
@@ -100,7 +144,7 @@ Showing an appropriate performance and metric relationship is an essential part 
 A similar problem is studied in~\cite{algebraic1} and~\cite{algebraic2}, where the authors generate well-known topologies and inspect the connectivity and robustness of the networks. In their case, a network is said to be robust if its performance is not sensitive to the changes in topology. In~\cite{algebraic1}, the algebraic connectivity metric is studied to search robustness and metric relationships, however, they show that the algebraic connectivity is not trivially correlated to the robustness of the network.\\
 The authors in~\cite{algebraic2} investigate the impact of betweenness centrality, algebraic connectivity and average degree to robustness, and they also draw the conclusion that there is no unique graph metric to satisfy both connectivity and robustness objectives while keeping a reasonable complexity, since each metric captures some attributes of the graph.
 
-Partly based on the advances of these two publications and our initial assumption relating to the topologies and corresponding metrics showed in Table \ref{tab:topology_metrics2}, we expect that we cannot find a correlation between one metric and the performance, hence, we conjecture that only the ensemble of more metrics is suited to find relationship.
+Partly based on the advances of these two publications and our initial assumption of the topologies and their metrics (Table \ref{tab:topology_metrics2}), we expect that we cannot find a correlation between one metric and the performance, hence, we conjecture that only the ensemble of more metrics is suited to find relationship.
 
 In order to find quantitative connections, we use regression analysis to show how the various metrics impact the performance. 
 
@@ -108,61 +152,10 @@ In order to find quantitative connections, we use regression analysis to show ho
 
 By using regression analysis on a sample, it is inevitable to regard the sample to be unbiased. In our case, a bias in a sample of graph topologies means a fluctuation in the size of the models. Obviously, one topology in the sample with larger amount of nodes can bias the connection between the models and the performance, therefore, our framework must support the generation of \textit{uniform} models with respect to the amount of nodes and edges, even in the case of different topologies as well.\footnote{From now on, under the concept of uniform models we mean models with approximately equal number of nodes and edges, despite the diversity of their internal structures.}
 
-\subsection{Uniform Model Generation}
-
-In order to guarantee the uniform model generation, we have to configure the topologies to each other.\\
-In terms of the random graph, scale-free, and WS model, their generation algorithms can be adjusted arbitrarily, meaning that an optional number of nodes or edges can be achieved. Actually, in these networks, the amount of nodes and edges are handled respectively.
-%todo more detail about the algorithms?
-
-Unfortunately, the creation of nodes and edges in the hierarchical graph occurs together. Since the final form of the hierarchical topology depends on the number of iteration in the recursive generation algorithm, the number of edges cannot be configured. A solution is that we adjust the other topologies to represent the same size as the hierarchical model with respect to the iteration of recursion. %todo well, this last sentence is a bit strange
-
-\subsubsection{Estimate the Number of Edges in Hierarchical Graphs}
-
-The literature relating to hierarchical graphs does not study the exact number of edges or its correlation to the amount of nodes, hence, we propose a solution to estimate $|E|$ in the recursive algorithm for every iteration.
-
-At first, let define the necessary variables hereunder:
-\begin{itemize}
-	\item{$i$}: Represents the current iteration in the original hierarchical algorithm.
-	\item{$c$}: Indicates the number of clones in every iteration.
-	\item{$n$}: The cluster size is denoted by $n$, which cluster is a $K_n$ complete graph. %todo cluster from nothing?
-	\item{$F_i$}: It indicates the constructed graph after the $i$ iteration. %todo why F? maybe change it to H later
-	\item{$|E_{F_i}|$}: The number of edges of $F_i$.
-\end{itemize}
-
-In the 0. iteration, the hierarchical graph consists of one $K_n$ cluster. Formally defining, $F_0 = K_n$, and $|E_{F_0}| = |E_{K_n}| = \frac{n \cdot (n-1)}{2}$. In the 1. iteration, the algorithm clones $F_0$ for $c$ times, and connects the peripheral nodes from each $F_0$ to the center node. It entails that 
-\begin{align}\label{eq:f1_version1}
-	|E_{F_1}| = (c+1) \cdot |E_{K_n}| + c \cdot (n - 1)	
-\end{align}
-since $c+1$ number of $K_n$ can be found in $F_1$, and $c \cdot (n - 1)$ edges can be drawn from the $c$ number of replicas to the center.
-
-Note that in the first iteration $K_n$ can be substituted with $F_0$, and the algorithm in the first part of the $i$ iteration creates $c$ number of replicas of the result of the $i-1$ iteration, namely, $F_{i-1}$. In the second part of the $i$ iteration, the algorithm connects the clusters from the cloned replicas to the center node. These connections are made between the peripheral nodes in each replica and the center, which indicates that the algorithm---in the $i$ iteration---connects $n-1$ peripheral nodes from $c$ number of replicas of $F_{i-1}$, and due to $F_{i-1}$ includes $c^{i-1}$ number of clusters, we obtain
-
-\begin{align}\label{eq:fi_formula}
-	|E_{F_i}| = (c+1) \cdot |E_{F_{i-1}}| + c \cdot c^{i-1} \cdot (n - 1)	= (c+1) \cdot |E_{F_{i-1}}| + c^i \cdot (n - 1)
-\end{align}
-
-By using Equation \ref{eq:fi_formula}, we are able to calculate the number of edges of a hierarchical graph and configure the other three topologies to the same size.
-
-\subsubsection{Configure Random Graph}
-
-Basically, we concentrate on the $G(n,p)$ model of the random graph. Knowing $|E|$ of a hierarchical graph denoted by $|E_{F_i}|$, we can calculate the $p$ probability value as:
-\begin{align}
-	p = \frac{|E_{F_i}|}{\binom{|V|}{2}}
-\end{align}
-where $|V|$ denotes the number of nodes~\cite{random_p}.
-
-\subsubsection{Configure Watts-Strogatz Model}
-
-In the generation algorithm of the Watts-Strogatz model, initially, $N$ number of consecutive nodes are connected to each other. By rewiring the edges, the amount of $|E|$ is not changed. As a result, in order to achieve a uniform size, $N$ has to be adjusted as $N = \frac{|E_{F_i}|}{|V|}$.
-
-\subsubsection{Configure Scale-Free Model}
-
-This topology is generated incrementally, since in every step, a new node is inserted to the graph with $m$ number of new connections. The variable $m$ has to be configured to achieve the same number of edges as in the hierarchical graph, which leads to $m = \frac{|E_{F_i}|}{|V|}$.
+The number of nodes in a graph is the most dominant factor to the performance
 
 \section{Usage of the Train Benchmark Framework}
-
+%todo rewrite
 For our approach, we use the Train Benchmark framework to generate different topologies, evaluate queries on the models, and finally, analyze the results by creating regression models to show how the model metrics characterize the performance.
 
 Since our research partly deviates from the field that the Train Benchmark investigates, it is necessary to extend the framework for our purpose. To eliminate the limitations of the framework (described in Section \ref{sec:railway}), we elaborate a new generation component based on a real-life model and enhance the framework with model and performance analysis.
-
-\section{Use Cases}
