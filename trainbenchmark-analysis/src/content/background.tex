@@ -107,7 +107,7 @@ A multiple linear regression model considers $k$ independent variables, and the 
 
 \section{Graph Theory}
 
-In the following sections we introduce the most important graph metrics and network topologies on which we concentrate in our work. We assume that the reader is already familiar with the basic concepts of graph theory, including undirected graph, complete graph, adjacent nodes,
+In the following sections we introduce the most important graph metrics and network topologies used in our work. We assume that the reader is already familiar with the basic concepts of graph theory, including undirected graphs, complete graphs, adjacent nodes,
 node degrees and shortest paths.
 %todo fix these metrics 
 \subsection{Metrics}
@@ -118,9 +118,13 @@ The spread among the degrees of the nodes is characterized by a distribution fun
 
 \subsubsection{Clustering Coefficient}
 
-The $C_n$ clustering coefficient of an $n$ node is equal to the proportion of connections found among the neighbors of $n$ divided by the maximum number of connections that can be possibly exist between them. Formally written, in undirected graphs the clustering coefficient of $n$ node is $C_n = \frac{2\cdot e_n}{k_n\cdot(k_n-1) }$, where $k_n$ is the number of neighbors of $n$, and $e_n$ is the number of connected pairs between all neighbors of $n$ (~\cite{clustering_formula}). The clustering coefficient is always quantified between 0 and 1.
+The $C_n$ clustering coefficient of a node $n$ is equal to the proportion of connections found among the neighbors of $n$ divided by the maximum number of connections that can be possibly exist between them. Formally, in undirected graphs the clustering coefficient of node $n$ is 
+\begin{align}
+	C_n = \frac{2e_n}{k_n(k_n-1) }
+\end{align}
+where $k_n$ is the number of neighbors of $n$, and $e_n$ is the number of connected pairs between all neighbors of $n$~\cite{clustering_formula}. The clustering coefficient always takes a value between 0 and 1.
 
-An example is showed in Figure \ref{fig:clustering}. In this case, the clustering coefficient of \textsf{A} is $C_A = \frac{2}{6}$, since it has three neighbors, so $k_A = 3$, and only one connection occurs among its adjacent nodes---between \textsf{B} and \textsf{C}---indicating that $e_A = 1$.
+An example is shown in Figure \ref{fig:clustering}. In this case, the clustering coefficient of \textsf{A} is $C_A = \frac{2}{6}$, since it has three neighbors, so $k_A = 3$, and only one connection occurs among its adjacent nodes---between \textsf{B} and \textsf{C}---indicating that $e_A = 1$.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=60mm, keepaspectratio]{figures/clustering.pdf}
@@ -130,7 +134,7 @@ An example is showed in Figure \ref{fig:clustering}. In this case, the clusterin
 
 \subsubsection{Betweenness Centrality}
 
-The betweenness centrality of an $n$ node is quantified by the number of shortest paths that include $n$ as an intermediate node, divided by the entire number of shortest paths. Consequently, this metric is normalized between 0 and 1.
+The betweenness centrality of an node $n$ is quantified by the number of shortest paths that include $n$ as an intermediate node, divided by the entire number of shortest paths. Consequently, this metric is normalized between 0 and 1.
 
 To demonstrate with an example, assume that we searched the following shortest paths denoted by $P_i$:
 \begin{itemize}
@@ -139,7 +143,7 @@ To demonstrate with an example, assume that we searched the following shortest p
 	\item $P_3 = (v_4, v_3, v_5)$
 \end{itemize}
 
-The entire number of shortest paths is equal to three, and the intermediate nodes are $v_3$, $v_4$ and $v_6$. The betweenness centrality values of the nodes---denoted by $B_i$---are the following:
+The entire number of shortest paths is equal to 3, and the intermediate nodes are $v_3$, $v_4$ and $v_6$. The betweenness centrality values of the nodes---denoted by $B_i$---are the following:
 \begin{itemize}
 	\item $B_3 = 1$, since $v_3$ appears in all three paths.
 	\item $B_4 = \frac{2}{3}$ due to $v_4$ appears in two paths---$P_1$ and $P_2$. Note that $v_4$ in $P_3$ is the initial node and not an intermediate node.
@@ -148,34 +152,34 @@ The entire number of shortest paths is equal to three, and the intermediate node
 \end{itemize}
 \subsection{Network Topologies} \label{sec:topologies}
 
-In the following sections, we introduce the graph topologies that connects to our work. Besides their generation algorithms, we also emphasize the degree distributions they follow.
+In the following sections, we introduce the graph topologies that are relevant to our work. Besides their generation algorithms, we also emphasize the degree distributions they follow.
 
 \subsubsection{Random Graph}
 
 The main concept of the random graph is to create the connections among nodes independently from each other, meaning that the occurrence of an edge between the nodes is not influenced by the other edges. 
 
-Two well-known algorithms exist to create random graphs. The first is the $G(N, M)$ model of Erdős-Rényi~\cite{erdos_random}, and the second is the $G(N,p)$ model from Gilbert~\cite{gilbert_random}. The former means that precisely $M$ number of edges exist among $N$ vertices, and the latter implies that---in the generation algorithm---every pair of nodes becomes adjacent with $p$ probability. The degree distribution of random graphs follows a Poisson distribution.
+Two well-known algorithms exist to create random graphs. The first is the $G(N, M)$ model of Erdős-Rényi~\cite{erdos_random}, and the second is the $G(N,p)$ model from Gilbert~\cite{gilbert_random}. The former means that precisely $M$ edges exist among $N$ vertices, and the latter implies that---in the generation algorithm---every pair of nodes becomes adjacent with $p$ probability. The degree distribution of random graphs follows a Poisson distribution.
 
 \subsubsection{Small-World Model of Watts-Strogatz}
 
-A graph is considered to follow a small-world property if the graph shows high average clustering coefficient and small average length of shortest paths.
+A graph follows a small-world property if the graph has a high average clustering coefficient and small average length of shortest paths.
 %todo citation?
 
-The generation algorithm of the Watts-Strogatz topology addresses the creation of networks with small-world properties. The algorithm is constructed as follows: initially, the algorithm creates a ring of $N$ number of isolated nodes, which is equal to the entire number of nodes in the graph. In the second step, every node becomes adjacent to $K$ number of their neighbors, thus creating a lattice graph~\cite{lattice}. This implies that every node has $K$ degree, therefore, its degree distribution fits to a uniform distribution. Besides the variables $N$ and $K$, another parameter appears in the algorithm, the $p$ probability variable. After creating $N$ nodes and $N \cdot K$ connections, every edge is rewired by $p$ probability and attached to a new, randomly chosen node. Note that by altering the $p$ value in the algorithm between 0 and 1, we obtain a mapping between a lattice and a random graph. As a result, the degree distribution of the Watts-Strogatz model deviates between uniform and Poisson.
+The generation algorithm of the Watts-Strogatz topology addresses the creation of networks with small-world properties. The algorithm is constructed as follows: initially, the algorithm creates a ring of $N$ number of isolated nodes, which is equal to the entire number of nodes in the graph. In the second step, every node becomes adjacent to $K$ number of their neighbors, thus creating a lattice graph~\cite{lattice}. This implies that every node has a degree $K$, therefore, its degree distribution fits to a uniform distribution. Besides the variables $N$ and $K$, another parameter appears in the algorithm, the $p$ probability variable. After creating $N$ nodes and $N \cdot K$ connections, every edge is rewired by $p$ probability and attached to a new, randomly chosen node. Note that the two extremes, $p=0$ and $p=1$ entails we obtain a mapping between a lattice and a random graph. As a result, the degree distribution of the Watts-Strogatz model deviates between uniform and Poisson.
 
 \subsubsection{Scale-Free Model of Barabási and Albert}
 
 The scale-free model of Barabási and Albert addresses the generation of a network that follows a power-law degree distribution and includes a small proportion of nodes that have significantly higher degrees than the average. These types of vertices are often referred as \textit{hubs}.
 
-The generation algorithm creates nodes incrementally and connects them to $m$ number of disjunct nodes. However, instead of choosing nodes randomly, these new connections per nodes are determined by a \textit{preferential attachment}. When the algorithm creates a new vertex then the probability $p_i$ that this vertex becomes adjacent to an $i$ node is:
+The generation algorithm creates nodes incrementally and connects them to $m$ disjunct nodes. However, instead of choosing nodes randomly, these new connections per nodes are determined by a \textit{preferential attachment}. When the algorithm creates a new vertex then the probability $p_i$ that this vertex becomes adjacent to an $i$ node is:
 \begin{align}
 	p_i = \frac{d(i)}{\sum_j d(j)}
 \end{align}
-where $d(i)$ denotes the degree of the $i$ node, and $j$ symbolizes the other existing nodes. As a conclusion, the probability of a node becomes adjacent to another one is depend on the degree of the latter. If a higher degree belongs to a node than the average, the probability also increases that the node obtains more connections.
+where $d(i)$ denotes the degree of the $i$ node, and $j$ symbolizes the other existing nodes. As a conclusion, the probability of a node becomes adjacent to another one depends on the degree of the latter. If a higher degree belongs to a node than the average, the probability also increases that the node obtains more connections.
 \subsubsection{Hierarchical Network}
 
-The hierarchical network topology~\cite{hierarchical} is generated by a recursive algorithm illustrated in Figure \ref{fig:hierarchical_generation}. Initially, the 0. iteration constructs a $K_5$ complete graph\footnote{The diagonal nodes are also connected to each other}, called \textit{cluster}. In the first iteration, the algorithm creates four replicas of the $K_5$ cluster. In the second step in this iteration, the algorithm connects the peripheral nodes from the replicas to the center node. The generation can be continued recursively, as in every $i$ run, the result graph of the $i-1$ iteration is cloned and the peripheral nodes---the deepest vertices in the replicas---are attached to the center node.\\
-Finally, the generated hierarchical graph follows a heavy-tail power-law degree distribution, since the graph includes such nodes that have significantly larger degrees---the center nodes---and the probability that these nodes appear are considerably small.
+The hierarchical network topology~\cite{hierarchical} is generated by a recursive algorithm illustrated in Figure \ref{fig:hierarchical_generation}. Initially, the $0.$ iteration constructs a $K_5$ complete graph\footnote{The diagonal nodes are also connected to each other}, called \textit{cluster}. In the first iteration, the algorithm creates four replicas of the $K_5$ cluster. In the second step in this iteration, the algorithm connects the peripheral nodes from the replicas to the center node. The generation can be continued recursively, as in every $i.$ run, the result graph of the $i-1$ iteration is cloned and the peripheral nodes---the \textit{deepest} vertices in the replicas---are attached to the center node.\\
+Finally, the generated hierarchical graph follows a heavy-tail power-law degree distribution, since the graph includes such nodes that have significantly larger degrees---the center nodes---and the probability that these nodes appear is considerably small.
 
 \begin{figure}[!ht]
 	\centering

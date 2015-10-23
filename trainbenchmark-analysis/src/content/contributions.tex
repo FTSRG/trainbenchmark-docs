@@ -187,7 +187,7 @@ The query uses the \textsf{*} operator from SPARQL Property Paths~\cite{property
 \subsubsection{Information Spread Query}
 %todo mention spread of information in background betweenness
 The query investigates the spread of information in the graph---by starting from a randomly chosen node---and it traverses the graph via the \textsf{neighbor} predicates to a three-hop distance. The concept of information spreading means that how fast the information can be forwarded among the nodes in the graph, or in other words, how many vertices can be reached from a certain node.\\
-The SPARQL definition of the query is showed below. As it can observed, in every new navigation we filter the previously found nodes to prevent the traversal of the same nodes again.
+The SPARQL definition of the query is shown below. As it can observed, in every new navigation we filter the previously found nodes to prevent the traversal of the same nodes again.
 
 \lstinputlisting{content/queries/spread.sparql}
 
