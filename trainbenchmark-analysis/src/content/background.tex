@@ -214,17 +214,39 @@ A multiple linear regression model considers $k$ independent variables, and the 
 
 \section{Graph Theory}
 
-During the model generation later, we will construct different graph topologies, and also introduce metrics that are able to characterize these models precisely. As a consequence, it is important to present the main related concepts in graph theory with the expectation that the theorems of directed graph, connectivity, complete graph, adjacent nodes, and degrees of vertices are already clarified.
+In the following sections we introduce the most important graph metrics and network topologies on which we concentrate in our work. We assume that the reader is already familiar with the basics concepts of graph theory, including directed graph, connectivity, complete graph, adjacent nodes and
+degrees of vertices.
+%todo fix these metrics 
+\subsection{Metrics}
 
-\subsection{Degree Distribution}
+\subsubsection{Degree Distribution}
 
-The spread in the node degrees is characterized by a distribution
-function $P(k)$, which gives the probability that a randomly selected node's degree equals to $k$.
+The fluctuation among the degrees of the nodes is characterized by a distribution function $P(k)$ which shows the probability that a randomly selected node's degree is equal to $k$. $P(k)$ is called as the degree distribution.
+
+\subsubsection{Clustering Coefficient}
+
+The $C_n$ clustering coefficient of an $n$ node is equal to the proportion of connections among those vertices that are adjacent to $i$ divided by the maximum number of connections that can be drawn between them. Formally written, in undirected graphs $C_n = \frac{2\cdot e_n}{k_n\cdot(k_n-1) }$, where $k_n$ is the number of neighbors of $n$ and $e_n$ is the number of connected pairs between all neighbors of $n$ (~\cite{clustering_formula}). As a result, the clustering coefficient is always quantified between 0 and 1.
+
+An example is showed in Figure \ref{fig:clustering}. In this case, the clustering coefficient of \textsf{A} is $C_A = \frac{2}{6}$, since it has three neighbors, so $k_A = 3$, and only one connection occurs among its adjacent nodes---between \textsf{B} and \textsf{C}---indicates that $e_A = 1$.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=60mm, keepaspectratio]{figures/clustering.pdf}
+	\caption{An example graph for illustrating the calculation of clustering coefficient.}
+	\label{fig:clustering}
+\end{figure}
+
+\subsubsection{Betweenness Centrality}
+
+The betweenness centrality of an $n$ node is quantified by the number of shortest paths that include $n$ as an intermediate node, divided by the total number of shortest paths. Consequently, this metric is mapped between 0 and 1.
 
 \subsection{Network Topologies} \label{sec:topologies}
 
+\subsubsection{Random Graph}
 
+\subsubsection{Small-World Model of Watts-Strogatz}
 
+\subsubsection{Scale-Free Model of Barabási and Albert}
 
+\subsubsection{Hierarchical Network}
 \section{Resource Description Framework: RDF} \label{section:rdf}
 
