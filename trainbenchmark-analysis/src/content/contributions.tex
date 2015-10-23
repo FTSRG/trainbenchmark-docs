@@ -118,9 +118,9 @@ where $|V|$ denotes the number of nodes.
 
 \subsubsection{Configure Watts-Strogatz Model}\label{sec:watts_generation}
 
-Regarding the Watts-Strogatz model, in the beginning of the generation algorithm, $N$ number of consecutive nodes are connected to each other. During the algorithm, by rewiring the edges the amount of $|E|$ is not changed. As a conclusion, in order to achieve a uniform size similarly to the hierarchical graph, $N$ has to be adjusted as $N = \frac{|E_H|}{|V|}$.
+Regarding the Watts-Strogatz model, in the beginning of the generation algorithm, $K$ number of consecutive nodes are connected to each other. During the algorithm, by rewiring the edges the amount of $|E|$ is not changed. As a conclusion, in order to achieve a uniform size similarly to the hierarchical graph, $K$ has to be adjusted as $K = \frac{|E_H|}{|V|}$.
 
-Generally, the $N$ value in the algorithm is a constant integer. In order to configure the WS model properly, we extend the algorithm by defining an inclusive lower ($N_1$) and upper ($N_2$) bound for $N$, as $N\in[N_1, N_2]$, and we also assign a $p$ probability to $N$ that determines the likelihood of $N$ is equal to $N_2$ and $1-p$ to $N_1$. Derived from the equation $N = \frac{|E_H|}{|V|}$, it results in $N_1 = \Big\lfloor\frac{|E_H|}{|V|}\Big\rfloor$ and $N_2 = \Big\lceil\frac{|E_H|}{|V|}\Big\rceil$, additionally, the $p$ probability equals to the fractional part, as $p = \Big\{\frac{|E_H|}{|V|}\Big\}$. Hence, by turning $N$ to a random variable, we can generate WS models with the same number of edges as $|E_H|$.
+Generally, the $K$ value in the algorithm is a constant integer. In order to configure the WS model properly, we extend the algorithm by defining an inclusive lower ($K_1$) and upper ($K_2$) bound for $K$, as $K\in[K_1, K_2]$, and we also assign a $p$ probability to $K$ that determines the likelihood of $K$ is equal to $K_2$ and $1-p$ to $K_1$. Derived from the equation $K = \frac{|E_H|}{|V|}$, it results in $K_1 = \Big\lfloor\frac{|E_H|}{|V|}\Big\rfloor$ and $K_2 = \Big\lceil\frac{|E_H|}{|V|}\Big\rceil$, additionally, the $p$ probability equals to the fractional part, as $p = \Big\{\frac{|E_H|}{|V|}\Big\}$. Hence, by turning $K$ to a random variable, we can generate WS models with the same number of edges as $|E_H|$.
 
 \subsubsection{Configure Scale-Free Model}
 
