@@ -1,7 +1,10 @@
 \chapter{Design}
 
 \section{Overview of the Approach}
-Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work, the Train Benchmark and MONDO-SAM frameworks, furthermore, we elaborate \framework, the \textit{MONDO-Metrics-Based Analysis of Performance} framework and the Homogeneous Graphs Benchmark.
+
+In this section, we introduce the main notions about our work to analyze model and performance relationships.
+
+Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work: the Train Benchmark and MONDO-SAM frameworks. Furthermore, we the elaborate \framework (MONDO-Metrics-Based Analysis of Performance) and the Homogeneous Graphs Benchmark.
 %todo mondo sam cite
 \begin{figure}[!ht]
 	\centering
@@ -11,13 +14,13 @@ Our concept includes the following systems illustrated in Figure \ref{fig:framew
 \end{figure}
 
 \paragraph{MONDO-SAM}
-The MONDO-SAM framework was created under the project MONDO~\cite{mondo} with the motivation to provide a common benchmark framework in Model Driven Engineering (MDE) for benchmark developers~\cite{mondo-sam}. \sam can be considered as an abstract layer that proposes an evaluation engine to execute arbitrary workflows independently on the current workload, furthermore, \sam also guarantees the serialization and data visualization of the benchmark results.
+The MONDO-SAM framework was created under the project MONDO (Scalable Modeling and Model Management on the Cloud)~\cite{mondo} with the motivation of providing a common benchmark framework in Model Driven Engineering (MDE) for benchmark developers~\cite{mondo-sam}. \sam can be considered as an abstract layer that proposes an evaluation engine to execute arbitrary workflows independently on the current workload. Furthermore, \sam also provides tools for serializing and visualizing the benchmark results.
 
 \paragraph{Train Benchmark}
-The Train Benchmark framework is based on the evaluation engine provided by \sam, and it proposes a benchmark for measuring continuous model validations and transformations, introduced in Section \ref{sec:train}.
+The Train Benchmark framework is based on the evaluation engine provided by \sam, and it proposes a benchmark for measuring continuous model validations and transformations. The Train Benchmark is presented in detail in Section \ref{sec:train}.
 
 \paragraph{\framework}
-\framework extends \sam with further features, as it provides a framework for analyzing model and performance relationships in the light of an arbitrary workload by characterizing the performance quantitatively with model related metrics. Similarly to \sam, \map is an abstract framework and can be extended by an arbitrary benchmark case.
+The goal of the \map framework is to support model-based performance analysis. To achieve this, it extends \sam with additional features, as it provides a framework for analyzing model and performance relationships in the light of an arbitrary workload by characterizing the performance quantitatively with model related metrics. Similarly to \sam, \map is an abstract framework and can be extended by an arbitrary benchmark case.
 
 \paragraph{Homogeneous Graphs Benchmark}
 
