@@ -32,78 +32,17 @@ The query metrics connect to the definitions of the queries, and they do not rel
 The generator components belong to the HG Benchmark. The abstract \textsf{Generator} unit is utilized from Train Benchmark. The \textsf{Stations Generator} component is responsible for transforming the real-life British Railway Stations model to RDF. Last, the \textsf{Topology Generators} construct different homogeneous graphs fitting to well-known topologies and transform them to RDF format.
 
 \paragraph{RDF Driver}
-The \textsf{Driver} manages the connections between the databases and the benchmark framework. furthermore, it also accomplishes the loading of the models. 
+The \textsf{RDF Driver} manages the connections between the measured RDF databases and the benchmark framework, furthermore, it also accomplishes the loading of the models. 
 
 \paragraph{Query Executor and Query Builder}
 
 The query evaluations are achieved by the \textsf{Query Executor} component. The \textsf{Query Builder} is responsible for creating and altering the query definitions in runtime.
 
+\section{British Railway Stations}
 
-\section{A Real-life Model}
+In order to test our regression models on an entirely different graph, we introduce a real-life model to our work. We use a model of train stations provided by the \textit{Network Rail} company that runs, maintains, and develops Britain's rail tracks~\cite{network_rail}. Network Rail publishes a number of different data available to developers, one of them is a \textit{daily extracts and updates of train schedules}~\cite{schedules_data} that we intend to use.
 
-For our purpose to analyze graph queries, we use a model of train schedules provided by the \textit{Network Rail} company that runs, maintains, and develops Britain's rail tracks~\cite{network_rail}. Network Rail publishes a number of different data available to developers, some of them are the following:
-\begin{itemize}
-	\item{Real-time train positioning and movement event data}
-	\item{Performance of trains against the timetable, measured as the percentage of trains arriving at their destination on-time}
-	\item{Daily extracts and updates of train schedules}
-\end{itemize}
-
-The most adequate data for our aim is the daily schedules of trains, hence, the performance analysis is also based on this data.
-
-\subsection{An Overview of the Train Schedules Data}\label{sec:schedules_overview}
-The data of schedules can be divided into three different types of records\footnote{In the data of schedules a record actually represents a JSON object.} that are defined hereunder~\cite{schedules_data}:
-\begin{itemize}
-	\item{\textit{Association records}}: indicate the relationships between trains.
-	\item{\textit{Schedule records}}: refer to the train schedules themselves.
-	\item{\textit{Tiploc records}}: include information about timing point locations in the schedules.
-\end{itemize}
-
-At first, note that the trains themselves do not appear in a distinguished type of record, with the exception of their identifiers (\textit{Train UID}) that can be found in the association and schedule records, therefore, the data lacks of any information that describes the attributes of the physical trains.
-
-An association is interpreted between two distinct trains that are somehow interconnected belonging to the same and only one location. For example, a dividing association means that a train separates into an other one in a particular station~\footnote{From now on, we use the words location and station as synonyms.}. However, an association does not necessarily occur, since there are trains that are not associated to any. To summarize, an association record always belong to the distinct trains, and one location.
-
-A schedule record attaches locations to a certain train, thus, it defines a path of locations, which are divided into three different groups in a schedule, representing their positions in the path such as \textit{origin}, \textit{intermediate}, or \textit{terminating} location. One schedule always belongs to one train, even though a train can be referred by more schedules as well, and obviously, more than one schedule can include the same location.
-
-Finally, \textit{Tiploc records} contain the locations.
-
-\subsubsection{Cardinalities}
-
-The data of schedules in Network Rail typically contain daily representations of the trains, however, an entire data model is available as well that contains every schedule information for each day. Since it includes a significantly larger data, from now on, we rely on this in our benchmark framework.
-
-In the entire data, the cardinalities belonging to the individual types are depicted in Figure 1. %todo create a pie chart of cardinalities per entities
-As can be observed, schedules represent the majority of the records, furthermore, only a small set of trains\footnote{Since train records are not defined in the data, in this case the number of trains are equal to the number of distinct train identifiers.} are in any kind of association with another train. The cardinality of locations indicates the number of unique locations, instead of their cumulated appearances. Regarding the latter, approximately 5.8 million number of locations occur as destinations attached to the schedules. It leads to the fact that the average number of attached destinations to a schedule is $15.66$.
-
-\subsection{Mapping to a Model}\label{sec:mapping_schedule}
-
-The previously introduced data of train schedules must be transformed to a graph on which the measurements can be accomplished. The corresponding domain derived from the data is depicted in Figure 2. %todo add a mesmerizing metamodel, or ER diagram and some footnote:this is actualy represented in blah blah to clarify blah blah
-%todo don't mix the concepts of graph and metamodel, or domain and model, use a consistent expression
-By mapping the domain to a graph leads to four different types of vertices: \textsf{Association}, \textsf{Station}, \textsf{Schedule}, and \textsf{Train}. The station symbolizes the location, and the references---such as \textsf{association}, \textsf{associative}, \textsf{destinations}, and so on---follow the same approaches introduced in Section \ref{sec:schedules_overview}, and they are mapped to directed edges in the graph. 
-
-One newly introduced edge is the \textsf{neighbor} connection among the stations. The presence of a \textsf{neighbor} edge between two stations implicates the existence of a path from the first station to the second via the same schedule, and these stations follow each other in the schedule's destinations. In other words, the consecutive stations from a schedule's path become adjacent. Figure 3 demonstrates an example which nodes of stations are connected via \textsf{neighbor} edges, assuming that originally those locations belonged to the same schedule. As a conclusion, \textsf{Station1} and \textsf{Station2} are connected since they are adjacent in the destinations of \textsf{Schedule1}, on the contrary, \textsf{Station1} and \textsf{Station3} are not drawn to each other, since they are not consecutive stations among the schedule's destinations, despite the fact that both of them can be found in it. %todo draw a graph
-Important to note that more than one adjacency in different schedules's stations do not implicate more \textsf{network} edges between the nodes.
-
-\subsubsection{Attributes}
-
-As can be observed in Figure 2, %todo add pic reference
-there are different attributes belong to the vertices that can be found in the original data set as well. These attributes are briefly introduced below:
-\begin{itemize}
-	\item{\textsf{Schedule Planning}}: It can be \textit{Short-term}, or \textit{Permanent}.
-	\item{\textsf{Status}}: It indicates the train status, and its possible value comes from the following enumeration: \textit{Freight}, \textit{Passenger}, \textit{Ship}, \textit{Bus}, and \textit{Trip}. Since a schedule can be a short-term overlay, thus, a temporary schedule may belong to a substitute bus or ship.
-	\item{\textsf{Days}}: A seven-character binary variable, the first represents Monday, and last one is Sunday. For example, the attribute for a schedule---that runs on every Monday and Sunday---is equal to \textit{1000001}.
-	%todo stpindicator is missing yet
-	\item{\textsf{Start Date}}: The start date of the schedule.
-	\item{\textsf{End Date}} : The end date of the schedule.
-	\item{\textsf{UID}}: The unique train identifier.
-	\item{\textsf{Category}}: Refers to the association's category that can be \textit{Divide}, \textit{Join}, \textit{Next}.
-\end{itemize}
-%todo mark that attributes with bold which will be used in the queries
-
-
-\subsection{Model Analysis}\label{sec:model_analysis}
-cardinalities
-prob distr
-scale-free, power-law dist
-random schedule factor -> important?
+The data contains approximately 10 000 British stations that belong to train schedules as destinations. We concentrate on the network of stations, and map it to a graph where every vertex symbolizes a station. An edge is drawn between two nodes---so two stations---if these stations appear consecutively in a destinations path belonging to a schedule.
 
 \section{Uniform Model Generation}
 
@@ -236,19 +175,45 @@ The model-based metrics are connected to graph metrics which appear in their nam
 
 \subsection{Queries}
 
-We investigate the performance of two queries in our HG Benchmark. The first one relates to the concept of transitive closure, and the second connects to the notion to investigate the spread of information in the graphs.
+We investigate the performance of two queries in our HG Benchmark. The first one relates to the concept of shortest path, and the second connects to the notion to investigate the spread of information in the graphs.
 
-\subsubsection{Transitive Closure Query}
+\subsubsection{Shortest Path Query}
 
 The SPARQL definition of the query is shown below:\\
 \lstinputlisting{content/queries/transitive.sparql}
 
-The query searches a path between two randomly chosen nodes by using the \textsf{*} operator from SPARQL Property Paths~\cite{property_path}.
+The query uses the \textsf{*} operator from SPARQL Property Paths~\cite{property_path} in the \textsf{(base:neighbor)*} predicate which means an arbitrary length of path with the \textsf{neighbor} predicates. The query is considered as a parameterized query in which we inject two random identifiers instead the \textsf{ID} parameters. Finally, the query searches a path between those two randomly chosen nodes.
 
-\subsection{Information Spread Query}
+\subsubsection{Information Spread Query}
+%todo mention spread of information in background betweenness
+The query investigates the spread of information in the graph---by starting from a randomly chosen node---and it traverses the graph via the \textsf{neighbor} predicates to a three-hop distance. The concept of information spreading means that how fast the information can be forwarded among the nodes in the graph, or in other words, how many vertices can be reached from a certain node.\\
+The SPARQL definition of the query is showed below. As it can observed, in every new navigation we filter the previously found nodes to prevent the traversal of the same nodes again.
 
 \lstinputlisting{content/queries/spread.sparql}
+
 \subsection{Tools}
+
+We concentrate on RDF tools in our work which are listed in Table \ref{tab:tools}. The last two columns illustrate whether the execution of our defined queries is feasible in the particular tool or not. As the table suggests, the first query cannot be evaluated in \textsf{4store}, since it does not support the usage of property paths.
+
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	
+	\begin{tabular}{ l c c c c c}
+		\toprule
+		Name & Programming Language& Version & Query 1 & Query 2\\ 
+		\midrule 
+		AllegroGraph~\cite{allegro} & C, \CC & 5.0.0  & \textbullet&  \textbullet \\ \hline
+		Blazegraph~\cite{blaze} & Java  & 1.5.2 & \textbullet & \textbullet\\ \hline
+		4store~\cite{4store} & C  & 1.1.5 & & \textbullet \\ \hline
+		Jena TDB~\cite{jena_tdb} & Java & 2.13.0 & \textbullet & \textbullet\\ \hline
+		Sesame~\cite{sesame} & Java & 2.7.9 & \textbullet & \textbullet\\ \hline
+		\bottomrule
+	\end{tabular}
+	\caption{The implemented tools in Train Benchmark}
+	\label{tab:tools}
+\end{table}
+
 
 \subsection{Regression Analysis}
 

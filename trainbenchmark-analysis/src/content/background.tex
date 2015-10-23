@@ -70,35 +70,6 @@ Besides uniformity, it is essential to guarantee reproducibility of the instance
 
 In terms of the implemented tools in the benchmark framework, it is already explained that they are categorized into four different formats. These tools are listed in Table \ref{tab:tools}. Unfortunately, we cannot afford in our research to investigate and analyze all of the currently integrated tools from the framework, hence, we chose a subset of the tools, and typically focus on the RDF-based systems. The analyzed tools on which we concentrate are marked in bold in the table.
 
-\begin{table}[ht]
-	\footnotesize
-	\centering
-	
-	\begin{tabular}{ l c c c c c}
-		\toprule
-		Name & Format & Implementation & Query Language & Version\\ 
-		\midrule 
-		\textbf{AllegroGraph} & RDF & C, \CC & SPARQL & 5.0.0 \\ \hline
-		\textbf{Blazegraph} & RDF & Java & SPARQL & 1.5.2\\ \hline
-		Drools & EMF & Java & DRL & 5.6.0, 6.3.0 \\ \hline
-		EclipseOCL & EMF & Java & OCL & 3.3.0 \\ \hline
-		\textsc{EMF-IncQuery} & EMF & Java & IQPL & 1.0.0 \\ \hline
-		\textbf{4store} & RDF & C & SPARQL & 1.1.5 \\ \hline
-		Jena API & RDF & Java & SPARQL & 2.13.0 \\ \hline
-		MemSQL & SQL & \CC & SQL & 4.0 \\ \hline
-		MySQL & SQL & \CC & SQL & 5.5.44\\ \hline
-		Neo4j & Graph & Java & Cypher, Core API & 2.2 \\ \hline
-		OrientDB & Graph & Java & Gremlin& 2.0.8 \\ \hline
-		\textbf{Sesame API} & RDF & Java & SPARQL & 2.7.9\\ \hline
-		\textbf{Virtuoso} & RDF & C & SPARQL & 6.1.6\\ 
-		\bottomrule
-	\end{tabular}
-	\caption{The implemented tools in Train Benchmark}
-	\label{tab:tools}
-\end{table}
-
-
-
 \subsection{The Framework's Architecture}
 
 It is important to emphasize that our goal in this paper is not entirely related to the main motivation and aim that belong to the Train Benchmark framework. We are not concerned with model validations (or transformations\footnote{Some instance model transformations are also occurred in the workflow of Train Benchmark after each validation. The goal is to investigate how the implemented tools perform after certain model modifications so that they execute the same validations and transformations again, iteratively. Since currently this area is out of our scope, we do not describe it in details.}) %todo right here in a footnote? seriously? 

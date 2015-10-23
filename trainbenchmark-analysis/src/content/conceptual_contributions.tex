@@ -1,11 +1,8 @@
-\chapter{Overview of the Approach}
+\chapter{Design}
 
-\section{Main Concepts}
-
-Our main goal is to provide a benchmark framework for analyzing model and performance relationships in an arbitrary workload, and characterizing  the performance quantitatively with model related metrics.
-
-Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work, the Train Benchmark and the MONDO-SAM framework, and we elaborate \framework, the \textit{MONDO-Metrics-Based Analysis of Performance} framework.
-%todo mondom sam cite
+\section{Overview of the Approach}
+Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work, the Train Benchmark and MONDO-SAM frameworks, furthermore, we elaborate \framework, the \textit{MONDO-Metrics-Based Analysis of Performance} framework and the Homogeneous Graphs Benchmark.
+%todo mondo sam cite
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=130mm, keepaspectratio]{figures/frameworks.pdf}
@@ -14,58 +11,31 @@ Our concept includes the following systems illustrated in Figure \ref{fig:framew
 \end{figure}
 
 \paragraph{MONDO-SAM}
-The MONDO-SAM framework was created under the project MONDO~\cite{mondo} with the motivation to provide a common benchmark framework in Model Driven Engineering (MDE) for benchmark developers. MONDO-SAM can be considered as an abstract layer that proposes an evaluation engine to execute arbitrary workflows independently on the current workload. MONDO-SAM also guarantees the serialization and data visualization of the benchmark results.
+The MONDO-SAM framework was created under the project MONDO~\cite{mondo} with the motivation to provide a common benchmark framework in Model Driven Engineering (MDE) for benchmark developers~\cite{mondo-sam}. \sam can be considered as an abstract layer that proposes an evaluation engine to execute arbitrary workflows independently on the current workload, furthermore, \sam also guarantees the serialization and data visualization of the benchmark results.
 
 \paragraph{Train Benchmark}
-The Train Benchmark framework is based on the evaluation engine provided by MONDO-SAM, and it proposes a benchmark for measuring model validations and transformations, introduced in Section \ref{sec:train}.
+The Train Benchmark framework is based on the evaluation engine provided by \sam, and it proposes a benchmark for measuring continuous model validations and transformations, introduced in Section \ref{sec:train}.
 
 \paragraph{\framework}
-As Figure \ref{fig:frameworks} depicts, our new framework---\framework---also relies on the evaluation engine located in MONDO-SAM, furthermore, it uses a part of the components in Train Benchmark that are adequate for our purpose as well.
+\framework extends \sam with further features, as it provides a framework for analyzing model and performance relationships in the light of an arbitrary workload by characterizing the performance quantitatively with model related metrics. Similarly to \sam, \map is an abstract framework and can be extended by an arbitrary benchmark case.
 
+\paragraph{Homogeneous Graphs Benchmark}
 
-The fundamental goal of \framework~is to find model metrics that are suited to characterize the performance of query evaluations with respect to an arbitrary query and tool. By generating artificial graphs with various characteristics and obtain a fluctuation in their descriptive metrics, we are able to show a quantitative relationship between model metrics and performance.
-%todo picture
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=140mm, keepaspectratio]{figures/approach.pdf}
+	\caption{The main concept of the metric-based performance analysis.}
+	\label{fig:approach}
+\end{figure}
 
-Figure 222 illustrates the main concept of our work. The \framework~framework generates different graph topologies which show significant deviations in metrics. These topologies are the following:
-\begin{itemize}
-	\item Random graph
-	\item Small-world model of Watts-Strogatz
-	\item Scale-free Network of Barabási-Albert
-	\item Hierarchical Network
-\end{itemize}
-After calculating the descriptive metrics belonging to the models, the benchmark framework evaluates the queries on each model in the particular databases and assess the evaluation times. It analyzes the results and creates regression models to explore the relationships between the variables.
+The Homogeneous Graphs Benchmark (HG Benchmark) extends the \map framework with a benchmark case for RDF databases. It generates homogeneous graphs ---well-known network topologies---and it investigates the relationships between the model metrics and performance of query evaluations with respect to an arbitrary query and database. The goal is to generate artificial graphs with various characteristics and obtain a fluctuation in their descriptive metrics, and thus showing a quantitative connection between the model metrics and performance. As Figure \ref{fig:frameworks} suggests, in the HG Benchmark we use a part of the components of Train Benchmark that are adequate for our purpose as well.
 
-\subsection{Use Cases}
+Figure \ref{fig:approach} illustrates the main concept of our work. First, the HG Benchmark generates different $K$ number of graph topologies. Using the graph metric definitions from \map (2.), we calculate the descriptive metrics for every topology in step 3. As it is showed, every topology contains an own values for every $N$ number of metrics, and they are stored in \sam. In the next two steps (4-5.) we define a query and evaluates it on every topology in the particular RDF database that we intend to measure. The measurement result is the query evaluation time ($Y$) that represents another variable belonging to the topologies besides their metrics (6.). As it was mentioned before, the \sam framework is responsible for publishing the benchmark results(7.). Finally, in \map we analyze the results by creating regression models to estimate the influence of metrics to the performance.
 
-\framework~proposes a benchmark to explore that a particular tool is how sensitive to the underlying graph topology and the variation of metrics. This knowledge can be utilized among tool developers, since a significant alteration between the graphs implies a comprehensive
+%\subsubsection{Challenges}
 
-main approach with figure
-mondo-sam: benchmark engine, execution of phases, publishing, reporting framework
-mondo-mbpal: domain independent framework for performance analysis based on metrics: model metrics, model generation different characteristics, topologies, regression analysis
-trainbenchmark: use come components
-British railway domain
-
-
-the difficulty of using existing real-life domains. cannot illustrate scalability or particular distribution between metrics -> must generate artificial models like anybody else does.
-
-British model characteristics generator: dbpedia, sp2bench
-from the model based and make deviations in generated models
-different topologies, investigate the metrics impact to the performance, concentrate on this
-
-
-
-
-The main idea of our work and its possible utilization is depicted in Figure 1121212. %todo create overview optimization figure
-In the first step, the framework analyzes the graph-based models and explores their characteristics, secondly, it evaluates the queries on the models and measures the performance---so the evaluation time. In the next step, the evaluation times and the corresponding model characteristics are analyzed together, as the framework searches relationships between them. The goal is to find that how the characteristics of the models impact the performance of the queries.
-
-As Figure 11212 %todo reference
-illustrates as well, a possible utilization of our approach is the field of query optimization. Based on the analysis results from the framework, it becomes feasible to choose an appropriate optimization technique for a particular tool in the light of the model and performance relationship.
-
-Three challenges can be found in our research. At first, we have to provide a solution for our framework to generate models with different characteristics that impact the performance of a certain query and thus cause a deviation in evaluation time. Secondly, we have to find model attributes that are able to characterize the models individually. Furthermore, these attributes must be suitable to create quantitative relationships among them and the evaluation times.
-
-
-link this and the following sections
-find individual attributes of models that can cause performance fluctuation, what is main indicator that distinguishes the graphs?
+%Three challenges can be found in our research. At first, we have to provide a solution in the HG benchmark to generate models with different %characteristics that impact the performance of a particular query and cause a deviation in evaluation time. 
+%Second, we have to find model metrics that are able to characterize the models individually. Furthermore, these attributes must be suitable to %create quantitative relationships among them and the evaluation times.
 
 \section{Models and Metrics}
 \subsection{Real-Life Networks}
@@ -151,11 +121,3 @@ In order to find quantitative connections, we use regression analysis to show ho
 \subsection{Sample Choosing}
 
 By using regression analysis on a sample, it is inevitable to regard the sample to be unbiased. In our case, a bias in a sample of graph topologies means a fluctuation in the size of the models. Obviously, one topology in the sample with larger amount of nodes can bias the connection between the models and the performance, therefore, our framework must support the generation of \textit{uniform} models with respect to the amount of nodes and edges, even in the case of different topologies as well.\footnote{From now on, under the concept of uniform models we mean models with approximately equal number of nodes and edges, despite the diversity of their internal structures.}
-
-The number of nodes in a graph is the most dominant factor to the performance
-
-\section{Usage of the Train Benchmark Framework}
-%todo rewrite
-For our approach, we use the Train Benchmark framework to generate different topologies, evaluate queries on the models, and finally, analyze the results by creating regression models to show how the model metrics characterize the performance.
-
-Since our research partly deviates from the field that the Train Benchmark investigates, it is necessary to extend the framework for our purpose. To eliminate the limitations of the framework (described in Section \ref{sec:railway}), we elaborate a new generation component based on a real-life model and enhance the framework with model and performance analysis.

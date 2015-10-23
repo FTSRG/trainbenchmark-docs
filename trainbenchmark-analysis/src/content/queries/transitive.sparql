@@ -4,7 +4,7 @@ PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT  (count(*) AS ?count)
 WHERE
   { ?sourceStation rdf:type base:Station .
-    ?sourceStation (base:neighbors)* ?targetStation
+    ?sourceStation (base:neighbor)* ?targetStation
     FILTER ( ?sourceStation = base:_ID1 )
     FILTER ( ?targetStation = base:_ID2 )
   }
