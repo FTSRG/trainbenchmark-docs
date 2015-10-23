@@ -46,7 +46,7 @@ The data contains approximately 10 000 British stations that belong to train sch
 
 \section{Uniform Model Generation}
 
-It is an essential expectation from the \framework~framework to guarantee uniform model generation among the topologies indicating the same size of the generated models. We propose a model generation technique in \framework~to generate topologies with the same amount of nodes and edges.
+It is an essential expectation from the HG Benchmark to guarantee uniform model generation among the topologies indicating the same size of the generated models. We propose a model generation technique to generate topologies with the same amount of nodes and edges.
 
 \subsection{Number of Nodes}
 
@@ -149,7 +149,7 @@ A workflow in the HG Benchmark is divided into phases that are considered as the
 	\label{fig:mondo_map_workflow}
 \end{figure}
 
-The workflow of \framework~is depicted in Figure \ref{fig:mondo_map_workflow}. After loading the model, the framework calculates the model related metrics. Due to the fact that in the current phase of our research we do not consider model transformations, therefore, a particular model's metrics can be calculated only once in the beginning of the workflow, and more importantly, different runs of the benchmark can utilize the previously calculated metrics that belong to the same model. As it can be observed in the model analysis phase, the solution is achieved by using a cache for the calculated metrics and reusing its content if possible.
+The workflow of the HG Benchmark is represented in Figure \ref{fig:mondo_map_workflow}. After loading the model, the framework calculates the model related metrics. Due to the fact that in the current phase of our research we do not consider model transformations, therefore, a particular model's metrics can be calculated only once in the beginning of the workflow, and more importantly, different runs of the benchmark can utilize the previously calculated metrics that belong to the same model. As it can be observed in the model analysis phase, the solution is achieved by using a cache for the calculated metrics and reusing its content if possible.
 
 The features in the \textsf{Initialize} and \textsf{Build Query} phases are strongly correlated. These two phases entail the creation of dynamic queries. The first one provides a default query definition that can be parameterized, and the second phase assembles a complete query for the evaluation, as it injects parameters or alters the entire syntax. The latter operation implies that entirely different queries can be executed in a sequence.
 
