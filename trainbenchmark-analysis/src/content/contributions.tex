@@ -4,7 +4,7 @@ In the following sections, we present the main contributions related to the \fra
 
 \section{Overall Architecture}
 
-Figure \ref{fig:architecture} depicts the frameworks and the main components belonging to them, additionally, it also denotes which components are reused from Train Benchmark.
+Figure \ref{fig:architecture} depicts the frameworks and the main components belonging to them, additionally, it also denotes which components are reused from Train Benchmark. All of the frameworks and their components were elaborated in Java programming language.
 
 \begin{figure}[!ht]
 	\centering
@@ -44,7 +44,7 @@ In order to test our regression models on an entirely different graph, we introd
 
 The data contains approximately 10~000 British stations that belong to train schedules as destinations. We concentrate on the network of stations, and map it to a graph where every vertex symbolizes a station. An edge is drawn between two nodes---\ie two stations---if these stations appear consecutively in a destinations path belonging to a schedule.
 
-\section{Uniform Model Generation}
+\section{Uniform Model Generation}\label{sec:uniform_generation}
 
 It is an essential requirement of the HG Benchmark to guarantee uniform model generation among the topologies indicating the same size of the generated models. We propose a model generation technique to generate topologies with the same amount of nodes and edges.
 

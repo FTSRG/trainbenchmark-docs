@@ -53,7 +53,7 @@ As far as the Watts-Strogatz model---and the random graph---are concerned, their
 
 We assume that those metrics that show high deviations among the different topologies are suited to characterize and identify them individually, furthermore, they may able to characterize an arbitrary graph as well. If these metrics are capable to characterize entirely different networks, then we assume that these metrics are the key to characterize the performance of query evaluations.
 
-\subsection{Network Topologies and Representative Metrics}
+\subsection{Network Topologies and Representative Metrics} \label{sec:topology_metric}
 
 Barabási and Albert inspect the natures of the well-known graph topologies in~\cite{statistical_mechanics}, such as the random graph, scale-free and the Watts-Strogatz model. As a main result, they observe that there are significant differences among the topologies regarding specific graph metrics. Based on their study and the research of hierarchical graphs~\cite{hierarchical}, the following metric deviations are assumed between the four topologies, illustrated in Table \ref{tab:topology_metrics}. The random graph is considered as a reference point, and every value is compared to its metrics by assuming that the networks are in the same size.
 \begin{table}[ht]
@@ -91,7 +91,7 @@ By modifying $p$, the Watts-Strogatz model represents a bridge between a lattice
 %todo add betweenness reference to background
 Besides the models in Table \ref{tab:topology_metrics}, the metrics also require modifications. The problem is that the maximum degree metric alone does not include a comprehensive information about the internal structure of the network, since it does not emphasize the role of a node with maximum degree in the connectivity of the graph. Hence, we use another metric---the \textit{betweenness centrality}---which characterizes adequately the importance of a higher degree, since the higher value of betweenness centrality belongs to a vertex, the more shortest paths include that node, symbolizing that node represents the center in the graph.
 
-After these modifications, the topologies and the related metrics are shown in Table \ref{tab:topology_metrics2}. WS-$p$ indicates the Watts-Strogatz model with a probability value of $p$. The values of the betweenness centrality are determined by our initial conjecture considering that the \textit{center} node in a hierarchical network and the \textit{hubs} in a scale-free model may occur more times in the shortest paths due to the fact that they have higher degrees. The main conclusion is that we can achieve a higher deviation among the metric values by using these topologies, and thus, in the following we concentrate on these networks.
+After these modifications, the topologies and the related metrics are shown in Table \ref{tab:topology_metrics2}. WS-$p$ indicates the Watts-Strogatz model with a probability value of $p$. The values of the betweenness centrality are determined by our initial assumption considering that the \textit{center} node in a hierarchical network and the \textit{hubs} in a scale-free model may occur more times in the shortest paths due to the fact that they have higher degrees. The main conclusion is that we can achieve a higher deviation among the metric values by using these topologies, and thus, in the following we concentrate on these networks.
 \begin{table}[ht]
 	\footnotesize
 	\centering
