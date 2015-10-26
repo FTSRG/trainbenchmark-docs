@@ -172,7 +172,7 @@ We investigate the performance of two queries in our HG Benchmark. The first one
 
 \subsubsection{Shortest Path Query}
 
-The SPARQL definition of the query is shown below:\\
+The SPARQL definition of the query is shown below\footnote{The domain of the homogeneous graphs is based on Stations.}:\\
 \lstinputlisting{content/queries/transitive.sparql}
 
 The query uses the \textsf{*} operator from SPARQL Property Paths~\cite{property_path} in the \textsf{(base:neighbor)*} predicate which means an arbitrary length of path with the \textsf{neighbor} predicates. The query is a parameterized query in which we inject two random identifiers instead the \textsf{ID} parameters. Finally, the query searches a path between those two nodes.

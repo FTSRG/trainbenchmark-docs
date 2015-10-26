@@ -4,8 +4,8 @@
 
 In this section, we introduce the main notions about our work to analyze model and performance relationships.
 
-Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work: the Train Benchmark and MONDO-SAM frameworks. Furthermore, we the elaborate \framework (MONDO-Metrics-Based Analysis of Performance) and the Homogeneous Graphs Benchmark.
-%todo mondo sam cite
+Our concept includes the following systems illustrated in Figure \ref{fig:frameworks}. We rely on two existing frameworks in our work: the Train Benchmark and MONDO-SAM\footnote{The project of MONDO-SAM can be found in \url{http://github.com/ftsrg/mondo-sam}} frameworks. Furthermore, we the elaborate \framework (MONDO-Metrics-Based Analysis of Performance)\footnote{The project of MONDO-MAP can found in \url{http://github.com/ftsrg/mondo-map}} and the Homogeneous Graphs Benchmark.
+
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=130mm, keepaspectratio]{figures/frameworks.pdf}
@@ -55,7 +55,7 @@ We assume that those metrics that show high deviations among the different topol
 
 \subsection{Network Topologies and Representative Metrics} \label{sec:topology_metric}
 
-Barabási and Albert inspect the natures of the well-known graph topologies in~\cite{statistical_mechanics}, such as the random graph, scale-free and the Watts-Strogatz model. As a main result, they observe that there are significant differences among the topologies regarding specific graph metrics. Based on their study and the research of hierarchical graphs~\cite{hierarchical}, the following metric deviations are assumed between the four topologies, illustrated in Table \ref{tab:topology_metrics}. The random graph is considered as a reference point, and every value is compared to its metrics by assuming that the networks are in the same size.
+Barabási and Albert inspect the natures of the well-known graph topologies in~\cite{statistical_mechanics}, such as the random graph, scale-free and the Watts-Strogatz model. As a main result, they observe that there are significant differences among the topologies regarding specific graph metrics. Based on their study and the research of hierarchical graphs~\cite{hierarchical}, the following metric deviations are assumed between the four topologies, illustrated in Table \ref{tab:topology_metrics}\footnote{The metric values are compared to each other, as one \textbullet ~indicates the lowest metric value, and  \textbullet\textbullet\textbullet~ denotes the largest value among the topologies.}. The random graph is considered as a reference point, and every value is compared to its metrics by assuming that the networks are in the same size.
 \begin{table}[ht]
 	\footnotesize
 	\centering

@@ -66,7 +66,7 @@ The generated models over the Railway domain are not related to a real-life mode
 
 \subsection{Metric-Based Analysis}
 
-The Train Benchmark framework was extended with metric-based analysis in ~\cite{metric_ase}.
+The Train Benchmark framework was extended with metric-based analysis in~\cite{metric_ase} with the fundamental goal of finding correlations between (i) the performance of query evaluations and (ii) query and model metrics.
 
 
 \section{Conclusion} \label{sec:benchmark_conclusions}
@@ -75,7 +75,7 @@ The represented benchmark frameworks propose different comprehensive use cases t
 
 However, in case of an arbitrary workload, the \textit{model} also represents a dominating factor to the performance. DBpedia or the SP$^2$Bench framework do not consider model modifications in their workloads, so they do not investigate the impact of various model characteristics to the performance, they only generate the same structural model in different sizes to measure scalability. BSBM proposes update operations on the models, still, it does not investigate model and performance correlations. Even though Train Benchmark considers model transformations, yet, it modifies only one type of element that impacts the result set of the query evaluation, and the generated models are still considered as static models. As a conclusion, all of the introduced frameworks concentrate on the generation of one static model without altering its internal structure and analyzing their influence to the performance.
 
-In order to introduce a new approach to the field of graph-based benchmark frameworks, we focus on elaborating a framework that proposes various models with different characteristics and investigates the relationships between the performance and the internal structure of the model.
+The fundamental goal of our work is to extend the metric-based analysis in the Train Benchmark with the particular emphasis on the generation of different models and analyze the relationship between the model-based metrics and the performance of query evaluation.
 
 The main features of the introduced frameworks and our new approach are summarized in Table \ref{tab:framework_features}.
 \begin{table}[ht]
@@ -92,7 +92,7 @@ The main features of the introduced frameworks and our new approach are summariz
 		Various models &  &  &  & & \textbullet \\ \hline
 		Measurement of scalability  & \textbullet & \textbullet & \textbullet & \textbullet & \textbullet\\ \hline
 		Performance metrics  & \textbullet & \textbullet & \textbullet & &  \\ \hline
-		Model metrics &  &  &  & & \textbullet \\ \hline
+		Model metrics &  &  &  & \textbullet & \textbullet \\ \hline
 		Various representation formats & &  &  & \textbullet & \\ \hline
 		\bottomrule
 	\end{tabular}

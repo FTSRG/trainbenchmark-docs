@@ -7,18 +7,18 @@
 
 \section{Benchmarking Environment}
 
-The benchmarking environment involves a single machine that contains a quad-core Intel Xeon Processor L5420 (2.5 GHz) and 16 GBs of RAM. In order to alleviate disturbance of a running measurement and minimize the noise in the results, a bare metal 64-bit Ubuntu 14.04.2 LTS was installed. Additionally, Oracle JDK version 1.7.0 was used as the Java environment.
+The benchmarking environment involves a single machine that contains a quad-core Intel Xeon Processor L5420 (2.5 GHz) and 16 GBs of RAM. In order to alleviate the effect of transient on the measurements and minimize the noise in the results, a 64-bit Ubuntu 14.04.2 LTS was installed. Additionally, Oracle JDK version 1.8.0 was used as the Java environment.
 
 
 \section{Benchmark Configuration}
 
 \paragraph{Topologies}
 
-We generate five topologies for the measurements such as the scale-free model, hierarchical network and Watts-Strogatz models with different probability $p$ values as $0.1$, $0.01$ and $0.001$. Due to these configurations of $p$, we reach a deviation between Watts-Strogatz models and random graphs.\\ The topologies are generated via our uniform model generation approach (\ref{sec:uniform_generation}).
+We generate five topologies for the measurements such as the scale-free model, hierarchical network and Watts-Strogatz models with different probability $p$ values as $0.1$, $0.01$ and $0.001$. Due to these configurations of $p$, we reach a deviation between Watts-Strogatz models and random graphs.\\ The topologies are generated via our uniform model generation approach (Section \ref{sec:uniform_generation}).
 Every topology is generated five times with different densities that are adjusted to five different values based on the size of $K_n$ complete graphs found in the hierarchical network. These $K_n$ complete graphs are configured to $K_3$, $K_4$, $K_5$ $K_6$ and $K_7$.
 
 \paragraph{Queries}
-The queries are parameterized and executed for 20 times in a sequence on every graph. Furthermore, every measurement is repeated 4 times.
+The queries are parameterized with random values 20 times and executed on every graph. Each measurements is performed 4 times.
 
 \paragraph{Model Size}
 
@@ -45,22 +45,22 @@ The configuration of the model sizes are shown in Table \ref{tab:graph_size} rep
 
 \section{Samples}
 
-In order to analyze the relationships between model metrics and performance of query evaluations, we create different samples of the measurements and investigate them respectively. The triple of a tool, query and a specific model size (number of nodes) defines a sample meaning that it includes the measurement results of one particular query per a tool based on a certain size of the models. As a result, the number of different samples is equal to the product of unique tools, queries and model sizes.
+In order to analyze the relationships between model metrics and the performance of query evaluations, we create different samples of the measurements and investigate them respectively. The triple of a specific tool, query and model size (number of nodes) defines a sample. A sample contains the measurement results for a particular query evaluated by a tool on a model of a certain size. As a result, the number of different samples is equal to the product of unique tools, queries and model sizes.
 
 \subsection{Sample Size}
-A sample includes the measurements executed on 5 different topologies, each of them appears 5 times in the sample with different densities that are configured between the various topologies equally. One sample contains 20 evaluations of a parameterized query. Every measurement is repeated 4 times in a sequence, however, we reject the first evaluation times and use the median of the remained measurements.\\
-The dimensions in a sample and their occurrences are illustrated in Table \ref{tab:sample_size}. Since the triple of tool, query and model size defines a different sample, these values represent one value in a sample. As it can be observed, the sample size is equal to $500$.
+A sample includes the measurements executed on 5 different topologies, each of them appears 5 times in the sample with different densities that are configured between the various topologies equally. One sample contains 20 evaluations of a parameterized query. Every measurement is repeated 4 times in a sequence, however, we discard the first evaluation times and use the median of the remaining measurements.\\
+The dimensions in a sample and their occurrences are illustrated in Table \ref{tab:sample_size}. Since the triple of a tool, query and model size defines a different sample, these values represent one value in a sample. As it can be observed, the sample size is equal to $500$.
 
 \begin{table}[ht]
 	\footnotesize
 	\centering
 	
 	\begin{tabular}{ l c c c c c c || c }
-		\toprule
+		\hline
 		 & Tool & Query & Model Size & Query Evaluation & Topology  & Density & $\prod$\\ [5pt] \hline
 %		\midrule 
 		Occurrence & 1 & 1 & 1 & 20 & 5 & 5 & 500 \\ \hline
-		\bottomrule
+%		\bottomrule
 	\end{tabular}
 	\caption{The dimensions and their occurrence in a sample.}
 	\label{tab:sample_size}
@@ -78,12 +78,12 @@ One essential expectation was in our work to generate different graphs with the 
 	\label{fig:density}
 \end{figure}
 
-As it can be observed, the topologies with different networks have approximately the same density with the respect to the number of nodes, which implies an equality in the number of edges. A small deviation is shown between the hierarchical graph and the other topologies. This is explained by the fact that the recursive generation algorithm of the hierarchical network must be terminated before its end in order to obtain an arbitrary number of nodes. Hence, we can only estimate the amount of edges in the graph with a dispersion. The standard deviation of the densities is $1.11 \cdot 10^{-5}$, and divided by the maximum number of density we obtain 0.028, which means a 2.8\% difference between the topologies with respect to their density.
+As it can be observed, the topologies with different networks have approximately the same density with the respect to the number of nodes, which implies the number of edges is almost equal. A small deviation is shown between the hierarchical graph and the other topologies. This is explained by the fact that the recursive generation algorithm of the hierarchical network must be terminated before its end in order to obtain an arbitrary number of nodes. Hence, we can only estimate the amount of edges in the graph with a dispersion. The standard deviation of the densities is $1.11 \cdot 10^{-5}$, and divided by the maximum number of density we obtain 0.028, which means a 2.8\% difference between the topologies with respect to their density.
 
 \subsection{Clustering Coefficient}
 
 Our goal is to achieve a deviation in metric values per topologies such as the clustering coefficient metric. Figure \ref{fig:clustering_metric} depicts the average clustering coefficients in the topologies. The $x$-axis represents the number of nodes in the graphs, the $y$-axis denotes the values of the metric, furthermore, every value is separated by the topology in legend.\\
-The plot shows how the values spread in the $0-1$ interval according to our early expectation (Section \ref{sec:topology_metric}). One topology has more corresponding metric value in the same size---\eg hierarchical---due to the fact that we generated 5 instances of every topology with different densities, which implies a different clustering coefficient metric per instance as well.
+The plot shows how the values spread in the $[0,1]$ interval according to our early expectation (Section \ref{sec:topology_metric}). One topology has more corresponding metric value in the same size---\eg hierarchical---due to the fact that we generated 5 instances of every topology with different densities, which implies a different clustering coefficient metric per instance as well.
 
 \begin{figure}[!ht]
 	\centering
@@ -94,7 +94,7 @@ The plot shows how the values spread in the $0-1$ interval according to our earl
 
 \subsection{Shortest Path Length}
 
-The average lengths of shortest paths in the topologies are demonstrated in Figure \ref{fig:betweenness_metric}. Easy to observe that as we decrease the $p$ probability in the Watts-Strogatz models (from $0.1$ to $0.001$) , the lengths of the shortest paths increase. This negative correlation shows the same results that we expected and can be explained by the operation of the generation algorithm belonging to the Watts-Strogatz model. As we increase the $p$ value, the algorithm rewires every edge with $p$ probability---\ie it deletes an edge and connects it to a new random node---and this entails a bigger interconnectivity in the graph showing a small-world property. On the contrary, a low $p$ value (\eg 0.001) modifies a subtle set of the edges, therefore, the graph still shows similar characteristics than a lattice graph with high average shortest path length.
+The average lengths of shortest paths in the topologies are demonstrated in Figure \ref{fig:betweenness_metric}. It can be observed that as we decrease the $p$ probability in the Watts-Strogatz models (from $0.1$ to $0.001$), the lengths of the shortest paths increase. This negative correlation shows the same results that we expected and can be explained by the operation of the generation algorithm belonging to the Watts-Strogatz model. As we increase the $p$ value, the algorithm rewires every edge with $p$ probability---\ie it deletes an edge and connects it to a new random node---and this entails a bigger interconnectivity in the graph showing a small-world property. On the contrary, a low $p$ value (\eg 0.001) modifies a subtle set of the edges, therefore, the graph still shows similar characteristics than a lattice graph with high average shortest path length.
 
 \begin{figure}[!ht]
 	\centering
