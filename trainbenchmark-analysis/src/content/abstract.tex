@@ -9,17 +9,16 @@
 % Abstract in Hungarian
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
-A modell központú rendszerek tervezése során kulcsfontosságú a modellen kiértékelt lekérdezések optimális teljesítménye, ennek elérése érdekében pedig a megfelelő végrehajtó eszközök megválasztása. Az elmúlt években különböző NoSQL adatbázis-kezelő rendszerek váltak népszerűvé, amelyek célja a gyors lekérdezés kiértékelés és skálázhatóság biztosítása.
 
-A lekérdezés kiértékelésének teljesítményét nagy mértékben befolyásolja a modell topológiája és a lekérdezés komplexitása. Célunk az, hogy bizonyos, a modellt és a lekérdezést leíró metrika felhasználásával, kapcsolatot találjunk a metrikák és a teljesítmény között, úgy, hogy az adott metrikákat ismerve, a teljesítmény megjósolható legyen.
 
-A metrikák alapján tervezési szintű döntéseket hozhatunk az optimális teljesítményre törekedve, továbbá, ez a tudás lehetőséget teremt a valósidejű lekérdezés optimalizálás területén is arra, hogy a modellt és a lekérdezést jellemző metrikák alapján döntsünk optimalizálást érintő kérdésekben.
+A gráf alapú adatbázis-kezelő rendszerek esetén kulcsfontosságú a nagy teljesítményű lekérdezés kiértékelésének elérése. Egy gráfon kiértékelt lekérdezéshez szükséges időt egyaránt befolyásolja a lekérdezés komplexitása és a gráf hálózata. 
 
-Különböző NoSQL adatbázis-kezelő rendszereket vizsgálva, regressziós analízis segítségével olyan metrikák után kutatunk, amelyek képesek az adott rendszer futási teljesítményét jellemezni. A vizsgálandó adathalmazok előállításához, egy valós modellből kiindulva, különböző eloszlású és topológiájú gráfokat generálunk.
+Számos modern benchmark keretrendszer ajánl életszerű illetve szisztematikus munka profilokat a lekérdezések teljesítménymérésére.
+Azonban, ezen keretrendszerek nem veszik figyelembe a gráf belső hálózatán végbemenő változásokat, és kizárólag egy struktúrájú gráfra koncentrálnak. Noha a legtöbb benchmark keretrendszer számításba vesz teljesítmény leíró metrikákat (mint válaszidő, óránként kiértékelt lekérdezések száma), ugyanakkor nem nyújt lekérdezést illetve gráfot leíró metrikát. Ennek következtében nem keresnek kapcsolatot a terhelési profil és a teljesítmény között.
 
-További célunk az, hogy eldöntsük, vajon egy tetszőleges struktúrájú adatmodellre képesek vagyunk-e a regressziós analízisünk alapján a teljesítményre becslést adni, illetve a modellhez a megfelelő, készletünkben lévő adatbázis-kezelő rendszert társítani, a legjobb teljesítményre koncentrálva. 
+Hogy megalapozzuk a gráf alapú adatbázisok teljesítmény elemzését, egy benchmark keretrendszert fejlesztünk ki.
 
-Végezetül, a valós idejű lekérdezések optimalizálásától motiválva, választ keresünk arra, hogy egy tetszőleges adatmodellre, költséghatékony  metrikaszámítással a teljesítmény előre megbecsülhető-e.
+A teljesítmény mérés céljára különböző gráf topológiákat használunk, amelyek jellemzésére gráfmetrikákat definiálunk. A metrikák segítségével kapcsolatot találhatunk a gráfokat jellemző metrikák és a lekérdezések futásidői között. A kapcsolat megtalálása a metrikák és a teljesítmény között felhasználható a gráflekérdezések optimalizálása terén. Míg a relációs adatbázis-kezelő rendszerek lekérdezés optimalizálása területén számos publikáció elérhető, addig a gráf alapú adatbázis-kezelők optimalizálása kiforratlan területnek tekinthető.
 
 
 
@@ -32,26 +31,30 @@ Végezetül, a valós idejű lekérdezések optimalizálásától motiválva, v�
 % Abstract in English
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
-Obtaining the optimal performance of query evaluations represents a crucial problem in the modern graph-based database systems. The response time of query evaluation on a graph is affected by the complexity of the particular query and the underlying network structure of a graph. To understand the connection between query, network and performance, a deeper analysis is required.
+Achieving high-performance query evaluation represents a crucial problem in modern graph-based database systems. The response time of the query evaluation on a graph is affected by the complexity of the particular query and the underlying network structure of the graph. 
 
-Several state-of-the-art benchmark frameworks exist that assess the query evaluations as they create realistic workloads and define suites of systematic queries to investigate the performance from different perspectives. However, these benchmark frameworks rely on only one particular type of network and they do not concentrate on a significant alteration of the underlying graph. Moreover, they do not propose a comprehensive performance analysis, as they do not 
+Several state-of-the-art benchmark frameworks exist that assess the performance and correctness of query evaluations as they create real world-like workloads and define suites of systematic queries. However, these benchmark frameworks rely on only one particular type of network and they do not concentrate on a significant alteration of the underlying graph. Although most of them define metrics for characterizing the specific aspects of performance (response time, query evaluations per hour, etc.), most of them lack such comprehensive metrics for the queries and the graph.
+As a consequence, they cannot determine the correlations between workload and performance.
 
-In order to introduce a new approach, we elaborate a benchmark framework
+%Due to the absence of metrics, it is difficult to give a precise characterization of the complexity for various benchmarks. Hence, it is difficult %to compare the benchmarks and the published results to each other.
 
-model nincs
+In order to provide solid foundations to characterize the complexity of graph benchmarks, we elaborate a benchmark framework for graph-based database systems.
 
-model metrics
+We use various graph metrics to describe the structure of the graph %create regression models to determine the relationships quantitatively.
+and use a varied set of graph topologies for benchmarking. This will allow us to perform in-depth analysis on the relationships between the structure of the graph in the database and the performance of the query evaluations. These results can be used to obtain advanced heuristics for the optimization of graph query engines. While the optimization of relational databases has well-known techniques documented by a wide literature, the problem for graph query engines is yet be discussed thoroughly.
 
-miért jó ha van kapcsolat
-The performance of query evaluations depends on the topology of the model, and the complexity of the particular query. Our primary goal is that --- by defining model and query-related quantitative metrics ---  to find a considerable connection between metrics and the performance, and thus, be able to predict the query evaluation time.
 
-Based on the metrics and their effect to the performance, we are able to make decisions in design to achieve on the optimal performance. Furthermore, this knowledge can be utilized in the area of real-time query optimization engines as well.
 
-We investigate various NoSQL database systems via regression analysis in order to find different model-related metrics that are suited to characterize their performance appropriately. Based on a real model, we generate graphs with various topologies and distributions to find metrics from different aspects.
 
-Furthermore, we explore that whether an arbitrarily structured model's performance is predictable via our regression analysis, and also predict which database system from our scope can be associated to the model in order to achieve an optimal performance.
+%The performance of query evaluations depends on the topology of the model, and the complexity of the particular query. Our primary goal is that --- %by defining model and query-related quantitative metrics ---  to find a considerable connection between metrics and the performance, and thus, be %able to predict the query evaluation time.
 
-Finally, being motivated by the real-time optimization engines, we search answers whether by reducing the cost of metric calculations, an arbitrary model's performance is still predictable.
+%Based on the metrics and their effect to the performance, we are able to make decisions in design to achieve on the optimal performance. %Furthermore, this knowledge can be utilized in the area of real-time query optimization engines as well.
+
+%We investigate various NoSQL database systems via regression analysis in order to find different model-related metrics that are suited to %characterize their performance appropriately. Based on a real model, we generate graphs with various topologies and distributions to find metrics %from different aspects.
+
+%Furthermore, we explore that whether an arbitrarily structured model's performance is predictable via our regression analysis, and also predict %which database system from our scope can be associated to the model in order to achieve an optimal performance.
+
+%Finally, being motivated by the real-time optimization engines, we search answers whether by reducing the cost of metric calculations, an arbitrary %model's performance is still predictable.
 
 
 \vfill

@@ -1,4 +1,4 @@
-\chapter{Contributions}
+\chapter{Contributions}\label{chapter:contribution}
 
 In the following sections, we present the main contributions related to the \framework~framework and the Homogeneous Graphs Benchmark.
 
@@ -28,7 +28,7 @@ The definitions of \textsf{Model Metrics} can be found in \framework. The model 
 
 \paragraph{Generators}
 
-The generator components belong to the HG Benchmark. The abstract \textsf{Generator} unit is utilized from Train Benchmark. The \textsf{Stations Generator} component is responsible for transforming the real-life British Railway Stations model to RDF. Last, the \textsf{Topology Generators} construct different homogeneous graphs fitting to well-known topologies and transform them to RDF format.
+The generator components belong to the HG Benchmark. The abstract \textsf{Generator} unit is utilized from Train Benchmark. Last, the \textsf{Topology Generators} construct different homogeneous graphs fitting to well-known topologies and transform them to RDF format.
 
 \paragraph{RDF Driver}
 The \textsf{RDF Driver} manages the connections between the measured RDF databases and the benchmark framework, furthermore, it also accomplishes the loading of the models. 
@@ -36,12 +36,6 @@ The \textsf{RDF Driver} manages the connections between the measured RDF databas
 \paragraph{Query Executor and Query Builder}
 
 The query evaluations are initiated by the \textsf{Query Executor} component. The \textsf{Query Builder} is responsible for creating and altering the query definitions in runtime.
-
-\section{British Railway Stations}
-
-In order to test our regression models on an entirely different graph, we introduce a real-life model to our work. We use a model of train stations provided by the \textit{Network Rail} company that runs, maintains, and develops Britain's rail tracks~\cite{network_rail}. Network Rail publishes a number of different data available to developers, one of them is a \textit{daily extracts and updates of train schedules}~\cite{schedules_data} that which formed the basis of our data set.
-
-The data contains approximately 10~000 British stations that belong to train schedules as destinations. We concentrate on the network of stations, and map it to a graph where every vertex symbolizes a station. An edge is drawn between two nodes---\ie two stations---if these stations appear consecutively in a destinations path belonging to a schedule.
 
 \section{Uniform Model Generation}\label{sec:uniform_generation}
 

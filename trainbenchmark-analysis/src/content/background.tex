@@ -1,7 +1,13 @@
 
 \chapter{Background}\label{chapter:background}
 
-\section{RDF}
+\section{Resource Description Framework}
+
+The Resource Description Framework (RDF~\cite{RDF}) is a family of W3C (World Wide Web Consortium) specifications originally designed as a \emph{metadata data model}. 
+
+The RDF data model is based on the idea of making statements about \emph{resources} in the form of triples. A triple is a data entity composed of a \emph{subject}, a \emph{predicate} and an \emph{object}, e.g.\ ''John instanceof Person'', ''John \mbox{has-an-age-of} 34''.  
+
+Triples are typically stored in \emph{triplestores}, specialized databases tailored to store and process triples efficiently. Also, some triplestores are capable of \emph{reasoning}, i.e.\ inferring logical consequences from a set of facts or axioms. Triplestores are mostly used in the semantic and Linked Data domain.
 
 \section{Foundations of Statistics} \label{section:distributions}
 In this section, we present the fundamental concepts of the field of statistics. The majority of the definitions can be found in~\cite{statistics_book}.
@@ -13,12 +19,12 @@ The sample size is the number of observations in a sample and commonly denoted b
 
 \subsection{Probability Distributions}
 
-The probability distribution links each possible value of a random variable~\cite{random_variable} with its probability of occurrence. The following paragraphs we define different discrete probability distributions related to our work.
+The probability distribution links each possible value of a random variable~\cite{random_variable} with its probability of occurrence. In the following paragraphs we define various discrete probability distributions related to our work.
 
 \subsubsection{Uniform Distribution}
 
 A random variable $X$ has a discrete uniform distribution if each of the \textit{n} values in
-its range, namely, $x_1$, $x_2$, ..., $x_n$, has equal probability. Formally:
+its range, namely, $x_1$, $x_2$, ..., $x_n$, have equal probability. Formally:
 \begin{align}
 	f(x_i) = \frac{1}{n}
 \end{align}
@@ -36,7 +42,7 @@ The power-law distribution describes the probability of the random variable that
 \begin{align}
 	f(x) = c\cdot x^{-\gamma}
 \end{align}
-where $c$ is a constant and $\gamma$ is called as the \textit{exponent} or \textit{scale factor}.
+where $c$ is a constant and $\gamma$ is called the \textit{exponent} or \textit{scale factor}.
 
 \subsubsection{Poisson Distribution}
 The Poisson distribution is characterized by the following elementary probabilities:
@@ -47,7 +53,9 @@ where $\lambda$ > 0 is the shape parameter and $k$ $\in$ $\mathbb{N}$.
 
 %todo insert distributions pic%
 
-\subsection{Related Measurements}
+\subsection{Measures of Descriptive Statistics}
+
+Descriptive statistics defines a number of values for characterizing a particular data set. Here, we discuss the most important measures related to our work.
 
 \subsubsection{Mean}
 The \textit{mean} or \textit{expected value} of a discrete random variable $X$ denoted by $\mu$ or $E(X)$ is
@@ -76,12 +84,12 @@ The \textit{covariance} is a measure of the linear relationship between random v
 \begin{align}
 	cov(X,Y) = E\big[(X - \mu_X)(Y - \mu_Y)\big]
 \end{align}
-A positive covariance implies that $Y$ tends to increase as $X$ increases as well, and if $cov(X,Y) < 0$ then $Y$ tends to decrease as $X$ increases~\cite{covariance}. A few examples of different scenarios are illustrated in Figure \ref{fig:covariance} (~\cite{statistics_book}). In the terms of (a) and (b), a covariance is observable between $X$ and $Y$, and in the cases of (c) and (d), the covariance is equal to zero.
+A positive covariance implies that $Y$ tends to increase as $X$ increases as well, and if $cov(X,Y) < 0$ then $Y$ tends to decrease as $X$ increases~\cite{covariance}. A few examples of different scenarios are illustrated in Figure \ref{fig:covariance}. In the terms of (a) and (c), a covariance is observable between $X$ and $Y$, and in the cases of (b) and (d), the covariance is equal to zero.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=140mm, keepaspectratio]{figures/covariance.png}
-	\caption{Different examples for covariance.}
+	\caption{Different examples for covariance~\cite{statistics_book}.}
 	\label{fig:covariance}
 \end{figure}
 
@@ -90,7 +98,7 @@ Similarly to covariance, the \textit{correlation} describes the strength of the 
 \begin{align}
 	\rho_{XY} = \frac{cov(X, Y)}{\sigma_X\sigma_Y}
 \end{align}
-where $ -1 \leq \rho_{XY} \leq 1$, and 1 indicates a positive linear relationship between $X$ and $Y$, and -1 means negative linearity, finally, 0 is interpreted as a correlation does not appear between the variables.
+where $ -1 \leq \rho_{XY} \leq 1$, and 1 indicates a positive linear relationship between $X$ and $Y$, and $-1$ means negative linearity, finally, 0 implies a correlation does not appear between the variables.
 
 \subsection{Regression Analysis}
 
@@ -105,6 +113,13 @@ A multiple linear regression model considers $k$ independent variables, and the 
 	Y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_kx_k + \epsilon
 \end{align}
 
+\subsubsection{Coefficient of Determination}
+The coefficient of determination---or the multiple R-squared, denoted by R$^2$---is a number between 0 and 1 that expresses how appropriately a regression model fits to the data. An R$^2$ of 1 represents a perfect fit.
+
+\subsubsection{P-value}
+
+The $p$-value is a function of the observed sample results (a statistic) that is used for testing a statistical hypothesis. 
+
 \section{Graph Theory}
 
 In the following sections we introduce the most important graph metrics and network topologies used in our work. We assume that the reader is already familiar with the basic concepts of graph theory, including undirected graphs, complete graphs, adjacent nodes,
@@ -115,6 +130,14 @@ node degrees and shortest paths.
 \subsubsection{Degree Distribution}
 
 The spread among the degrees of the nodes is characterized by a distribution function $P(k)$ which shows the probability that a randomly selected node's degree is equal to $k$. $P(k)$ is called as the degree distribution.
+
+\subsubsection{Density}
+
+For undirected graphs the density is defined as
+\begin{align}
+	D = \frac{2 |E|}{|V| (|V|-1)}
+\end{align}
+where $|E|$ denotes the number of edges and $|V|$ represents the number of nodes in the graph.
 
 \subsubsection{Clustering Coefficient}
 

@@ -1,4 +1,4 @@
-\chapter{Related Work}
+\chapter{Related Work}\label{chapter:related_work}
 
 In the following sections, we introduce benchmark frameworks that are designed to investigate the performance of RDF databases. In Section \ref{sec:benchmark_conclusions}, we summarize the frameworks and compare them to our work which is the introduction of a new approach to existing benchmark frameworks.
 
@@ -63,6 +63,11 @@ Besides the validations, the framework also performs model transformations to al
 The Train Benchmark framework uses artificially generated graph-based models for the measurements over a \textit{railway} domain, illustrated in Figure \ref{fig:tb_domain}. In the models, a train route is defined by a sequence of sensors, and the sensors are associated with track elements which are either segments or switches. A route follows certain switch positions which describe the required state of a switch belonging to the route. Each route has a semaphore on its entry and exit~\cite{train_ttc}.
 
 The generated models over the Railway domain are not related to a real-life model, which leads to the fact that the cardinalities of the elements and their distributions do not follow a real model's characteristic, therefore, the measurement results of different databases cannot be claimed to be representative in a real-life use case.
+
+\subsection{Metric-Based Analysis}
+
+The Train Benchmark framework was extended with metric-based analysis in ~\cite{metric_ase}.
+
 
 \section{Conclusion} \label{sec:benchmark_conclusions}
 
