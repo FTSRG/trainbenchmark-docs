@@ -24,8 +24,7 @@ The \textsf{Model} and \textsf{Query Analyzer} units belong to the \framework~fr
 
 \paragraph{Metrics}
 
-The definitions of metrics---such as \textsf{Model Metrics}  and \textsf{Query Metrics}---can be found in \framework. The model metrics symbolize graph metrics with applying the commonly used naming conventions from graph theory. Note that the HG Benchmark does not contain further RDF-based metrics implying that we use the graph-based naming conventions in our work.\\
-The query metrics describe the complexity of a query itself, without considering its performance in a particular setting.
+The definitions of \textsf{Model Metrics} can be found in \framework. The model metrics symbolize graph metrics with applying the commonly used naming conventions from graph theory. Note that the HG Benchmark does not contain further RDF-based metrics implying that we use the graph-based naming conventions in our work.
 
 \paragraph{Generators}
 
@@ -203,10 +202,8 @@ The tools used in this report are listed in Table \ref{tab:tools}. The last two 
 		\toprule
 		Name & Implementation Language& Version & Query 1 & Query 2\\ 
 		\midrule 
-		AllegroGraph~\cite{allegro} & Allegro Common Lisp & 5.0.0  & \textbullet&  \textbullet \\ \hline
 		Blazegraph~\cite{blaze} & Java  & 1.5.2 & \textbullet & \textbullet\\ \hline
 		4store~\cite{4store} & C  & 1.1.5 & & \textbullet \\ \hline
-		Jena~\cite{jena_api} & Java & 2.13.0 & \textbullet & \textbullet\\ \hline
 		Sesame~\cite{sesame} & Java & 2.7.9 & \textbullet & \textbullet\\ \hline
 		\bottomrule
 	\end{tabular}
@@ -214,9 +211,5 @@ The tools used in this report are listed in Table \ref{tab:tools}. The last two 
 	\label{tab:tools}
 \end{table}
 
-
-\subsection{Regression Analysis}
-
-\subsubsection{MARS}
 
 

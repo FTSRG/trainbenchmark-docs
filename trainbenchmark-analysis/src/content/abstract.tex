@@ -32,8 +32,17 @@ Végezetül, a valós idejű lekérdezések optimalizálásától motiválva, v�
 % Abstract in English
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
-Achieving the optimal performance of query evaluations plays an important goal in model-based systems. In the last few years, different NoSQL database systems were introduced to provide a better performance and solve the problem of scalability.
+Obtaining the optimal performance of query evaluations represents a crucial problem in the modern graph-based database systems. The response time of query evaluation on a graph is affected by the complexity of the particular query and the underlying network structure of a graph. To understand the connection between query, network and performance, a deeper analysis is required.
 
+Several state-of-the-art benchmark frameworks exist that assess the query evaluations as they create realistic workloads and define suites of systematic queries to investigate the performance from different perspectives. However, these benchmark frameworks rely on only one particular type of network and they do not concentrate on a significant alteration of the underlying graph. Moreover, they do not propose a comprehensive performance analysis, as they do not 
+
+In order to introduce a new approach, we elaborate a benchmark framework
+
+model nincs
+
+model metrics
+
+miért jó ha van kapcsolat
 The performance of query evaluations depends on the topology of the model, and the complexity of the particular query. Our primary goal is that --- by defining model and query-related quantitative metrics ---  to find a considerable connection between metrics and the performance, and thus, be able to predict the query evaluation time.
 
 Based on the metrics and their effect to the performance, we are able to make decisions in design to achieve on the optimal performance. Furthermore, this knowledge can be utilized in the area of real-time query optimization engines as well.
