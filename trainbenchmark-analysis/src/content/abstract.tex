@@ -10,15 +10,14 @@
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
+A gráf alapú adatmodellező, illetve adatbázis-kezelő keretrendszerek esetén kulcsfontosságú a minél nagyobb teljesítmény, illetve rövidebb válaszidő biztosítása, különösen az olyan alkalmazási területeken, ahol egyszerre több, strukturálisan összetett lekérdezést kell újra és újra kiértékelni egy folyamatosan változó (gráf)adatstruktúra felett. A modern, relációs adatmodellt elvető NoSQL technológiák terjedésével egyre nagyobb figyelmet kap az ilyen rendszerek teljesítőképessége és skálázhatósága, így az utóbbi években több olyan benchmark is megjelent, melynek fő célja az ilyen rendszerek teljesítőképességének, különösen a lekérdezések skálázhatóságának szisztematikus kiértékelése. 
 
-A gráf alapú adatbázis-kezelő rendszerek esetén kulcsfontosságú a nagy teljesítményű lekérdezés kiértékelésének elérése. Egy gráfon kiértékelt lekérdezéshez szükséges időt egyaránt befolyásolja a lekérdezés komplexitása és a gráf hálózata. 
+A legtöbb mérési keretrendszer számításba vesz bemenet és teljesítmény leíró metrikákat, mint például a gráf csomópontjainak száma vagy a lekérdezések válaszideje, ugyanakkor nagyon nehéz az eredmények összehasonlítása, mert a méréshez használt bemenetek (gráfok, lekérdezések komplexitása, illetve a gráfon a mérés során végrehajtott változtatások jellege, összességében a \emph{terhelési profil}) igen nagy méret- és tulajdonságbeli eltéréseket mutatnak - ezekről pedig megelőző kutatási eredmények kimutatták, hogy jelentős és változó mértékben befolyásolhatják az egyes eszközök viselkedését, teljesítménykarakterisztikáját.
+% Azonban, ezen keretrendszerek nem veszik figyelembe a gráf belső hálózatán végbemenő változásokat, és kizárólag egy struktúrájú gráfra koncentrálnak. 
 
-Számos modern benchmark keretrendszer ajánl életszerű illetve szisztematikus munka profilokat a lekérdezések teljesítménymérésére.
-Azonban, ezen keretrendszerek nem veszik figyelembe a gráf belső hálózatán végbemenő változásokat, és kizárólag egy struktúrájú gráfra koncentrálnak. Noha a legtöbb benchmark keretrendszer számításba vesz teljesítmény leíró metrikákat (mint válaszidő, óránként kiértékelt lekérdezések száma), ugyanakkor nem nyújt lekérdezést illetve gráfot leíró metrikát. Ennek következtében nem keresnek kapcsolatot a terhelési profil és a teljesítmény között.
+A jelen dolgozat elsődleges célja, hogy - korábbi kutatásokat folytatva - kidolgozzon egy olyan mérési módszertant és hozzá kapcsolódó keretrendszert, amelynek segítségével a gráf alapú adatbázis-kezelő rendszerek teljesítménybeli összehasonlítása szisztematikusan és reprodukálhatóan hajtható végre. Fő eredményként a teljesítménymérés céljára különböző gráf topológiákat javasolunk, amelyek jellemzésére gráfmetrikákat definiálunk. A metrikák segítségével jellemezhető az egyes mérések nehézsége, illetve bizonyos eszközök esetén kapcsolatot is találhatunk a gráfokat jellemző metrikák és a lekérdezések futásidői között. A módszertan és a keretrendszer képességeinek bemutatására a dolgozat bemutat egy komplex esettanulmányt, mely magába foglalja számos kísérlet automatizált elvégzését és magasszintű statisztikai analízis eszközökkel támogatott kiértékelését is.
 
-Hogy megalapozzuk a gráf alapú adatbázisok teljesítmény elemzését, egy benchmark keretrendszert fejlesztünk ki.
-
-A teljesítmény mérés céljára különböző gráf topológiákat használunk, amelyek jellemzésére gráfmetrikákat definiálunk. A metrikák segítségével kapcsolatot találhatunk a gráfokat jellemző metrikák és a lekérdezések futásidői között. A kapcsolat megtalálása a metrikák és a teljesítmény között felhasználható a gráflekérdezések optimalizálása terén. Míg a relációs adatbázis-kezelő rendszerek lekérdezés optimalizálása területén számos publikáció elérhető, addig a gráf alapú adatbázis-kezelők optimalizálása kiforratlan területnek tekinthető.
+%, így metrikáink később felhasználhatóak a gráflekérdezések optimalizálása - jelenleg még nagyon kiforratlan - területén. 
 
 
 
