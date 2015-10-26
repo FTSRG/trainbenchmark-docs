@@ -2,3 +2,37 @@
 \chapter*{Introduction}\addcontentsline{toc}{chapter}{\bevezeto}
 %----------------------------------------------------------------------------
 
+% Queries in MDE: scalability challenge
+Nowadays, model-driven software engineering (MDSE) plays an important role in the development processes of critical embedded systems. Advanced modeling tools provide support for a wide range of development tasks such as requirements and traceability management, system modeling, early design validation, automated code generation, model-based testing and other validation and verification tasks. With the dramatic increase in complexity that is also affecting critical embedded systems in recent years, modeling toolchains are facing scalability challenges as the size of design models constantly increases, and automated tool features become more sophisticated.
+
+% Techniques to achieve scalability
+A key factor in the scalability of MDE toolchains is the performance of model representation~\cite{GrandChallengeScalability}, which is, in turn, determined by the characteristics of persistence, query evaluation and model manipulation operations. Traditionally, modeling tools built on state-of-the-art frameworks such as the Eclipse Modeling Framework (EMF~\cite{EMF}) have relied on an in-memory object model backed by an XML serialization. More recently, \emph{model repositories} (such as CDO~\cite{CDO} or Morsa~\cite{COLLAB:MORSA}) have emerged that aim to tackle scalability issues by making use of advances in object persistence technology. As the majority of model-based tools uses a graph-oriented data model, recent results of the NoSQL and Linked Data movement~\cite{neo4j,openvirtuoso,sesame} are straightforward candidates for adaptation to MDE purposes. 
+
+\emph{Model queries} support several essential scenarios including model validation, model transformations, model synchronization, view maintenance and model execution. As a consequence, many scalability issues can be addressed by improving query performance. This led to the development of several model indexing and query evaluation engines (such as Eclipse OCL~\cite{EclipseOCL}, EMF Query~\cite{EMF:ModelQuery}, complementary approaches that translate model queries into lower level queries that can be executed on the (relational) back-end~\cite{scheidgen2012automated}). 
+There are also several approaches (such as \mbox{\textsc{EMF-IncQuery}}~\cite{models10} and the Impact Analyzer of Eclipse OCL~\cite{EclipseOCL}) to support the \emph{incremental evaluation} of model queries, which reduces query response time by limiting the impact of model modifications to query result calculation.
+
+% Benchmarks
+For tool engineers, \emph{benchmarks} may provide guidance on picking the right technology for building a new tool architecture to fulfill increasing scalability requirements. Due to their central role in data-intensive applications, the performance of persistence technologies has been evaluated by many benchmarks~\cite{BSBM,SP2Bench} % TODO cite
+that focus on throughput and response time measurements, and investigate scalability in terms of the size of the data set and the number of transactions. In addition to these traditional scalability aspects, the semantic web community has investigated the scalability of semantic graph databases (RDF triple stores). These benchmarks rely on graph queries over a structurally richer data set and also investigate the effects of advanced semantic technologies such as inference. Up to now, the most complex benchmarking workloads have been investigated by the academic and industrial MDE tool building community in transformation tool contests~\cite{TTC}, which feature synthetic model transformation case studies inspired by real-world applications.
+
+% Challenges: lack of predictability, and generalizability to actual MDSE workloads
+% key differences
+Despite all these efforts, \emph{making a well-founded technological choice} based on existing benchmarking results \emph{remains a tough challenge}. First, MDE tools have very specific \emph{workloads} (both in terms of model structure and transaction complexity) \emph{that are different} in key aspects compared to traditional RDBMS and newer graph persistence benchmarks. MDE tools rely on much more complex queries and their performance is dominated by response time and re-evaluation time rather than throughput. Additionally, RDBMS and semantic technologies have key conceptual differences that require mapping layers which might have adverse and unpredictable effects on real life performance.
+The generalizability of benchmark results is further limited by the \emph{scarcity of relevant metrics} that could be used to assess an engineering problem and predict which technology would be best suited. Existing metrics emphasize a single aspect of the problem (most typically model size), while internal metrics (used by e.g. optimizing query evaluation engines or pattern matchers inside GT tools, for estimating query evaluation difficulty) are either not documented well or not accessible in a reusable way.
+
+
+In this paper, we aim to address these challenges by \emph{assessing existing metrics, along with newly proposed ones}. These metrics take instance model characteristics, static query characteristics and their combination into account. Based on our real-life experiences with tools and models, we \emph{outline a benchmark} that uses model validation as its core scenario, thus focusing on model loading and model validation workloads. Guidelines are provided on the generation of instance models and queries, on which we evaluated the metrics and executed the benchmark using three, characteristically different graph query tools. In order to identify which metrics provide reliable performance prediction for a given workload and tool category, we \emph{calculate the correlation with significance values} between execution times and metrics.
+
+% % proposal: metrics for estimation, benchmark for differentiation 
+% In this paper, we aim to address these challenges by \emph{assessing (existing and novel) metrics} that take instance model characteristics, static query characteristics and their combination %of both query and instance model characteristics 
+% into account. 
+% By providing guidelines on instance model generation and case study fine tuning to achieve result dispersion (to provide differentiation between various technologies), we outline a benchmark that uses model validation as the core scenario.
+% Our experimental measurements evaluate the metrics over the test set of our benchmark over  three characteristically different classes of query technologies. We calculate the correlation of the predictions provided by the metrics with the measurement data to highlight which metrics provide reliable prediction for a certain query technology.
+% %with results to identity those metrics that can reliably predict application performance.
+
+% Structure
+The rest of the paper is structured as follows. 
+\autoref{sec:background} overviews the most important concepts of modeling languages and model queries, and 
+\autoref{sec:relwork} discusses benchmarking and metrics related work.
+\autoref{sec:benchmark} presents our analysis of existing benchmarks and proposes new metrics and benchmarks, with their evaluation presented in \autoref{sec:eval}.
+\autoref{sec:conclusion} outlines directions for future work and concludes the paper.
