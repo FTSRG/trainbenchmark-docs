@@ -1,7 +1,7 @@
 Train Benchmark documentation
 =============================
 
-[![PDF Status](https://www.sharelatex.com/github/repos/FTSRG/trainbenchmark-docs/builds/latest/badge.svg)](https://www.sharelatex.com/github/repos/FTSRG/trainbenchmark-docs/builds/latest/output.pdf)
+**Deprecated.**
 
-The implementation is availabe in the [trainbenchmark](https://github.com/FTSRG/trainbenchmark) repository.
+The implementation is available in the [trainbenchmark](https://github.com/FTSRG/trainbenchmark) repository.
 
