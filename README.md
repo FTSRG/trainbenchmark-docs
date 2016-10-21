@@ -1,7 +1,3 @@
-Train Benchmark documentation
-=============================
-
 **Deprecated.**
 
-The implementation is available in the [trainbenchmark](https://github.com/FTSRG/trainbenchmark) repository.
-
+See the [latest Train Benchmark docs](http://docs.inf.mit.bme.hu/trainbenchmark/).
